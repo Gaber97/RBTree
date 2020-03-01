@@ -25,7 +25,11 @@ Tree.prototype.addValue= function(val){
       if(z.value<x.value){
         if(this.root.value<x.value){
           if(this.root!=x){
-            x.x=x.x+30;
+            //x.x=x.x+30;
+
+
+
+            x.newx=x.newx+30;
             
             
             if(x.right!=this.nil){
@@ -35,8 +39,11 @@ Tree.prototype.addValue= function(val){
           }
         
         }
-        z.x=x.x-30;
-        z.y=x.y+40;
+
+        //z.x=x.x-30;
+        //z.y=x.y+40;
+        z.newx=x.newx-30;
+        z.newy=x.newy+40;
         x=x.left;
     
       }
@@ -47,7 +54,8 @@ Tree.prototype.addValue= function(val){
 
         if(this.root.value>x.value){
           if(this.root!=x){
-            x.x=x.x-30;
+            //x.x=x.x-30;
+            x.newx=x.newx-30;
             
           
             if(x.left!=this.nil){
@@ -57,8 +65,10 @@ Tree.prototype.addValue= function(val){
           }
           
         }
-        z.x=x.x+30;
-        z.y=x.y+40;
+        //z.x=x.x+30;
+        //z.y=x.y+40;
+        z.newx=x.newx+30;
+        z.newy=x.newy+40;
         x=x.right;
       
       }
@@ -66,8 +76,10 @@ Tree.prototype.addValue= function(val){
     z.parent=y;
     if(y==this.nil){
       this.root=z;
-      z.x=width/2;
-      z.y=40;
+      //z.x=width/2;
+      //z.y=40;
+      z.newx=width/2;
+      z.newy=40;
 
     }
     else if(z.value<y.value){
@@ -88,7 +100,8 @@ Tree.prototype.addValue= function(val){
 Tree.prototype.PixelUp= function(n){
 
   
-  n.x=n.x+30;
+  //n.x=n.x+30;
+  n.newx=n.newx+30;
   
  
 
@@ -115,7 +128,8 @@ Tree.prototype.PixelUp= function(n){
 Tree.prototype.PixelDown= function(n){
 
   
-  n.x=n.x-30;
+  //n.x=n.x-30;
+  n.newx=n.newx-30;
   
  
 

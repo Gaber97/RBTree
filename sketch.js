@@ -7,7 +7,7 @@ function setup(){
 
 
     background(54);
-    canvas=createCanvas(1600,1000);
+    canvas=createCanvas(1600,600);
     background(54);
     tree=randomTree(0);
     Visualazer= new Treevisualizer();
@@ -17,6 +17,15 @@ function setup(){
     button = createButton('Add');
     button.position(input.x + input.width, 10);
     button.mousePressed(clicked);
+
+    slider = createSlider(0, 0.1, 0.01,0.001);
+    slider.position(10, 550);
+    
+
+
+    animButton = createButton('SetAnimation ON/OFF');
+    animButton.position(button.x + button.width, 10);
+    animButton.mousePressed(setAnim);
     
    
     
@@ -32,7 +41,7 @@ function setup(){
 function draw(){
     
     background(54);
-
+    Visualazer.setAnimationSpeed(slider.value());
     Visualazer.drawTree(tree);
   
 }
@@ -41,12 +50,20 @@ function clicked(){
 
     n=input.value();
     tree.addValue(n);
-
-   
     
+ 
+}
   
-  }
-  
+
+function setAnim(){
+
+    Visualazer.setAnimation();
+    
+ 
+}
+
+
+
 function randomTree(num){
 
 
