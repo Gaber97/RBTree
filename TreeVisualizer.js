@@ -50,48 +50,47 @@ class Treevisualizer {
 
     Preorder=function(n){
     
-    
-
-    if(n.left!= this.nil ){
-        this.Preorder(n.left);
-       
-    }
-
-    if(n.right!=this.nil){
-        this.Preorder(n.right);
-       
-    }
-
-
-
-        if(this.anim){
-            this.MoveNode(n);
-        }
-        else{
-            n.lambda=1;
-            n.x=n.newx;
-            n.y=n.newy;
-            n.drawx=n.newx;
-            n.drawy=n.newy;
-        }
+        if(n.left!= this.nil ){
+            this.Preorder(n.left);
         
-        
-        //console.log(this.x);
-    
-        //console.log(n.newx);
-     
-
-        stroke(255);
-        if(n.parent!=this.nil){
-        line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
         }
-    
-        noStroke();
-        fill(255,2,2);
-        ellipse( n.drawx,  n.drawy, 30, 30);
-        fill(255); 
-        textAlign(CENTER,CENTER);
-        text(n.value, n.drawx, n.drawy);  
+
+        if(n.right!=this.nil){
+            this.Preorder(n.right);
+        
+        }
+
+
+
+            if(this.anim){
+                this.MoveNode(n);
+            }
+            else{
+                n.lambda=1;
+                n.x=n.newx;
+                n.y=n.newy;
+                n.drawx=n.newx;
+                n.drawy=n.newy;
+            }
+            
+            
+            //console.log(this.x);
+        
+            //console.log(n.newx);
+        
+
+            stroke(255);
+            if(n.parent!=this.nil){
+            line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
+            }
+        
+            noStroke();
+            fill(255,2,2);
+            ellipse( n.drawx,  n.drawy, 40, 40);
+            fill(255); 
+            textAlign(CENTER,CENTER);
+            textSize(20);
+            text(n.value, n.drawx, n.drawy);  
     
 
     }
@@ -135,8 +134,7 @@ class Treevisualizer {
                 ismoved=this.IsMoved(tree.right,ismoved);
                
             }
-            
-        
+   
 
         }
 

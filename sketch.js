@@ -5,9 +5,11 @@ var list=[67,99,87,100];
 
 function setup(){
 
-
+   
     background(54);
-    canvas=createCanvas(1600,600);
+    
+    canvas=createCanvas(windowWidth, 3*windowHeight/4);
+    canvas.position(0,0);
     background(54);
     tree=randomTree(0);
     Visualazer= new Treevisualizer();
@@ -18,7 +20,7 @@ function setup(){
     button.position(input.x + input.width, 10);
     button.mousePressed(clicked);
 
-    slider = createSlider(0, 0.1, 0.01,0.001);
+    slider = createSlider(0.001, 0.1, 0.01,0.001);
     slider.position(10, 550);
     
 
@@ -77,3 +79,7 @@ function randomTree(num){
 
     return tree;
 }
+
+function windowResized() {
+    resizeCanvas(windowWidth, 3*windowHeight/4);
+  }

@@ -15,7 +15,6 @@ class Node{
     this.drawx;
     this.drawy;
     
-
   }
 
  
