@@ -7,6 +7,8 @@ class Treevisualizer {
         this.nil=null;
         this.dir=1;
         this.anim=true;
+        this.visSteps=[];
+        this.visStepsNumber=0;
         
     }
 
@@ -32,9 +34,7 @@ class Treevisualizer {
 
     drawTree=function(n) {
 
-        var ismoved=true;
-        
-        
+        var ismoved=true; 
         this.nil=n.nil;
         //var is=this.IsMoved(n.root,ismoved);
         //console.log(is);
@@ -43,8 +43,6 @@ class Treevisualizer {
            this.Preorder(n.root);
        
         }
-    
-
         
     }
 
@@ -115,31 +113,7 @@ class Treevisualizer {
 
 
     }
-    //kérdéses még
-
-
-    IsMoved(tree,ismoved){
-
-        if(tree!=this.nil){
-            ismoved= ismoved && (tree.x != tree.newx && tree.y != tree.newy );
-            console.log(tree.x != tree.newx && tree.y != tree.newy);
-            console.log(tree.value);
-            if(tree.left != this.nil){
-                
-                ismoved=this.IsMoved(tree.left,ismoved);
-              
-            }
-            if(tree.right != this.nil){
-                
-                ismoved=this.IsMoved(tree.right,ismoved);
-               
-            }
-   
-
-        }
-
-        return ismoved;
-    }
+    
 
 
 

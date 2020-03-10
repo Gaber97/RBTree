@@ -1,5 +1,6 @@
 
 
+
 var list=[67,99,87,100];
 
 
@@ -28,7 +29,7 @@ function setup(){
     animButton.position(button.x + button.width, 10);
     animButton.mousePressed(setAnim);
     
-   
+  
     
     console.log(tree);
     
@@ -50,7 +51,7 @@ function draw(){
 function clicked(){
 
     n=input.value();
-    tree.addValue(n);
+    console.log(tree.addValue(n));
     
  
 }
@@ -83,3 +84,5 @@ function randomTree(num){
 function windowResized() {
     resizeCanvas(windowWidth, 3*windowHeight/4);
   }
+
+
