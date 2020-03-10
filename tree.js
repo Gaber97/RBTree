@@ -5,24 +5,28 @@ class Tree{
   constructor(){
     this.nil=new Node(-99999,0,0,"Black");
     this.root=this.nil;
-    
+    this.verticalchange=40;
+    this.horizontalchange=40;
 
   }
   
-
-
 }
 
 
 
 Tree.prototype.addValue= function(val){
-   
+    val=int(val);
   
     var z = new Node(val)
     var y=this.nil;
     var x= this.root;
 
-
+    //ha az elem megtalálható akkor nem szúrjuk be újra
+    
+    if(this.Find(x,val)){
+      return [];
+    }
+    
 
     while(x!=this.nil){
       y=x;
@@ -33,12 +37,12 @@ Tree.prototype.addValue= function(val){
 
 
 
-            x.newx=x.newx+40;
+            x.newx=x.newx+ this.horizontalchange;
             
             
             if(x.right!=this.nil){
                
-                this.PixelUp(x.right);
+                this.PixelChange(x.right, this.horizontalchange);
               }
           }
         
@@ -46,31 +50,30 @@ Tree.prototype.addValue= function(val){
 
         //z.x=x.x-30;
         //z.y=x.y+40;
-        z.newx=x.newx-40;
-        z.newy=x.newy+40;
+        z.newx=x.newx-this.horizontalchange;
+        z.newy=x.newy+this.verticalchange;
         x=x.left;
     
       }
       else{
        
-
         if(this.root.value>x.value){
           if(this.root!=x){
             //x.x=x.x-30;
-            x.newx=x.newx-40;
+            x.newx=x.newx-this.horizontalchange;
             
           
             if(x.left!=this.nil){
               
-              this.PixelDown(x.left);
+              this.PixelChange(x.left,-this.horizontalchange);
             }
           }
           
         }
         //z.x=x.x+30;
         //z.y=x.y+40;
-        z.newx=x.newx+40;
-        z.newy=x.newy+40;
+        z.newx=x.newx+ this.horizontalchange;
+        z.newy=x.newy+this.verticalchange;
         x=x.right;
       
       }
@@ -82,23 +85,22 @@ Tree.prototype.addValue= function(val){
       //z.x=width/2;
       //z.y=40;
       z.x=width/2;
-      z.y=70;
-
+      z.y=this.verticalchange*2;
 
       z.newx=width/2;
-      z.newy=40;
+      z.newy=this.verticalchange;
 
     }
     else if(z.value<y.value){
       y.left=z;
-      z.x=y.x-50;
-      z.y=y.y+70;
+      z.x=y.x-this.horizontalchange*2;
+      z.y=y.y+this.verticalchange*2;
 
     }
     else{
       y.right=z;
-      z.x=y.x+50;
-      z.y=y.y+70;
+      z.x=y.x+this.horizontalchange*2;
+      z.y=y.y+this.verticalchange*2;
     }
     z.left=this.nil;
     z.right=this.nil;
@@ -108,86 +110,74 @@ Tree.prototype.addValue= function(val){
 
 }
 
-
-Tree.prototype.PixelUp= function(n){
-
-  
-  //n.x=n.x+30;
-  n.newx=n.newx+40;
-  
- 
-
-  if(n.left!=this.nil){
-      this.PixelUp(n.left);
-     
-  }
-
-  if(n.right!=this.nil){
-      this.PixelUp(n.right);
-     
-  }
-
- 
-
-
-
-}
-
+//nem a amegfelelő
 
 Tree.prototype.Find= function(t,k){
 
-  if(t==this.nil){
-    return this.nil;
+  if(t==this.nil){  
+    return false;
   }
-  else{
+  else
+  {
     if(k==t.value){
-      return t;
+
+      return true;
     }
     else if(k<t.value){
-
+     
       this.Find(t.left,k);
     }
     else{
+      
       this.Find(t.right,k);
     }
 
   }
-  
+ 
+}
 
+Tree.prototype.Find= function(t,k){
 
+  var x=t;
+  while(x!=this.nil){
+ 
+        if(k==x.value){
+          return true;
+        }
+        else if(k<x.value){
+        
+          x=x.left;
+        }
+        else{
+          
+          x=x.right;
+        }
 
+  }
 
-
-  
+  return false;
+ 
 }
 
 
 
-
-Tree.prototype.PixelDown= function(n){
+Tree.prototype.PixelChange= function(n,px){
 
   
   //n.x=n.x-30;
-  n.newx=n.newx-40;
+  n.newx=n.newx+px;
   
  
-
   if(n.left!=this.nil){
-      this.PixelDown(n.left);
+      this.PixelChange(n.left);
      
   }
 
   if(n.right!=this.nil){
-      this.PixelDown(n.right);
+      this.PixelChange(n.right);
      
   }
 
- 
-
-
-
 }
-
-
 
 

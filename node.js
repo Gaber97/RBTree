@@ -2,7 +2,7 @@
 class Node{
 
   constructor(val,color){
-    this.value = int(val);
+    this.value = val;
     this.left = null;
     this.right= null;
     this.parent= null;

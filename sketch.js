@@ -21,9 +21,8 @@ function setup(){
     button.mousePressed(clicked);
 
     slider = createSlider(0.001, 0.1, 0.01,0.001);
-    slider.position(10, 550);
+    slider.position(10, 3*windowHeight/4-50);
     
-
 
     animButton = createButton('SetAnimation ON/OFF');
     animButton.position(button.x + button.width, 10);
@@ -65,7 +64,6 @@ function setAnim(){
 }
 
 
-
 function randomTree(num){
 
 
@@ -79,6 +77,8 @@ function randomTree(num){
 
     return tree;
 }
+
+
 
 function windowResized() {
     resizeCanvas(windowWidth, 3*windowHeight/4);
