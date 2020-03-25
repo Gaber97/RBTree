@@ -170,9 +170,7 @@ class Treevisualizer {
                 this.stepanim=false;
                 //kirajzolás
 
-                noStroke();
-                fill(255,2,2);
-
+                
                 var x=actualListelement.x;
                 var y=actualListelement.y;
                 var val=actualListelement.value;
@@ -180,9 +178,15 @@ class Treevisualizer {
                 
                 var value=actualListelement.node.value;
                 
+                 
+                fill(255); 
+                textAlign(LEFT,CENTER);
+                textSize(20);
+                text(actualListelement.information,10, 100);  
 
 
-               
+
+
                 if(val<value){
                     this.drawNode(x+50,y,value);
                 }
@@ -190,6 +194,9 @@ class Treevisualizer {
                     
                     this.drawNode(x-50,y,value);
                 }
+
+                
+               
 
 
 
@@ -216,7 +223,6 @@ class Treevisualizer {
 
           this.stepanim=true;
         
-
 
         if(this.vistree.root!=this.vistree.nil)  this.Preorder(this.vistree.root,this.vistree.nil);
        

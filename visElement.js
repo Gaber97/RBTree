@@ -8,7 +8,7 @@ class visElement{
         this.y=y;
         this.value=val;
         this.node=node;
-        this.infomation=info;
+        this.information=info;
 
     }
 
