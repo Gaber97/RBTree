@@ -17,6 +17,28 @@ class Node{
     
   }
 
+  Copy(node,nil){
+
+    this.value = node.value;
+   
+    this.x=node.x;
+    this.y=node.y;
+    this.newx=node.newx;
+    this.newy=node.newy;
+    this.lambda=node.lambda;
+    this.color=node.color;
+    this.drawx=node.drawx;
+    this.drawy=node.drawy;
+    this.left = nil;
+    this.right= nil;
+    this.parent= nil;
+
+  }
+
+
+
+
+
  
 }
  
