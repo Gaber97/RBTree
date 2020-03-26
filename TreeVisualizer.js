@@ -18,7 +18,7 @@ class Treevisualizer {
 
 
 
-        this.tree;
+        this.tree=new Tree;
         this.vistree;
         this.treeIsSet=false;
         
@@ -38,7 +38,43 @@ class Treevisualizer {
         }
 
     }
+
+
+    addElement(val){
+
+        val=parseInt(val)
+
+        if(isNaN(val)){
+          console.log(NaN);
+            return 0;
+        }
     
+
+
+        if(this.actualStep<this.visStepsNumber){
+
+            if(this.actualStep==-1){
+                this.tree=new Tree;
+
+            }
+            else{
+                console.log("valami");
+                this.tree=this.visSteps[this.actualStep]["NewTree"].Clone();
+                this.tree.CordinatEquals(this.tree.root,this.tree.nil); 
+            }
+            
+        }
+
+
+
+
+
+        this.addSteps(this.tree.addValue(val));
+
+    }
+
+
+
     setAnimationSpeed(val){
 
         this.speed=val;
@@ -51,6 +87,10 @@ class Treevisualizer {
         if(data.length==0){
             return 0;
         }
+
+        
+
+
         
 
         this.treeIsSet=false;
@@ -128,8 +168,12 @@ class Treevisualizer {
         
         if(this.actualStepElement-1<0){
             
-            if(this.actualStep-1>=-1) {
+            if(this.actualStep-1>-1) {
 
+                this.actualStep= this.actualStep-1;
+                this.actualStepElement=this.visSteps[this.actualStep]["List"].length-1;
+            }
+            else if(this.actualStep-1==-1){
                 this.actualStep= this.actualStep-1;
                 this.actualStepElement=0;
             }
@@ -195,16 +239,16 @@ class Treevisualizer {
                     this.drawNode(x-50,y,value);
                 }
 
-                
-               
-
-
-
-
               break;
            
             case "Animation":
                 this.setTree(actualNewTree,this.treeIsSet);
+
+                fill(255); 
+                textAlign(LEFT,CENTER);
+                textSize(20);
+                text(actualListelement.information,10, 100);  
+
                 this.stepanim=true;
                 
               break;

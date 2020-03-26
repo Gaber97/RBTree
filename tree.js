@@ -17,13 +17,6 @@ class Tree{
 Tree.prototype.addValue= function(val){
 
 
-    val=parseInt(val)
-
-    if(isNaN(val)){
-      console.log(NaN);
-      return [];
-    }
-
 
   
     var z = new Node(val)
@@ -108,7 +101,7 @@ Tree.prototype.addValue= function(val){
     z.right=this.nil;
     z.color="Piros";
 
-    Steps.push(new visElement("Animation"));
+    Steps.push(new visElement("Animation",z.x,z.y,z.value,z,"Az beszurandó "+String(z.value)+" elem a helyére kerül"));
 
     newTree=this.Clone();
 

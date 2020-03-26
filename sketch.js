@@ -11,8 +11,6 @@ function setup(){
     canvas=createCanvas(windowWidth, 3*windowHeight/4);
     canvas.position(0,0);
     background(54);
-    tree=new Tree();
-
 
     Visualazer= new Treevisualizer();
     input = createInput();
@@ -61,7 +59,8 @@ function draw(){
 function clicked(){
 
     n=input.value();
-    Visualazer.addSteps(tree.addValue(n));
+    Visualazer.addElement(n);
+
     
  
 }
@@ -88,18 +87,32 @@ function setAnim(){
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//tester
+
 function randomTree(num){
 
 
-    
-
     for(var i=0;i<num;i++){
-        
-        
-        Visualazer.addSteps(tree.addValue(random(1,10000+num)));            
+
+        Visualazer.addElement(random(1,10000+num));            
     }
 
-    return tree;
+   
 }
 
 
