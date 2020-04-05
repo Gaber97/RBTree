@@ -16,6 +16,8 @@ class Treevisualizer {
         this.stepanim=false;
 
 
+        this.readyToAddElement=true;
+
 
 
         this.tree=new Tree;
@@ -103,13 +105,12 @@ class Treevisualizer {
         this.visSteps[this.visStepsNumber]=data;
     
 
-        console.log( this.visStepsNumber);
+      
 
     }
 
     stepForward(){
-        console.log(this.visStepsNumber);
-        console.log("Semmi");
+        
         if(this.visStepsNumber==-1){
            
             return 0;
@@ -147,12 +148,7 @@ class Treevisualizer {
         }
 
       
-        //console.log(this.visSteps[this.actualStep]["List"]);
-
-        
-        console.log( this.actualStepElement);
-        console.log(this.actualStep);
-        console.log( this.visStepsNumber);
+       
 
     }
       
@@ -176,6 +172,7 @@ class Treevisualizer {
             else if(this.actualStep-1==-1){
                 this.actualStep= this.actualStep-1;
                 this.actualStepElement=0;
+                
             }
 
 
@@ -184,17 +181,14 @@ class Treevisualizer {
             this.actualStepElement=this.actualStepElement-1;
         }
 
-        //console.log(this.visSteps[this.actualStep]["List"]);
-        console.log( this.actualStepElement);
-        console.log(this.actualStep);
-        console.log( this.visStepsNumber);
+       
         
 
     }
 
 
 
-    drawTree=function() {
+    drawTree() {
         
         if(this.visStepsNumber==-1 ||this.actualStep==-1) return 0;
 
@@ -215,12 +209,15 @@ class Treevisualizer {
                 //kirajzolás
 
                 
-                var x=actualListelement.x;
-                var y=actualListelement.y;
-                var val=actualListelement.value;
+                var x=actualListelement.node.x;
+                var y=actualListelement.node.y;
+                var val=actualListelement.node.value;
+                var color=actualListelement.nodenew.color;
+
+
+                console.log()
                 
-                
-                var value=actualListelement.node.value;
+                var value=actualListelement.nodenew.value;
                 
                  
                 fill(255); 
@@ -232,11 +229,11 @@ class Treevisualizer {
 
 
                 if(val<value){
-                    this.drawNode(x+50,y,value);
+                    this.drawNode(x+50,y,value,color);
                 }
                 else{
                     
-                    this.drawNode(x-50,y,value);
+                    this.drawNode(x-50,y,value,color);
                 }
 
               break;
@@ -280,7 +277,7 @@ class Treevisualizer {
 
         noStroke();
         fill(0,0,0);
-        if(color){
+        if(color=="Red"){
             fill(255,2,2);
 
         }
@@ -319,18 +316,15 @@ class Treevisualizer {
         
         }
              
-            //console.log(this.x);
-        
-            //console.log(n.newx);
-        
-
+          
            
             if(n.parent!=nil){
             stroke(255);
             line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
             }
+            
         
-            this.drawNode(n.drawx,n.drawy,n.value);
+            this.drawNode(n.drawx,n.drawy,n.value,n.color);
     
 
     }

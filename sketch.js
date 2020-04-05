@@ -92,16 +92,6 @@ function setAnim(){
 
 
 
-
-
-
-
-
-
-
-
-
-
 //tester
 
 function randomTree(num){
@@ -110,6 +100,17 @@ function randomTree(num){
     for(var i=0;i<num;i++){
 
         Visualazer.addElement(random(1,10000+num));            
+    }
+
+   
+}
+
+function lessTree(num){
+
+
+    for(var i=0;i<num;i++){
+
+        Visualazer.addElement(num*2-i);            
     }
 
    
