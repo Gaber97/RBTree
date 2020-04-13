@@ -1,0 +1,37 @@
+
+button{
+
+    border: none;
+    background-color: gray;
+    border-radius: 5px;
+    color: white;
+ 
+}
+
+body{
+
+    background-color: gray;
+}
+
+button:hover{
+
+    background-color: white;
+    color:black;
+
+}
+
+input{
+    font-size:20;
+    text-align: right;
+}
+
+
+div{
+
+    background-color: gray;
+    border-radius: 40px;
+
+
+
+
+}

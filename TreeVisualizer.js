@@ -114,6 +114,60 @@ class Treevisualizer {
         if(this.visStepsNumber==-1){
            
             return 0;
+  
+        }
+
+        this.treeIsSet=true;
+
+        if(this.actualStep==-1){
+            this.actualStep=0;
+            return 0;
+        }
+
+
+      
+      
+    
+
+        
+        if(this.actualStepElement+1>=this.visSteps[this.actualStep]["List"].length){
+
+
+            
+            if(this.actualStep+1<=this.visStepsNumber) {
+
+                this.actualStep=this.actualStep+1;
+                this.actualStepElement=0;
+                this.treeIsSet=false;
+            }
+          
+       
+           
+
+        }
+        else{
+
+            this.actualStepElement=1+this.actualStepElement;
+
+            if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command != this.visSteps[this.actualStep]["List"][this.actualStepElement-1].command){
+                this.treeIsSet=false;
+                console.log("d")
+            }
+
+
+            
+        }
+
+      
+       
+
+    }
+
+    stepForwardSkip(){
+        
+        if(this.visStepsNumber==-1){
+           
+            return 0;
         }
 
         this.treeIsSet=false;
@@ -126,27 +180,14 @@ class Treevisualizer {
       
       
     
-
-        
-        if(this.actualStepElement+1>=this.visSteps[this.actualStep]["List"].length){
-            
-            if(this.actualStep+1<=this.visStepsNumber) {
-
-                this.actualStep=this.actualStep+1;
-                this.actualStepElement=0;
-            }
-            else{
-                this.treeIsSet=true;
-            }
-         
-       
-           
-
+        if(this.actualStepElement+1==this.visSteps[this.actualStep]["List"].length){
+            this.stepForward();
         }
         else{
-            this.actualStepElement=1+this.actualStepElement;
+            this.actualStepElement=this.visSteps[this.actualStep]["List"].length-1;
         }
-
+        
+   
       
        
 
@@ -160,7 +201,7 @@ class Treevisualizer {
             return 0;
         }
 
-        this.treeIsSet=false;
+        this.treeIsSet=true;
         
         if(this.actualStepElement-1<0){
             
@@ -168,6 +209,8 @@ class Treevisualizer {
 
                 this.actualStep= this.actualStep-1;
                 this.actualStepElement=this.visSteps[this.actualStep]["List"].length-1;
+                this.treeIsSet=false;
+
             }
             else if(this.actualStep-1==-1){
                 this.actualStep= this.actualStep-1;
@@ -178,13 +221,45 @@ class Treevisualizer {
 
         }
         else{
+            if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command != this.visSteps[this.actualStep]["List"][this.actualStepElement-1].command){
+                this.treeIsSet=false;
+            }
+            
             this.actualStepElement=this.actualStepElement-1;
+
         }
 
        
         
 
     }
+
+
+    stepBackwardSkip(){
+
+        
+        if(this.visStepsNumber==-1){
+            return 0;
+        }
+
+        this.treeIsSet=false;
+        
+        if(this.actualStepElement==0){
+            
+         this.stepBackward();
+
+        }
+        else{
+            this.actualStepElement=0;
+        }
+
+       
+        
+
+    }
+
+
+    
 
 
 
@@ -206,24 +281,25 @@ class Treevisualizer {
                 
                 this.setTree(actualOldTree,this.treeIsSet);
                 this.stepanim=false;
+                
                 //kirajzolás
 
                 
-                var x=actualListelement.node.x;
-                var y=actualListelement.node.y;
-                var val=actualListelement.node.value;
-                var color=actualListelement.nodenew.color;
+                var x=actualListelement.visElement1.x;
+                var y=actualListelement.visElement1.y;
+                var val=actualListelement.visElement1.value;
+                var color=actualListelement.visElement2.color;
 
 
                 console.log()
                 
-                var value=actualListelement.nodenew.value;
+                var value=actualListelement.visElement2.value;
                 
                  
                 fill(255); 
                 textAlign(LEFT,CENTER);
                 textSize(20);
-                text(actualListelement.information,10, 100);  
+                text(actualListelement.visElement3,10, 3*windowHeight/4-100);  
 
 
 
@@ -244,7 +320,7 @@ class Treevisualizer {
                 fill(255); 
                 textAlign(LEFT,CENTER);
                 textSize(20);
-                text(actualListelement.information,10, 100);  
+                text(actualListelement.visElement3,10,  3*windowHeight/4-100);  
 
                 this.stepanim=true;
                 
@@ -361,6 +437,7 @@ class Treevisualizer {
     setTree(t,isset){
 
         if(!isset){
+            console.log("klonozás");
             this.vistree=t.Clone();
             this.treeIsSet=true;
         }

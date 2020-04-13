@@ -8,8 +8,8 @@ class Tree{
     this.nil.parent=this.nil;
     this.nil.right=this.nil;
     this.root=this.nil;
-    this.verticalchange=50;
-    this.horizontalchange=50;
+    this.verticalchange=40;
+    this.horizontalchange=40;
     this.Steps=[];
 
   }
@@ -116,7 +116,6 @@ Tree.prototype.addValue= function(val){
     
 
 
-    console.log(z.parent.color);
 
     this.RepaerAdd(z);
 
@@ -206,7 +205,12 @@ Tree.prototype.RightRound= function(x){
  
 
   y=x.left;
+
+
   x.left=y.right;
+
+
+
   if(y.left!=this.nil) y.right.parent=x;
   
   y.parent=x.parent;
@@ -242,9 +246,6 @@ Tree.prototype.RepaerAdd= function(z){
   while(z.parent.color=='Red'){
 
 
-    console.log("----------------------------------------------");
-    console.log("while kezdete");
-    console.log(z.parent);
 
     if(z.parent==z.parent.parent.left){
 
@@ -252,7 +253,7 @@ Tree.prototype.RepaerAdd= function(z){
 
       if(y.color=="Red"){
 
-        console.log("Nagyszulo jobb gyerekenek szine piros");
+      
         z.parent.color="Black";
         y.color="Black";
         z.parent.parent.color="Red"
@@ -260,9 +261,9 @@ Tree.prototype.RepaerAdd= function(z){
 
       }
       else{
-         console.log("nagyszulojobb");
+         
         if(z==z.parent.right){
-          console.log("Forgat");
+          
           z=z.parent;
           this.LeftRound(z);
 
@@ -280,9 +281,10 @@ Tree.prototype.RepaerAdd= function(z){
   else{
 
 
-    console.log("Nagyszulo jobb gyerekenek szine fekete");
+    
 
     var y=z.parent.parent.left;
+
       if(y.color=="Red"){
         z.parent.color="Black";
         y.color="Black";
@@ -309,13 +311,12 @@ Tree.prototype.RepaerAdd= function(z){
 
   }
 
-  console.log(z.parent);
-  console.log("----------------------------------------------");
+ 
 }
 
 this.root.color="Black";
 
-console.log("vege");
+
 
 }
 

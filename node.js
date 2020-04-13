@@ -17,6 +17,9 @@ class Node{
     
   }
 
+
+  
+ 
   Copy(node,nil){
 
     this.value = node.value;
@@ -34,8 +37,6 @@ class Node{
     this.parent= nil;
 
   }
-
-
 
 
 
