@@ -11,6 +11,9 @@ function setup(){
     
     canvas=createCanvas(windowWidth, 3*windowHeight/4);
     canvas.position(0,0);
+
+
+
     
 
     Visualazer= new Treevisualizer();
@@ -101,13 +104,22 @@ function helpDiv(){
 
 function createButtons(){
 
+
+
+ 
+    divHorizontal = createElement("div","");
+
+    divHorizontal.position(0,0);
+    divHorizontal.size(80,3*windowHeight/4);
+
+    divVertical = createElement("div","");
+
+    divVertical.position(0,0);
+    divVertical.size(windowWidth,50);
+
     input = createInput();
     input.position(20, 10);
     input.size(50,30);
-
- 
-    
-
 
     
 
@@ -159,9 +171,10 @@ function createButtons(){
 
 
     helpDivElement = createElement("div","");
+    helpDivElement.id("helpDialog");
     helpDivElement.position(help.x-500,help.y)
     helpDivElement.size(500,500);
-    helpDivElement.innerHTML="saft";
+    helpDivElement.html("\tcsácsumi");
    
     helpDivElement.hide();
     helpDivElement.isHide=true;

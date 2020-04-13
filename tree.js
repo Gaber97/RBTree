@@ -45,7 +45,7 @@ Tree.prototype.addValue= function(val){
       if(z.value<x.value){
 
         b.Copy(x);
-        this.Steps.push(new visElement("Add",b,z,"Az beszurandó "+String(z.value)+" elem kisebb mint "+String(x.value)));
+        this.Steps.push(new visElement("Add",b,z,"Az beszúrandó "+String(z.value)+" elem kisebb mint "+String(x.value)));
 
         if(this.root.value<x.value && this.x!=x ) this.PixelSet(x,this.horizontalchange,0,x.right);
         
@@ -60,7 +60,7 @@ Tree.prototype.addValue= function(val){
       else{
         b.Copy(x);
         
-        this.Steps.push(new visElement("Add",b,z,"Az beszurandó "+String(z.value)+" elem nagyobb mint "+String(x.value)));
+        this.Steps.push(new visElement("Add",b,z,"Az beszúrandó "+String(z.value)+" elem nagyobb mint "+String(x.value)));
        
         if(this.root.value>x.value && this.x!=x ) this.PixelSet(x,-this.horizontalchange,0,x.left);
         //z.x=x.x+30;
@@ -79,17 +79,17 @@ Tree.prototype.addValue= function(val){
       //z.x=width/2;
       //z.y=40;
       z.x=width/2-40;
-      z.y=this.verticalchange;
+      z.y=this.verticalchange+40;
 
 
       var b=new Node;
       b.Copy(z);
       
-      this.Steps.push(new visElement("Add",b,b,"Az beszurandó "+String(z.value)+" elem a gyöker"));
+      this.Steps.push(new visElement("Add",b,b,"Az beszúrandó "+String(z.value)+" elem a gyöker"));
       
 
       z.newx=width/2;
-      z.newy=this.verticalchange;
+      z.newy=this.verticalchange+40;
 
      
 

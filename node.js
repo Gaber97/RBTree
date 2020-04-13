@@ -7,7 +7,7 @@ class Node{
     this.right= null;
     this.parent= null;
     this.x=60;
-    this.y=60;
+    this.y=90;
     this.newx=this.x;
     this.newy=this.y;
     this.lambda=1;

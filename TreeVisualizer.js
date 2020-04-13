@@ -299,7 +299,7 @@ class Treevisualizer {
                 fill(255); 
                 textAlign(LEFT,CENTER);
                 textSize(20);
-                text(actualListelement.visElement3,10, 3*windowHeight/4-100);  
+                text(actualListelement.visElement3,90, 3*windowHeight/4-100);  
 
 
 
@@ -320,7 +320,7 @@ class Treevisualizer {
                 fill(255); 
                 textAlign(LEFT,CENTER);
                 textSize(20);
-                text(actualListelement.visElement3,10,  3*windowHeight/4-100);  
+                text(actualListelement.visElement3,90,  3*windowHeight/4-100);  
 
                 this.stepanim=true;
                 

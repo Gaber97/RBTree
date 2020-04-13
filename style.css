@@ -28,9 +28,19 @@ input{
 
 div{
 
-    background-color: gray;
-    border-radius: 40px;
+    background-color: #252424;
+    
+   
 
+
+
+
+}
+
+#helpDialog{
+
+    background-color: gray;
+    border-radius: 30px;
 
 
 
