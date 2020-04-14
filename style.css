@@ -30,6 +30,7 @@ div{
 
     background-color: #252424;
     
+    
    
 
 
@@ -45,3 +46,7 @@ div{
 
 
 }
+
+button,div,input {
+    transition-duration: 0.4s;
+  }

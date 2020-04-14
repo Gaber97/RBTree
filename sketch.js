@@ -38,6 +38,7 @@ function clicked(){
 
     n=input.value();
     Visualazer.addElement(n);
+    input.value("");
 
     
  
@@ -104,9 +105,10 @@ function helpDiv(){
 
 function createButtons(){
 
-
-
  
+
+
+    //vizual elemet
     divHorizontal = createElement("div","");
 
     divHorizontal.position(0,0);
@@ -116,12 +118,11 @@ function createButtons(){
 
     divVertical.position(0,0);
     divVertical.size(windowWidth,50);
-
+    //
     input = createInput();
     input.position(20, 10);
     input.size(50,30);
 
-    
 
     buttonAdd = createButton('Add');
     buttonAdd.position(input.x + input.width+10, input.y );
@@ -212,7 +213,16 @@ function lessTree(num){
 
 function windowResized() {
     resizeCanvas(windowWidth, 3*windowHeight/4);
-    animButton.position(windowWidth-200,3*windowHeight/4-50);
+    animButton.position(windowWidth-150,3*windowHeight/4-75);
+    slider.position(animButton.x-slider.width-10, animButton.y+ animButton.height/4);
+    divVertical.size(windowWidth,50);
+    help.position(windowWidth-50,20);
+    helpDivElement.position(help.x-500,help.y);
+    divHorizontal.size(80,3*windowHeight/4);
+  
+
+    
+
 
 
 

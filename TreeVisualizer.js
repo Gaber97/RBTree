@@ -118,6 +118,7 @@ class Treevisualizer {
         }
 
         this.treeIsSet=true;
+        this.anim=true;
 
         if(this.actualStep==-1){
             this.actualStep=0;
@@ -171,6 +172,7 @@ class Treevisualizer {
         }
 
         this.treeIsSet=false;
+        this.anim=true;
 
         if(this.actualStep==-1){
             this.actualStep=0;
@@ -202,6 +204,7 @@ class Treevisualizer {
         }
 
         this.treeIsSet=true;
+        this.anim=false;
         
         if(this.actualStepElement-1<0){
             
@@ -238,10 +241,13 @@ class Treevisualizer {
     stepBackwardSkip(){
 
         
+
+        
         if(this.visStepsNumber==-1){
             return 0;
         }
 
+        this.anim=false;
         this.treeIsSet=false;
         
         if(this.actualStepElement==0){
@@ -388,7 +394,7 @@ class Treevisualizer {
 
         if(this.stepanim){
 
-            this.MoveNode(n)
+            this.MoveNode(n);
         
         }
              
