@@ -1,0 +1,40 @@
+<h2>Program működése útmutató</h2>
+<ul>
+    <li><h3>Add</h3>
+        <p>Ennek segítségével adhatsz elemet a Piros Fekete fához.</p>
+        <p>Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>
+    
+    </li>
+    <li>
+        <h3>Del</h3>
+        <p>Ennek segítségével törölhetsz elemet a Piros Fekete fából.</p>
+        <p>Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>
+
+
+    </li>
+    <li> <h3>>></h3>
+        <p>Ennek segítségével léptetheted a rögtön a vég állapotba  a fát a beszúrás,vagy törlés esetén.</p>
+    </li>
+    <li><h3>></h3>
+        <p>Ennek segítségével léptetheted a fát előre a beszúrás vagy törlés esetén.</p></li>
+    <li><h3>< </h3>
+        <p>Ennek segítségével léptetheted a fát vissza a beszúrás vagy törlés esetén.</p></li>
+    <li><h3><<</h3>
+        <p>Ennek segítségével léptetheted a fát előre a beszúrás vagy törlés esetén.</p>
+        <p>Ezek segítségével léphetünk vissza, vagy előre előző beszúrt elemekhez is</p>
+    
+    </li>
+    
+        
+    <li>
+        <p>Csúszke swegítségével az animáció sebeségét nővelhetjük</p>
+    </li>
+       
+    <li>
+        <h3>>Animation set ON/Off</h3>
+        <p>Ennek az animációt be és ki lehet kaspcsolni.</p>
+    </li>
+
+
+
+</ul>

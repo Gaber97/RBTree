@@ -10,7 +10,7 @@ button{
 
 body{
 
-    background-color: gray;
+    background-color: rgb(207, 207, 207);
 }
 
 button:hover{
@@ -42,11 +42,14 @@ div{
 
     background-color: gray;
     border-radius: 30px;
-
+    
 
 
 }
 
-button,div,input {
+
+
+button,input {
     transition-duration: 0.4s;
   }
+

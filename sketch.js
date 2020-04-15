@@ -1,8 +1,5 @@
 
 
-
-
-
 function setup(){
 
 
@@ -168,14 +165,49 @@ function createButtons(){
 
     help=createButton('?');
     help.position(windowWidth-50,20);
-    help.mousePressed(helpDiv);
+    
+    help.mouseOver(handlerHelp);
+    help.mouseOut(handlerHelp);
 
 
     helpDivElement = createElement("div","");
     helpDivElement.id("helpDialog");
     helpDivElement.position(help.x-500,help.y)
-    helpDivElement.size(500,500);
-    helpDivElement.html("\tcsácsumi");
+    helpDivElement.size(500,750);
+
+
+    //szépít
+    helpDivElement.html('<h2 align="center">Program működése útmutató</h2>'+
+    '<ul>'+
+        '<li><h3>Add</h3>'+
+            '<p>Ennek segítségével adhatsz elemet a Piros Fekete fához.'+
+            'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
+        
+        '</li>'+
+        '<li>'+
+            '<h3>Del</h3>'+
+            '<p>Ennek segítségével törölhetsz elemet a Piros Fekete fából.'+
+            'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
+    
+    
+       '</li>'+
+        '<li> <h3>>></h3>'+
+            '<p>Ennek segítségével léptetheted a rögtön a vég állapotba  a fát a beszúrás,vagy törlés esetén.</p>'+
+        '</li>'+
+        '<li><h3>></h3>'+
+            '<p>Ennek segítségével léptetheted a fát előre a beszúrás vagy törlés esetén.</p></li>'+
+        '<li><h3>< </h3>'+
+            '<p>Ennek segítségével léptetheted a fát vissza a beszúrás vagy törlés esetén.</p></li>'+
+        '<li><h3><<</h3>'+
+           ' <p>Ennek segítségével léptetheted a fát előre a beszúrás vagy törlés esetén.'+
+           ' Ezek segítségével léphetünk vissza, vagy előre előző beszúrt elemekhez is</p>'+
+        '</li>'+   
+        '<li>'+
+            '<h3>Animation set ON/Off</h3>'+
+            '<p>Ennek az animációt be és ki lehet kaspcsolni.'+
+            'Csúszka segítségével az animáció sebeségét nővelhetjük</p>'+
+       '</li>'+
+    '</ul>');
    
     helpDivElement.hide();
     helpDivElement.isHide=true;
@@ -231,3 +263,14 @@ function windowResized() {
 }
 
 
+
+function handlerHelp(event) {
+  
+  if (event.type == 'mouseover') {
+     helpDivElement.show();
+   
+  }
+  if (event.type == 'mouseout') {
+    helpDivElement.hide();
+  }
+}
