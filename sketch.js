@@ -1,20 +1,11 @@
 
-
 function setup(){
 
+    background(54);
 
-   
-    
-    
     canvas=createCanvas(windowWidth, 3*windowHeight/4);
     canvas.position(0,0);
-
-
-
-    
-
     Visualazer= new Treevisualizer();
-
     createButtons();
 
 
@@ -28,8 +19,27 @@ function draw(){
     background(54);
     Visualazer.setAnimationSpeed(slider.value());
     Visualazer.drawTree();
+    LockAddAndDel(Visualazer.canAddAndDel());
+    
+    
   
 }
+
+function LockAddAndDel(canClick) {
+    if (canClick) {
+      
+        input.removeAttribute('disabled',"");
+        buttonAdd.removeAttribute('disabled',"");
+        buttonDel.removeAttribute('disabled',"");
+       
+    } else {
+        input.attribute('disabled',"");
+        buttonAdd.attribute('disabled',"");
+        buttonDel.attribute('disabled',"");
+     
+    }
+  }
+
 
 function clicked(){
 
@@ -99,7 +109,6 @@ function helpDiv(){
 
 
 
-
 function createButtons(){
 
  
@@ -164,7 +173,8 @@ function createButtons(){
     slider.position(animButton.x-slider.width-10, animButton.y+ animButton.height/4);
 
     help=createButton('?');
-    help.position(windowWidth-50,20);
+    help.position(windowWidth-50,10);
+    help.size(30,30);
     
     help.mouseOver(handlerHelp);
     help.mouseOut(handlerHelp);
@@ -177,6 +187,8 @@ function createButtons(){
 
 
     //szépít
+  
+    
     helpDivElement.html('<h2 align="center">Program működése útmutató</h2>'+
     '<ul>'+
         '<li><h3>Add</h3>'+
@@ -208,6 +220,7 @@ function createButtons(){
             'Csúszka segítségével az animáció sebeségét nővelhetjük</p>'+
        '</li>'+
     '</ul>');
+    
    
     helpDivElement.hide();
     helpDivElement.isHide=true;

@@ -25,6 +25,10 @@ input{
     text-align: right;
 }
 
+input:disabled,button:disabled{
+    background-color: #353535;
+}
+
 
 div{
 

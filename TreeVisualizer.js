@@ -6,6 +6,7 @@ class Treevisualizer {
         this.speed=0.01;
         this.dir=1;
         this.anim=true;
+
         this.visSteps=[];
         this.visStepsNumber=-1;
         this.actualStep=-1;
@@ -16,13 +17,20 @@ class Treevisualizer {
         this.stepanim=false;
 
 
-        this.readyToAddElement=true;
+        
 
-
+        this.visNode1=new Node();
+        this.visNode2=new Node();
 
         this.tree=new Tree;
         this.vistree;
+        
         this.treeIsSet=false;
+        this.CloneNotSet=false;
+
+
+       
+        
         
 
 
@@ -57,12 +65,14 @@ class Treevisualizer {
 
             if(this.actualStep==-1){
                 this.tree=new Tree;
+                
 
             }
             else{
-                console.log("valami");
+                
                 this.tree=this.visSteps[this.actualStep]["NewTree"].Clone();
-                this.tree.CordinatEquals(this.tree.root,this.tree.nil); 
+                this.tree.CordinatEquals();
+                
             }
             
         }
@@ -92,17 +102,14 @@ class Treevisualizer {
 
         
 
-
-        
-
-        this.treeIsSet=false;
-
         
         this.visStepsNumber= this.actualStep+1;
         this.actualStep=this.visStepsNumber;
         this.actualStepElement=0;
         
         this.visSteps[this.visStepsNumber]=data;
+
+        this.ChangeTree();
     
 
       
@@ -117,7 +124,8 @@ class Treevisualizer {
   
         }
 
-        this.treeIsSet=true;
+       
+        this.stepanim=true;
         this.anim=true;
 
         if(this.actualStep==-1){
@@ -139,7 +147,7 @@ class Treevisualizer {
 
                 this.actualStep=this.actualStep+1;
                 this.actualStepElement=0;
-                this.treeIsSet=false;
+                this.ChangeTree();
             }
           
        
@@ -149,15 +157,13 @@ class Treevisualizer {
         else{
 
             this.actualStepElement=1+this.actualStepElement;
-
-            if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command != this.visSteps[this.actualStep]["List"][this.actualStepElement-1].command){
-                this.treeIsSet=false;
-                console.log("d")
-            }
+            this.ChangeTree();
 
 
             
         }
+
+        
 
       
        
@@ -171,8 +177,8 @@ class Treevisualizer {
             return 0;
         }
 
-        this.treeIsSet=false;
-        this.anim=true;
+        
+        this.anim=false;
 
         if(this.actualStep==-1){
             this.actualStep=0;
@@ -187,6 +193,7 @@ class Treevisualizer {
         }
         else{
             this.actualStepElement=this.visSteps[this.actualStep]["List"].length-1;
+            this.ChangeTree();
         }
         
    
@@ -203,7 +210,7 @@ class Treevisualizer {
             return 0;
         }
 
-        this.treeIsSet=true;
+        //this.treeIsSet=true;
         this.anim=false;
         
         if(this.actualStepElement-1<0){
@@ -212,8 +219,8 @@ class Treevisualizer {
 
                 this.actualStep= this.actualStep-1;
                 this.actualStepElement=this.visSteps[this.actualStep]["List"].length-1;
-                this.treeIsSet=false;
-
+                //this.treeIsSet=false;
+                this.ChangeTree();
             }
             else if(this.actualStep-1==-1){
                 this.actualStep= this.actualStep-1;
@@ -224,15 +231,14 @@ class Treevisualizer {
 
         }
         else{
-            if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command != this.visSteps[this.actualStep]["List"][this.actualStepElement-1].command){
-                this.treeIsSet=false;
-            }
+           
             
             this.actualStepElement=this.actualStepElement-1;
+            this.ChangeTree();
 
         }
 
-       
+        
         
 
     }
@@ -257,6 +263,7 @@ class Treevisualizer {
         }
         else{
             this.actualStepElement=0;
+            this.ChangeTree();
         }
 
        
@@ -270,11 +277,27 @@ class Treevisualizer {
 
 
     drawTree() {
+    
+
+
+        if(this.CloneNotSet) {
+            console.log("kihagy");
+            return 0;
+        }
+       
+
+ 
         
+
+
+  
+
+
         if(this.visStepsNumber==-1 ||this.actualStep==-1) return 0;
 
+
         
-       
+        
         
         var actual=this.visSteps[this.actualStep];
         var actualNewTree=actual["NewTree"];
@@ -284,10 +307,7 @@ class Treevisualizer {
 
         switch (actualListelement.command) {
             case "Add":
-                
-                this.setTree(actualOldTree,this.treeIsSet);
-                this.stepanim=false;
-                
+                   
                 //kirajzolás
 
                 
@@ -297,7 +317,7 @@ class Treevisualizer {
                 var color=actualListelement.visElement2.color;
 
 
-                console.log()
+                
                 
                 var value=actualListelement.visElement2.value;
                 
@@ -321,7 +341,7 @@ class Treevisualizer {
               break;
            
             case "Animation":
-                this.setTree(actualNewTree,this.treeIsSet);
+                
 
                 fill(255); 
                 textAlign(LEFT,CENTER);
@@ -331,25 +351,110 @@ class Treevisualizer {
                 this.stepanim=true;
                 
               break;
-            case 3:
-              day = "";
+            case "AddAnimation":
+              
+                fill(255); 
+                textAlign(LEFT,CENTER);
+                textSize(20);
+
+                
+                text(actualListelement.visElement3,90,  3*windowHeight/4-100);  
+
+                this.stepanim=true;
+
+
               break;
-            case 4:
-              day = "";
+            case "RotationRight":
+
+
+                var nodex=this.visNode1;
+          
+                var nodey=this.visNode2;
+
+                this.stepanim=true;   
+                this.MoveNode(nodex);
+                this.MoveNode(nodey);
+           
+
+                
+                fill(100,97,2);
+                ellipse( nodex.drawx, nodex.drawy, 50, 50);
+                 
+                fill(100,97,2);
+                ellipse( nodey.drawx, nodey.drawy, 50, 50);
+
+                fill(255); 
+                textAlign(LEFT,CENTER);
+                textSize(20);
+
+
+                text(actualListelement.visElement4,90,  3*windowHeight/4-100);
+
+                
+
+
               break;
-            case 5:
-              day = "";
+            case "RotationLeft":
+
+                var nodex=actualListelement.visElement2;
+          
+                var nodey=actualListelement.visElement3;
+           
+                this.stepanim=true;   
+                this.MoveNode(nodex);
+                this.MoveNode(nodey);
+           
+                
+                
+                
+                fill(100,97,2);
+                ellipse( nodex.x, nodex.y, 50, 50);
+                 
+                fill(100,97,2);
+                ellipse( nodey.x, nodey.y, 50, 50);
+
+                fill(255); 
+                textAlign(LEFT,CENTER);
+                textSize(20);
+
+                
+                text(actualListelement.visElement4,90,  3*windowHeight/4-100);  
+
+                this.stepanim=true;        
+
               break;
-            case 6:
-              day = "";
+            case  "RotationSelectAndChange":
+
+ 
+                var nodex=actualListelement.visElement2;
+          
+                var nodey=actualListelement.visElement3;
+           
+
+                
+                
+                
+                fill(100,97,2);
+                ellipse( nodex.x, nodex.y, 50, 50);
+                 
+                fill(100,97,2);
+                ellipse( nodey.x, nodey.y, 50, 50);
+                fill(255); 
+                textAlign(LEFT,CENTER);
+                textSize(20);
+
+                
+                text(actualListelement.visElement4,90,  3*windowHeight/4-100);  
+              
+            break;
+           
           }
 
-          this.stepanim=true;
+      
+         
         
-
-        if(this.vistree.root!=this.vistree.nil)  this.Preorder(this.vistree.root,this.vistree.nil);
-       
- 
+          if(this.vistree.root!=this.vistree.nil)  this.PostOrder(this.vistree.root,this.vistree.nil);  
+        
 
     }
 
@@ -374,15 +479,15 @@ class Treevisualizer {
     }
 
 
-    Preorder=function(n,nil){
-    
-        if(n.left!= nil ){
-            this.Preorder(n.left,nil);
+    PostOrder=function(n,nil){
+        
+        if(n.left!= nil  ){
+            this.PostOrder(n.left,nil);
         
         }
 
-        if(n.right!=nil){
-            this.Preorder(n.right,nil);
+        if(n.right!=nil  ){
+            this.PostOrder(n.right,nil);
         
         }
 
@@ -390,7 +495,6 @@ class Treevisualizer {
         n.drawx=n.x;
         n.drawy=n.y;
      
-        
 
         if(this.stepanim){
 
@@ -398,11 +502,11 @@ class Treevisualizer {
         
         }
              
-          
-           
+        
             if(n.parent!=nil){
-            stroke(255);
-            line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
+                //console.log(n.parent.drawx + " "+ n.parent.drawy);
+                stroke(255);
+                line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
             }
             
         
@@ -438,18 +542,77 @@ class Treevisualizer {
 
 
     }
-    
 
-    setTree(t,isset){
 
-        if(!isset){
-            console.log("klonozás");
-            this.vistree=t.Clone();
-            this.treeIsSet=true;
+    ChangeTree(){
+
+        
+        if(this.actualStepElement==0){
+            this.setTree(this.visSteps[this.actualStep]["OldTree"]);
+
+        }
+        /*
+        else if(this.actualStepElement==this.visSteps[this.actualStep]["List"].length-1){
+            this.setTree(this.visSteps[this.actualStep]["NewTree"]);
+        }
+        */
+        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'Add'){
+            this.setTree(this.visSteps[this.actualStep]["OldTree"]);
+        }
+        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'AddAnimation'){
+       
+            this.setTree(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1);
+        }
+        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'Animation'){
+       
+            this.setTree(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1);
         }
 
+        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'RotationLeft'){
+       
+            this.setTree(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1);
+            console.log(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1);
+            this.visNode1.Copy(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement2);
+            this.visNode2.Copy(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement3);
+
+        }
+        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'RotationRight'){
+       
+            this.setTree(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1);
+            console.log(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1);
+            this.visNode1.Copy(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement2);
+            this.visNode2.Copy(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement3);
+            
+        }
+        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'RotationSelectAndChange'){
+       
+            this.setTree(this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1);
+        }
+ 
+     
+      
+    }
+
+    setTree(t){
+            
+     
+                this.vistree=t.Clone();
+ 
+        
+    }
 
 
+    canAddAndDel(){
+        
+        if(this.visStepsNumber==-1){
+            return true;
+        }
+
+        if(this.actualStepElement==this.visSteps[this.actualStep]["List"].length-1){
+            return true;
+        }
+
+        return false;
     }
 
 

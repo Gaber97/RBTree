@@ -6,14 +6,14 @@ class Node{
     this.left = null;
     this.right= null;
     this.parent= null;
-    this.x=60;
-    this.y=90;
+    this.x=400;
+    this.y=400;
     this.newx=this.x;
     this.newy=this.y;
     this.lambda=1;
     this.color=color;
-    this.drawx;
-    this.drawy;
+    this.drawx=this.x;
+    this.drawy=this.y;
     
   }
 
@@ -30,8 +30,8 @@ class Node{
     this.newy=node.newy;
     this.lambda=node.lambda;
     this.color=node.color;
-    this.drawx=node.drawx;
-    this.drawy=node.drawy;
+    this.drawx=node.x;
+    this.drawy=node.y;
     this.left = nil;
     this.right= nil;
     this.parent= nil;

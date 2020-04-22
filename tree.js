@@ -8,8 +8,8 @@ class Tree{
     this.nil.parent=this.nil;
     this.nil.right=this.nil;
     this.root=this.nil;
-    this.verticalchange=40;
-    this.horizontalchange=40;
+    this.verticalchange=45;
+    this.horizontalchange=45;
     this.Steps=[];
 
   }
@@ -111,8 +111,9 @@ Tree.prototype.addValue= function(val){
     z.right=this.nil;
     z.color="Red";
 
-    this.Steps.push(new visElement("Animation",z,z,"Az beszurandó "+String(z.value)+" elem a helyére kerül"));
-
+    
+    this.Steps.push(new visElement("AddAnimation",this.Clone(),true,"Az beszurandó "+String(z.value)+" elem a helyére kerül"));
+    this.CordinatEquals();
     
 
 
@@ -121,9 +122,10 @@ Tree.prototype.addValue= function(val){
 
 
     var newTree=this.Clone();
+    this.Steps.push(new visElement("Animation",this.Clone(),true,"A művelet befejeződik elem a helyére kerül"));
 
     //a fa kordínátáinak át állítása az újra
-    this.CordinatEquals(this.root,this.nil);
+    this.CordinatEquals();
     
     
 
@@ -168,7 +170,17 @@ Tree.prototype.LeftRound= function(x){
   
 
   var y=x.right;
+
+  var visx=new Node();
+  var visy=new Node();
+
+  visx.Copy(x);
+  visy.Copy(y);
+
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),visx,visy,"A "+ String(y.value) +" értékű és a " + String(x.value)+"értékű elem forgatása balra"));
   x.right=y.left;
+
+  
   if(y.left!=this.nil) y.left.parent=x;
   
   y.parent=x.parent;
@@ -185,6 +197,16 @@ Tree.prototype.LeftRound= function(x){
   y.left=x;
   x.parent=y;
 
+  var visx=new Node();
+  var visy=new Node();
+
+  visx.Copy(x);
+  visy.Copy(y);
+
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),visx,visy,"A "+ String(y.value) +" értékű és a " + String(x.value)+"értékű elem forgatása\n A gyerekek és szülők cseréje " ));
+
+ 
+
   if(y==this.root){
     this.PixelChange(y,-(y.x-x.x),0);
   }
@@ -192,6 +214,16 @@ Tree.prototype.LeftRound= function(x){
   this.PixelSet(y,0,-this.verticalchange,y.right);
   
   this.PixelSet(x,0,this.verticalchange,x.left);
+
+  var visx=new Node();
+  var visy=new Node();
+  visx.Copy(x);
+  visy.Copy(y);
+
+
+
+  this.Steps.push(new visElement("RotationLeft",this.Clone(),visx,visy,"A "+ String(y.value) +" értékű és a " + String(x.value)+"értékű elem a helyére kerül"));
+  this.CordinatEquals();
 
 
 
@@ -206,9 +238,14 @@ Tree.prototype.RightRound= function(x){
 
   y=x.left;
 
+  var visx=new Node();
+  var visy=new Node();
+  visx.Copy(x);
+  visy.Copy(y);
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),visx,visy,"A "+ String(y.value) +" értékű és a " + String(x.value)+"értékű elem forgatása jobbra"));
 
   x.left=y.right;
-
+  
 
 
   if(y.left!=this.nil) y.right.parent=x;
@@ -227,6 +264,17 @@ Tree.prototype.RightRound= function(x){
   y.right=x;
   x.parent=y;
 
+
+  var visx=new Node();
+  var visy=new Node();
+
+  visx.Copy(x);
+  visy.Copy(y);
+
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),visx,visy,"A "+ String(y.value) +" értékű és a " + String(x.value)+"értékű elem forgatása\n A gyerekek és szülők cseréje " ));
+ 
+
+
   if(y==this.root){
     this.PixelChange(y,(x.x-y.x),0);
   }
@@ -235,7 +283,13 @@ Tree.prototype.RightRound= function(x){
   this.PixelSet(y,0,-this.verticalchange,y.left);
   this.PixelSet(x,0,this.verticalchange,x.right);
 
+  var visx=new Node();
+  var visy=new Node();
+  visx.Copy(x);
+  visy.Copy(y);
 
+  this.Steps.push(new visElement("RotationRight",this.Clone(),visx,visy,"A "+ String(y.value) +" értékű és a " + String(x.value)+"értékű elem a helyére kerül"));
+  this.CordinatEquals();
 
 }
 
@@ -364,19 +418,16 @@ Tree.prototype.PixelChange= function(n,px,py){
 
 }
 
-
-
-
-Tree.prototype.Clone=function()
+Tree.prototype.CloneSubTree=function(node)
 {
 
     newTree= new Tree();
 
-    if (this.root == this.nil)
+    if (node == this.nil)
         return newTree;
 
 
-    var root=this.root;
+    var root=node;
     newTree.root = new Node();
     newTree.root.Copy(root,newTree.nil);
     clone=newTree.root;
@@ -417,17 +468,73 @@ Tree.prototype.Clone=function()
 }
 
 
+Tree.prototype.Clone=function()
+{
+
+    newTree= new Tree();
+
+    if (this.root == this.nil)
+        return newTree;
 
 
-  Tree.prototype.CordinatEquals=function(n,nil){
+    var root=this.root;
+
+    newTree.root = new Node();
+    newTree.root.Copy(root,newTree.nil);
+    clone=newTree.root;
+   
+    
+  
+    while (root != this.nil)
+    {
+      
+        
+        if (root.left != this.nil && clone.left == newTree.nil)
+        {
+            clone.left = new Node();
+
+            clone.left.Copy(root.left,newTree.nil);
+           
+            clone.left.parent=clone;
+
+            root = root.left;
+            clone = clone.left;
+        }
+        else if (root.right != this.nil && clone.right == newTree.nil)
+        {
+            clone.right = new Node();
+
+            clone.right.Copy(root.right,newTree.nil);
+            clone.right.parent=clone;
+
+            root = root.right;
+            clone = clone.right;
+        }
+        else
+        {
+            root =  root.parent;
+            clone = clone.parent;
+        }
+    }
+
+    return newTree;
+}
+
+  Tree.prototype.CordinatEquals=function(){
+
+    this.CordinatEqualsOrder(this.root,this.nil);
+  }
+
+
+  Tree.prototype.CordinatEqualsOrder=function(n,nil){
       
     if(n.left!= nil ){
-        this.CordinatEquals(n.left,nil);
+        this.CordinatEqualsOrder(n.left,nil);
     
     }
 
     if(n.right!=nil){
-        this.CordinatEquals(n.right,nil);
+        this.CordinatEqualsOrder(n.right,nil);
     
     }
 
