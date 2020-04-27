@@ -3,12 +3,12 @@ function setup(){
 
     background(54);
 
-    canvas=createCanvas(windowWidth, 3*windowHeight/4);
+    canvas=createCanvas(windowWidth, windowHeight);
     canvas.position(0,0);
     Visualazer= new Treevisualizer();
     createButtons();
-
-
+    blindButtons();
+    
     //test
 
 }
@@ -17,9 +17,10 @@ function setup(){
 function draw(){
     
     background(54);
-    Visualazer.setAnimationSpeed(slider.value());
+    //Visualazer.setForwardSpeed(slider.value());
     Visualazer.drawTree();
     LockAddAndDel(Visualazer.canAddAndDel());
+    LockSteps(Visualazer.canStep());
     
     
   
@@ -41,57 +42,26 @@ function LockAddAndDel(canClick) {
   }
 
 
-function clicked(){
+function LockSteps(canClick) {
+    if (canClick) {
+      
+        buttonForwardSkip.removeAttribute('disabled',"");
+        buttonForward.removeAttribute('disabled',"");
+        buttonBackward.removeAttribute('disabled',"");
+        buttonBackwardSkip.removeAttribute('disabled',"")
 
-    n=input.value();
-    Visualazer.addElement(n);
-    input.value("");
+       
+    } else {
+        buttonForwardSkip.attribute('disabled',"");
+        buttonForward.attribute('disabled',"");
+        buttonBackward.attribute('disabled',"");
+        buttonBackwardSkip.attribute('disabled',"")
+     
+    }
+  }
 
-    
- 
-}
 
-function stepForward(){
 
-    Visualazer.stepForward();
-    
- 
-}
-
-function stepBackward(){
-
-    Visualazer.stepBackward();
- 
-}
-  
-
-function setAnim(){
-
-    Visualazer.setAnimation();
-    
- 
-}
-
-function stepForwardSkip(){
-
-    Visualazer.stepForwardSkip();
-    
- 
-}
-
-function stepBackwardSkip(){
-
-    Visualazer.stepBackwardSkip();
- 
-}
-  
-
-function setAnim(){
-
-    Visualazer.setAnimation();
-    
- 
-}
 
 function helpDiv(){
 
@@ -109,6 +79,7 @@ function helpDiv(){
 
 
 
+
 function createButtons(){
 
  
@@ -118,7 +89,7 @@ function createButtons(){
     divHorizontal = createElement("div","");
 
     divHorizontal.position(0,0);
-    divHorizontal.size(80,3*windowHeight/4);
+    divHorizontal.size(80,windowHeight);
 
     divVertical = createElement("div","");
 
@@ -132,58 +103,68 @@ function createButtons(){
 
     buttonAdd = createButton('Add');
     buttonAdd.position(input.x + input.width+10, input.y );
-    buttonAdd.mousePressed(clicked);
+  
     buttonAdd.size(50,30);
 
     buttonDel = createButton('Del');
     buttonDel.position(buttonAdd.x + buttonAdd.width+10, buttonAdd.y );
-    //buttonDel.mousePressed(clicked);
+
     buttonDel.size(50,30);
+
+
+    buttonFind = createButton('Find');
+    buttonFind.position(buttonDel.x + buttonDel.width+10, buttonDel.y );
+
+    buttonFind.size(50,30);
 
     buttonForwardSkip = createButton('>>');
     buttonForwardSkip.position(input.x, input.y + input.height+ 10);
-    buttonForwardSkip.mousePressed(stepForwardSkip);
+    
     buttonForwardSkip.size(50,50);
 
     buttonForward = createButton('>');
     buttonForward.position(buttonForwardSkip.x, buttonForwardSkip.y + buttonForwardSkip.height+ 10);
-    buttonForward.mousePressed(stepForward);
+
     buttonForward.size(50,50);
 
     buttonBackward = createButton('<');
     buttonBackward.position(buttonForward.x ,buttonForward.y + buttonForward.height + 10);
-    buttonBackward.mousePressed(stepBackward);
+  
     buttonBackward.size(50,50);
 
     
     buttonBackwardSkip = createButton("<<");
     buttonBackwardSkip.position(buttonBackward.x ,buttonBackward.y + buttonBackward.height + 10);
-    buttonBackwardSkip.mousePressed(stepBackwardSkip);
+
     buttonBackwardSkip.size(50,50);
 
 
-    animButton = createButton('SetAnimation ON/OFF');
-    animButton.size(100,50);
-    animButton.position(windowWidth-150,3*windowHeight/4-75);
-    animButton.mousePressed(setAnim);
-    
+    buttonPause = createButton("Pause/\nStart");
+    buttonPause.position(buttonBackwardSkip.x ,buttonBackwardSkip.y + buttonBackwardSkip.height + 10);
+
+    buttonPause.size(50,50);
 
 
-    slider = createSlider(0.001, 0.1, 0.01,0.001);
-    slider.position(animButton.x-slider.width-10, animButton.y+ animButton.height/4);
+    clearTreeButton = createButton('Clear Tree');
+    clearTreeButton.size(100,50);
+    clearTreeButton.position(windowWidth-150,windowHeight-75);
+
+
+
+    slider = createSlider(1, 5, 2,0.1);
+    slider.position(clearTreeButton.x-slider.width-10, clearTreeButton.y+ clearTreeButton.height/4);
 
     help=createButton('?');
     help.position(windowWidth-50,10);
     help.size(30,30);
     
-    help.mouseOver(handlerHelp);
-    help.mouseOut(handlerHelp);
+ 
 
 
     helpDivElement = createElement("div","");
     helpDivElement.id("helpDialog");
-    helpDivElement.position(help.x-500,help.y)
-    helpDivElement.size(500,750);
+    helpDivElement.position(help.x-700,help.y)
+    helpDivElement.size(700,750);
 
 
     //szépít
@@ -219,13 +200,93 @@ function createButtons(){
             '<p>Ennek az animációt be és ki lehet kaspcsolni.'+
             'Csúszka segítségével az animáció sebeségét nővelhetjük</p>'+
        '</li>'+
-    '</ul>');
+       '<li>'+
+       '<h3>Animation set ON/Off</h3>'+
+       '<p>Ennek az animációt be és ki lehet kaspcsolni.'+
+       '<p>gnoivbuehbvuewjkgorwegervnoierorhorheongvob</p>'+
+       'Csúszka segítségével az animáció sebeségét nővelhetjük</p>'+
+  '</li>'+
+    '</ul>'
+  );
+
     
    
     helpDivElement.hide();
     helpDivElement.isHide=true;
 
 
+}
+
+
+function blindButtons(){
+
+    buttonAdd.mousePressed(() => {  
+
+        n=input.value();
+        Visualazer.operationInTree(n,"Add");
+        input.value("");
+
+    });
+
+    buttonDel.mousePressed(() => {  
+        /*
+        n=input.value();
+        Visualazer.operationInTree(n,"Del");
+        input.value("");
+        */
+    });
+
+
+    buttonFind.mousePressed(() => {  
+
+        n=input.value();
+        Visualazer.operationInTree(n,"Find");
+        input.value("");
+
+    });
+
+    buttonForwardSkip.mousePressed(() =>{
+
+        Visualazer.stepForwardSkip();
+    });
+    buttonForward.mousePressed(()=>{
+      
+        Visualazer.stepForward();
+
+    });
+    buttonBackward.mousePressed(()=>{
+
+        Visualazer.stepBackward();
+        
+    });
+    buttonBackwardSkip.mousePressed(()=>{
+
+        Visualazer.stepBackwardSkip();
+
+    });
+    buttonPause.mousePressed(()=>{
+ 
+
+        Visualazer.stopOrStartInterval();
+  
+    });
+    clearTreeButton.mousePressed(() =>{
+
+        Visualazer.clear();
+    });
+    help.mousePressed(()=>{
+        if (helpDivElement.isHide) {
+            helpDivElement.show();
+            helpDivElement.isHide=false;
+          
+         }
+         else {
+           helpDivElement.hide();
+           helpDivElement.isHide=true;
+         }
+    });
+
+    
 }
 
 
@@ -237,7 +298,7 @@ function randomTree(num){
 
     for(var i=0;i<num;i++){
 
-        Visualazer.addElement(random(1,10000+num));            
+        Visualazer.addElement(random(1,100+num));            
     }
 
    
@@ -248,7 +309,19 @@ function lessTree(num){
 
     for(var i=0;i<num;i++){
 
-        Visualazer.addElement(num*2-i);            
+         
+        Visualazer.operationInTree(num*2-i,"Add");           
+    }
+
+   
+}
+
+function GreaterTree(num){
+
+
+    for(var i=0;i<num;i++){
+
+        Visualazer.operationInTree(num+i,"Add");            
     }
 
    
@@ -257,13 +330,13 @@ function lessTree(num){
 
 
 function windowResized() {
-    resizeCanvas(windowWidth, 3*windowHeight/4);
-    animButton.position(windowWidth-150,3*windowHeight/4-75);
-    slider.position(animButton.x-slider.width-10, animButton.y+ animButton.height/4);
+    resizeCanvas(windowWidth, windowHeight);
+    clearTreeButton.position(windowWidth-150,windowHeight-75);
+    slider.position(clearTreeButton.x-slider.width-10, clearTreeButton.y+ clearTreeButton.height/4);
     divVertical.size(windowWidth,50);
     help.position(windowWidth-50,20);
-    helpDivElement.position(help.x-500,help.y);
-    divHorizontal.size(80,3*windowHeight/4);
+    helpDivElement.position(help.x-700,help.y);
+    divHorizontal.size(80,windowHeight);
   
 
     
@@ -276,14 +349,3 @@ function windowResized() {
 }
 
 
-
-function handlerHelp(event) {
-  
-  if (event.type == 'mouseover') {
-     helpDivElement.show();
-   
-  }
-  if (event.type == 'mouseout') {
-    helpDivElement.hide();
-  }
-}

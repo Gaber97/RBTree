@@ -46,6 +46,7 @@ div{
 
     background-color: gray;
     border-radius: 30px;
+    overflow : auto;
     
 
 
@@ -53,7 +54,15 @@ div{
 
 
 
+
+
 button,input {
     transition-duration: 0.4s;
   }
 
+  
+#helpDialog::-webkit-scrollbar {
+    display: none;
+
+
+}
