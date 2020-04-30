@@ -1,10 +1,20 @@
 
 function setup(){
 
-    background(54);
+    if(windowHeight>600){
 
-    canvas=createCanvas(windowWidth, windowHeight);
-    canvas.position(0,0);
+        sizex=windowWidth;
+        sizey=4*windowHeight/6;
+    }
+    else{
+        sizex=windowWidth;
+        sizey=600;
+    }
+    
+
+    background(150);
+
+    
     Visualazer= new Treevisualizer();
     createButtons();
     blindButtons();
@@ -16,27 +26,29 @@ function setup(){
 
 function draw(){
     
-    background(54);
+    background(150);
     //Visualazer.setForwardSpeed(slider.value());
     Visualazer.drawTree();
-    LockAddAndDel(Visualazer.canAddAndDel());
+    LockOperations(Visualazer.canAddAndDel());
     LockSteps(Visualazer.canStep());
     
     
   
 }
 
-function LockAddAndDel(canClick) {
+function LockOperations(canClick) {
     if (canClick) {
       
         input.removeAttribute('disabled',"");
         buttonAdd.removeAttribute('disabled',"");
         buttonDel.removeAttribute('disabled',"");
+        buttonFind.removeAttribute('disabled',"");
        
     } else {
         input.attribute('disabled',"");
         buttonAdd.attribute('disabled',"");
         buttonDel.attribute('disabled',"");
+        buttonFind.attribute('disabled',"");
      
     }
   }
@@ -82,19 +94,27 @@ function helpDiv(){
 
 function createButtons(){
 
- 
+    
 
-
+    translate(0, 0);
     //vizual elemet
-    divHorizontal = createElement("div","");
-
-    divHorizontal.position(0,0);
-    divHorizontal.size(80,windowHeight);
-
     divVertical = createElement("div","");
 
     divVertical.position(0,0);
-    divVertical.size(windowWidth,50);
+    divVertical.size(80,sizey);
+
+    divHorizontal1 = createElement("div","");
+
+    divHorizontal1.position(0,0);
+    divHorizontal1.size(sizex,50);
+
+
+    divHorizontal2 = createElement("div","");
+    divHorizontal2.position(0,sizey);
+    divHorizontal2.size(sizex,50);
+
+    canvas=createCanvas(sizex-80, sizey-50);
+    canvas.position(80,50);
     //
     input = createInput();
     input.position(20, 10);
@@ -146,8 +166,8 @@ function createButtons(){
 
 
     clearTreeButton = createButton('Clear Tree');
-    clearTreeButton.size(100,50);
-    clearTreeButton.position(windowWidth-150,windowHeight-75);
+    clearTreeButton.size(100,40);
+    clearTreeButton.position(sizex-150,sizey+5);
 
 
 
@@ -155,7 +175,7 @@ function createButtons(){
     slider.position(clearTreeButton.x-slider.width-10, clearTreeButton.y+ clearTreeButton.height/4);
 
     help=createButton('?');
-    help.position(windowWidth-50,10);
+    help.position(sizex-50,10);
     help.size(30,30);
     
  
@@ -229,11 +249,11 @@ function blindButtons(){
     });
 
     buttonDel.mousePressed(() => {  
-        /*
+        37,
         n=input.value();
         Visualazer.operationInTree(n,"Del");
         input.value("");
-        */
+        
     });
 
 
@@ -296,7 +316,7 @@ function blindButtons(){
 function randomTree(num){
 
 
-    for(var i=0;i<num;i++){
+    for(let i=0;i<num;i++){
 
         Visualazer.addElement(random(1,100+num));            
     }
@@ -307,19 +327,33 @@ function randomTree(num){
 function lessTree(num){
 
 
-    for(var i=0;i<num;i++){
+    for(let i=0;i<num;i++){
 
          
-        Visualazer.operationInTree(num*2-i,"Add");           
+        Visualazer.operationInTree(num*2-2*i,"Add");           
     }
 
    
 }
 
+
+function lessTreeDel(num){
+
+
+    for(let i=0;i<num;i++){
+
+         
+        Visualazer.operationInTree(num*2-2*i,"Del");           
+    }
+
+   
+}
+
+
 function GreaterTree(num){
 
 
-    for(var i=0;i<num;i++){
+    for(let i=0;i<num;i++){
 
         Visualazer.operationInTree(num+i,"Add");            
     }
@@ -328,15 +362,40 @@ function GreaterTree(num){
 }
 
 
+function FindTest(num,val){
+
+
+    for(let i=0;i<num;i++){
+
+        Visualazer.operationInTree(val,"Find");            
+    }
+
+   
+}
+
 
 function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-    clearTreeButton.position(windowWidth-150,windowHeight-75);
+
+    sizex=windowWidth;
+    sizey=5*windowHeight/6;
+
+    if(windowHeight<600) sizey=600;
+
+   
+
+    resizeCanvas(sizex-80, sizey-50);
+    clearTreeButton.position(sizex-150,sizey);
     slider.position(clearTreeButton.x-slider.width-10, clearTreeButton.y+ clearTreeButton.height/4);
-    divVertical.size(windowWidth,50);
-    help.position(windowWidth-50,20);
+
+    divVertical.size(80,sizey);
+    divHorizontal1.size(sizex,50);
+    
+    divHorizontal2.size(sizex,50);
+    divHorizontal2.position(0,sizey);
+    help.position(sizex-50,10);
     helpDivElement.position(help.x-700,help.y);
-    divHorizontal.size(80,windowHeight);
+    
+
   
 
     

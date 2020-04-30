@@ -14,7 +14,7 @@ class VisNode extends RBNode {
 
     super(val,color);
     this.x=400;
-    this.y=900;
+    this.y=400;
     this.newx=this.x;
     this.newy=this.y;
     //change when move

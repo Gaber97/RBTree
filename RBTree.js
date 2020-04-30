@@ -170,6 +170,18 @@ class RBTree{
     }
   
   
+        
+    min(node){
+  
+      while(node.left != this.nil){
+      
+        node = node.left;
+      }
+  
+     
+      return node;
+    }
+  
  
   
   

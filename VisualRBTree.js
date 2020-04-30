@@ -10,7 +10,7 @@ class VisaulRBTree extends RBTree{
 
   constructor(){
     super();
-    this.nil=new VisNode(-99999,"Black");
+    this.nil=new VisNode("Nil","Black");
     this.nil.left=this.nil;
     this.nil.parent=this.nil;
     this.nil.right=this.nil;
@@ -27,9 +27,10 @@ class VisaulRBTree extends RBTree{
 addValue(val){
 
 
-    var z = new VisNode(val,"Red")
-    var y=this.nil;
-    var x=this.root;
+    let z = new VisNode(val,"Red");
+    z.parent=this.nil;
+    let y=this.nil;
+    let x=this.root;
 
     //ha az elem megtalálható akkor nem szúrjuk be újra
     
@@ -39,7 +40,7 @@ addValue(val){
 
     this.Steps=[];
 
-    var oldTree=this.Clone();
+    let oldTree=this.Clone();
 
     
     while(x!=this.nil){
@@ -51,7 +52,7 @@ addValue(val){
         
         this.Steps.push(new visElement("Add",x.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem kisebb mint "+String(x.value)));
 
-        if(this.root.value<x.value && this.x!=x ) this.PixelSet(x,this.horizontalchange,0,x.right);
+        if(this.root.value<x.value  ) this.PixelSet(x,this.horizontalchange,0,x.right);
         
         
         //z.x=x.x-30;
@@ -65,7 +66,7 @@ addValue(val){
        
         this.Steps.push(new visElement("Add",x.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem nagyobb mint "+String(x.value)));
        
-        if(this.root.value>x.value && this.x!=x ) this.PixelSet(x,-this.horizontalchange,0,x.left);
+        if(this.root.value>x.value ) this.PixelSet(x,-this.horizontalchange,0,x.left);
         //z.x=x.x+30;
         //z.y=x.y+40;
         z.newx=x.newx+ this.horizontalchange;
@@ -81,15 +82,15 @@ addValue(val){
       this.root=z;
       //z.x=width/2;
       //z.y=40;
-      z.x=200;
-      z.y=this.verticalchange+40;
+      z.x=this.horizontalchange+40;
+      z.y=this.verticalchange;
 
 
       this.Steps.push(new visElement("Add",z.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem a gyöker"));
       
 
-      z.newx=245;
-      z.newy=this.verticalchange+40;
+      z.newx=2*this.horizontalchange+40;
+      z.newy=this.verticalchange;
 
      
 
@@ -125,7 +126,7 @@ addValue(val){
     this.RepaerAdd(z);
 
 
-    var newTree=this.Clone();
+    let newTree=this.Clone();
     this.Steps.push(new visElement("End",this.Clone(),""));
 
     //a fa kordínátáinak át állítása az újra
@@ -150,19 +151,22 @@ addValue(val){
 
 
 findVis(k){
-  var oldTree=this.Clone();
+  let oldTree=this.Clone();
 
 
   this.Steps=[];
-  var x=this.root;
+  let x=this.root;
   while(x!=this.nil && x.value!=k){
         if(k<x.value){
-          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem kisebb mint "+String(x.value) + "erékű elem . Balra megyünk tovább."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem kisebb mint "+String(x.value) + " ertékű elem . Balra megyünk tovább."));
+
         
           x=x.left;
         }
         else{
-          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem nagyobb mint "+String(x.value) + "erékű elem . Jobbra megyünk tovább."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem nagyobb mint "+String(x.value) + " ertékű elem . Jobbra megyünk tovább."));
+
+
           x=x.right;
         }
 
@@ -178,7 +182,7 @@ findVis(k){
   this.Steps.push(new visElement("End",this.Clone(),""));
 
   
-  var newTree=this.Clone();
+  let newTree=this.Clone();
 
 
   return {
@@ -194,31 +198,94 @@ findVis(k){
  
 }
 
+findVisDel(k){
+  let change=false;
+
+  if(this.Find(k)!=this.nil) change=true;
+  console.log(change);
+
+  let x=this.root;
+  while(x!=this.nil && x.value!=k){
+        if(k<x.value){
+          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem kisebb mint "+String(x.value) + "ertékű elem.\nBalra megyünk tovább."));
+          console.log(this.root.value<x.value && change);
+          if(this.root.value<x.value && change ) this.PixelSet(x,-this.horizontalchange,0,x.right);
+        
+          x=x.left;
+        }
+        else{
+          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem nagyobb mint "+String(x.value) + " ertékű elem.\nJobbra megyünk tovább."));
+         
+          if(this.root.value>x.value && change ) this.PixelSet(x,this.horizontalchange,0,x.left);
+          
+          x=x.right;
+        }
+
+  }
+
+  if(x==this.nil){
+    this.Steps.push(new visElement("End",this.Clone(),"Az keresendő "+String(k)+" elem nem található"));
+  }
+  else{
+    this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem megtalálva"));
+
+  
+  }
+
+
+  return x;
+
+}
 
 
 
 delValue(k){
 
+  this.Steps=[];
 
-  var z=this.findVis(k);
+  let oldTree=this.Clone();
+  
+  let z=this.findVisDel(k);
 
-  if(z["List"][z["List"].length-2].command="End")
+  if(z==this.nil)
   {
 
-   return z;
+
+
+    let newTree=this.Clone();
+
+    this.Steps.push(new visElement("End",this.Clone(),""));
+
+    return {
+
+      "Operation" : "Del",
+      
+      "OldTree": oldTree,
+      
+      "List":this.Steps,
+      
+      "NewTree": newTree
+      };
+   
+
 
   }
 
 
-  var y;
+  let y;
 
-  if(z.left ==this.nil ||z.right ==this.nil ){
+  if(z.left == this.nil ||z.right == this.nil ){
     y=z;
   }
   else{
-    y=this.Vismax(z.left);
+    
+
+    if(this.root.value>z.value ) this.PixelSet(z,this.horizontalchange,0,z.left);
+
+
+    y=this.Next(z);
   }
-  var x;
+  let x;
 
   if(y.left!=this.nil){
     x=y.left;
@@ -227,12 +294,18 @@ delValue(k){
     x=y.right;
   }
 
-  this.Steps.push(new visElement("Del",this.Clone(),z.Copy(),y.Copy(),x.Copy(),"Törlés "+ String(z.value) +" értékű csúcs"));
-  this.CordinatEquals();
+ 
+  if(x!=this.nil){
+    this.Steps.push(new visElement("Del",this.Clone(),z.Copy(),y.Copy(),x.Copy(),"A "+ String(z.value) +" értékű csúcs törlése",false));
+  }
+  else{
+    this.Steps.push(new visElement("DelNil",this.Clone(),z.Copy(),y.Copy(),"A "+ String(z.value) +" értékű csúcs törlése",false));
+  }
+  
 
   x.parent=y.parent;
 
-  if(y.parent=this.nil){
+  if(y.parent==this.nil){
     this.root=x;
   }
   else if(y==y.parent.left){
@@ -242,28 +315,86 @@ delValue(k){
     y.parent.right=x;
   }
 
-  this.Steps.push(new visElement("Del",this.Clone(),z.Copy(),y.Copy(),x.Copy(),"Törlés : az elemek átkötése"));
-  this.CordinatEquals();
+
+ 
+  
 
   if( y!=z ){
     z.value=y.value;
-    z.color=y.color;
+   
+
+  if(y.right!=this.nil){
+  
+    this.PixelChange(x,(y.newx-x.x),(y.newy-x.y));
+
+
+    if(x!=this.nil){
+      this.Steps.push(new visElement("DelBinding",this.Clone(),z.Copy(),x.Copy(),"A " +String(x.value)+" értékű elem átkötése",false));
+    }
+    else{
+      this.Steps.push(new visElement("DelBindingNil",this.Clone(),z.Copy(),"Törlés : " +String(x.value)+" értékű elem átkötése",false));
+    }
+    
+      
+  }
+
+  }
+  else
+  {
+
+    if(y.right!=this.nil){
+      if(this.root.value>x.value){
+        this.PixelChange(x,0,-this.verticalchange);
+      }
+      else{
+         this.PixelChange(x,-this.horizontalchange,-this.verticalchange);
+      }
+     
+    }
+    else if(y.left!=this.nil){
+
+      if(this.root.value<x.value){
+        this.PixelChange(x,0,-this.verticalchange);
+      }
+      else{
+         this.PixelChange(x,this.horizontalchange,-this.verticalchange);
+      }
+      
+    }
+  
 
   }
 
-  this.Steps.push(new visElement("Del",this.Clone(),z.Copy(),y.Copy(),x.Copy(),"Törlés : az elemek átkötése"));
+
+  if(this.min(this.root).x>200){
+    this.PixelChange(this.root, -this.horizontalchange, 0);
+  }
+  
+
+  if(x!=this.nil){
+    this.Steps.push(new visElement("DelBinding",this.Clone(),z.Copy(),x.Copy(),"A " +String(x.value)+" értékű elem átkötése",true));
+  }
+  else{
+    if(z!=y){
+      this.Steps.push(new visElement("DelBindingNil",this.Clone(),z.Copy(),"Törlés : " +String(x.value)+" értékű elem átkötése",true));
+    }
+  
+  }
+
+
   this.CordinatEquals();
 
   if(y.color=="Black"){
     //javít
   }
-  var newTree=this.Clone();
+  let newTree=this.Clone();
   this.CordinatEquals();
 
 
-
+  this.Steps.push(new visElement("End",this.Clone(),""));
+  this.CordinatEquals();
   
-  return {  "Operation" : "Find",
+  return {  "Operation" : "Del",
     
   "OldTree": oldTree,
     
@@ -277,39 +408,63 @@ delValue(k){
 }
 
 
-Vismax(node){
+Next(p){
 
-    while(node.right != this.nil){
-      this.Steps.push(new visElement("Find",node.Copy(),"A legnagyobb elem keresése a bal részfában."));
-      node = node.right;
+    if(p.right != this.nil){
+      return this.VisMinimum(p.right,p);
+    }
+    else{
+      let s=p.parent;
+      while(s!=this.nil && p==s.right){
+        p=s;
+        s=s.parent;
+
+      }
+      return s;
     }
 
-    this.Steps.push(new visElement("Find",node.Copy(),"A legnagyobb elem a"+String(node.value)+" a bal részfában."));
-
-    return node;
-
 
 }
 
 
-Find(k){
-  
-  var x=this.root;
-  while(x!=this.nil && x.value!=k){
-        if(k<x.value){
-        
-          x=x.left;
-        }
-        else{
-          
-          x=x.right;
-        }
 
+VisMinimum(node,rootOfSubTree){
+
+
+
+   
+
+  
+
+  while(node.left != this.nil){
+    this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem keresése a jobb részfában."));
+
+    if(this.root.value<node.value ) this.PixelSet(node,-this.horizontalchange,0,node.right);
+    
+   
+   
+
+    
+    node = node.left;
   }
 
-  return x;
- 
+  if(this.root.value>node.value ) this.PixelSet(node,this.horizontalchange,0,node.left);
+
+  
+
+
+
+
+  this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem a"+String(node.value)+" a jobb részfában."));
+
+  return node;
+
+
 }
+
+
+
+
 
 
 
@@ -319,7 +474,7 @@ Find(k){
 LeftRound(x){
   
 
-  var y=x.right;
+  let y=x.right;
 
   this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Balra: A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása balra"));
   this.CordinatEquals();
@@ -332,6 +487,7 @@ LeftRound(x){
 
   if(x.parent==this.nil){
     this.root=y;
+    y.parent=this.nil;
   }
   else if(x==x.parent.left){
     x.parent.left=y;
@@ -371,7 +527,7 @@ LeftRound(x){
 RightRound(x){
  
 
-  var y=x.left;
+  let y=x.left;
 
 
   this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Jobbra : A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása jobbra"));
@@ -386,6 +542,7 @@ RightRound(x){
 
   if(x.parent==this.nil){
     this.root=y;
+    y.parent=this.nil;
   }
   else if(x==x.parent.left){
     x.parent.left=y;
@@ -433,7 +590,7 @@ RepaerAdd(z){
 
 
 
-      var y=z.parent.parent.right;
+      let y=z.parent.parent.right;
 
 
 
@@ -483,7 +640,7 @@ RepaerAdd(z){
 
     
 
-    var y=z.parent.parent.left;
+    let y=z.parent.parent.left;
 
       if(y.color=="Red"){
         this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett A "+ String(z.value) +" értékű csúcs nagyszülőjének bal gyereke piros "));
@@ -542,10 +699,6 @@ this.root.color="Black";
 
 
 
-
-
-
-
 PixelSet(x,px,py,xchild){
   
  
@@ -585,18 +738,19 @@ PixelChange(n,px,py){
 
 
 
+
 Clone(){
 
-    var newTree= new VisaulRBTree();
+    let newTree= new VisaulRBTree();
 
     if (this.root == this.nil)
         return newTree;
 
 
-    var root=this.root;
+    let root=this.root;
 
     newTree.root = root.Copy(newTree.nil);
-     var clone=newTree.root;
+     let clone=newTree.root;
    
     
   

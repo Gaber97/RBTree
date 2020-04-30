@@ -55,7 +55,7 @@ class Treevisualizer {
 
         switch(operation){
             case "Add":
-                var x=this.tree.max(this.tree.root);
+                let x=this.tree.max(this.tree.root);
                 
                 if(x.x>windowWidth-50){return 0  ;}
                 this.addSteps(this.tree.addValue(val));
@@ -81,7 +81,7 @@ class Treevisualizer {
         if(this.actualStep<this.visStepsNumber){
 
             if(this.actualStep==-1){
-                console.log("f");
+                
                 this.tree=new VisaulRBTree();
                 
                 
@@ -229,11 +229,13 @@ class Treevisualizer {
                 this.actualStep= this.actualStep-1;
                 this.actualStepElement=this.visSteps[this.actualStep]["List"].length-1;
                 //this.treeIsSet=false;
+                this.tree= this.visSteps[this.actualStep]["NewTree"].Clone();
                 this.ChangeTree();
             }
             else if(this.actualStep-1==-1){
                 this.actualStep= this.actualStep-1;
                 this.actualStepElement=0;
+                this.tree= new VisaulRBTree();
                 
             }
 
@@ -286,180 +288,156 @@ class Treevisualizer {
 
 
     drawTree() {
-    
+
+        let node1;
+        let node2;
+        let node3;
+
+        let moved=true;
+
+        
 
         if(this.visStepsNumber==-1 ||this.actualStep==-1) return 0;
+
         
-        var actual=this.visSteps[this.actualStep];
-        var actualNewTree=actual["NewTree"];
-        var actualOldTree=actual["OldTree"];
-        var actualListelement=actual["List"][this.actualStepElement];
+        
+        let actual=this.visSteps[this.actualStep];
+      
+        let actualListelement=actual["List"][this.actualStepElement];
 
 
         switch (actualListelement.command) {
             case "Add":
-                   
-                //kirajzolás
+     
 
-                /*
-                
-                var x=actualListelement.visElement1.x;
-                var y=actualListelement.visElement1.y;
-                */
-
-               var nodex=this.visNode1;
-               nodex.newy=nodex.y-10;
-               nodex.value=actualListelement.visElement2.value;
-               nodex.color=actualListelement.visElement2.color;
+               node1=this.visNode1;
+               node1.newy=node1.y-10;
+               node1.value=actualListelement.visElement2.value;
+               node1.color=actualListelement.visElement2.color;
 
                this.stepanim=true;
                   
-               this.MoveNodeVertical(nodex);
+               this.MoveNodeVertical(node1);
                
 
-                var val=actualListelement.visElement1.value;   
-                var value=actualListelement.visElement2.value;
+                let val=actualListelement.visElement1.value;   
+                let value=actualListelement.visElement2.value;
                 
-                 
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-                text(actualListelement.visElement3,90, 3*windowHeight/4-100);  
-
-
+  
+                this.drawText(actualListelement.visElement3);
 
 
                 if(val<value){
-                    this.drawNode(nodex,50,0);
+                    this.drawNode(node1,50,0);
                 }
                 else{
                     
-                    this.drawNode(nodex,-50,0);
+                    this.drawNode(node1,-50,0);
                 }
 
               break;
             case "AddAnimation":
               
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
 
-                
-                text(actualListelement.visElement3,90,  3*windowHeight/4-100);  
-
+                this.drawText(actualListelement.visElement3);
 
               break;
             case "RotationRight":
         
-                var nodex=this.visNode1;
+                node1=this.visNode1;
           
-                var nodey=this.visNode2;
+                node2=this.visNode2;
 
             
-                this.MoveNode(nodex);
-                this.MoveNode(nodey);
-                this.CiyleChange(nodex,47,55);
-                this.CiyleChange(nodey,47,55);
+                this.MoveNode(node1);
+                this.MoveNode(node2);
+                this.CiyleChange(node1,47,55);
+                this.CiyleChange(node2,47,55);
                 
            
                 
                 fill(0,100,0);
-                ellipse( nodex.drawx, nodex.drawy, nodex.round, nodex.round);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
                  
                 fill(0,100,0);
-                ellipse( nodey.drawx, nodey.drawy, nodey.round, nodey.round);
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-
-
-                text(actualListelement.visElement4,90,  3*windowHeight/4-100);
+                ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+       
+                this.drawText(actualListelement.visElement4);
 
             
               break;
             case "RotationLeft":
           
-                var nodex=this.visNode1;
+                node1=this.visNode1;
           
-                var nodey=this.visNode2;
-           
-                
-                this.MoveNode(nodex);
-                this.MoveNode(nodey);
+                node2=this.visNode2;
 
-                this.CiyleChange(nodex,47,55);
-                this.CiyleChange(nodey,47,55);
+            
+                this.MoveNode(node1);
+                this.MoveNode(node2);
+                this.CiyleChange(node1,47,55);
+                this.CiyleChange(node2,47,55);
                 
            
                 
                 fill(0,100,0);
-                ellipse( nodex.drawx, nodex.drawy, nodex.round, nodex.round);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
                  
                 fill(0,100,0);
-                ellipse( nodey.drawx, nodey.drawy, nodey.round, nodey.round);
-
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-
-                
-                text(actualListelement.visElement4,90,  3*windowHeight/4-100);  
-
-                
+                ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+       
+                this.drawText(actualListelement.visElement4);
 
               break;
             case  "RotationSelectAndChange":
 
-                var nodex=actualListelement.visElement2;
+                node1=actualListelement.visElement2;
           
-                var nodey=actualListelement.visElement3;
+                node2=actualListelement.visElement3;
         
-                this.CiyleChange(nodex,47,55);
-                this.CiyleChange(nodey,47,55);
                  
-                fill(0,100,0);
-                ellipse( nodex.drawx, nodex.drawy, nodex.round, nodex.round);
-                 
-                fill(0,100,0);
-                ellipse( nodey.drawx, nodey.drawy, nodey.round, nodey.round);
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-
+                this.CiyleChange(node1,47,55);
+                this.CiyleChange(node2,47,55);
                 
-                text(actualListelement.visElement4,90,  3*windowHeight/4-100);  
+           
+                
+                fill(0,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+                 
+                fill(0,100,0);
+                ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+       
+                this.drawText(actualListelement.visElement4);
               
             break;
             case  "AddPreaper":
 
-                var nodex=actualListelement.visElement2;
+                node1=actualListelement.visElement2;
           
-                var nodey=actualListelement.visElement3;
+                node2=actualListelement.visElement3;
+        
+                 
+                this.CiyleChange(node1,47,55);
+                this.CiyleChange(node2,47,55);
                 
-                this.CiyleChange(nodex,47,55);
-                this.CiyleChange(nodey,47,55);
+           
                 
-       
                 fill(100,100,0);
-                ellipse( nodex.drawx, nodex.drawy, nodex.round, nodex.round);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
                  
                 fill(0,100,0);
-                ellipse( nodey.drawx, nodey.drawy, nodey.round, nodey.round);
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-
-                
-                text(actualListelement.visElement4,90,  3*windowHeight/4-100);  
+                ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+       
+                this.drawText(actualListelement.visElement4);
               
             break;
             case  "AddPreaperGrandParent":
 
-                var node1=actualListelement.visElement2;
+                node1=actualListelement.visElement2;
           
-                var node2=actualListelement.visElement3;
+                node2=actualListelement.visElement3;
 
-                var node3=actualListelement.visElement4;
+                node3=actualListelement.visElement4;
                     
                 this.CiyleChange(node1,47,55);
                 this.CiyleChange(node2,47,55);
@@ -473,16 +451,13 @@ class Treevisualizer {
 
                 fill(0,100,0);
                 ellipse( node3.drawx, node3.drawy, node3.round, node3.round);
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-            
-                text(actualListelement.visElement5,90,  3*windowHeight/4-100);  
+      
+                this.drawText(actualListelement.visElement5);
               
             break;
             case  "Find":
 
-                var node1=actualListelement.visElement1;
+                node1=actualListelement.visElement1;
           
                     
                 this.CiyleChange(node1,47,55);
@@ -490,20 +465,36 @@ class Treevisualizer {
                 fill(100,100,0);
                 ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
              
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-            
-                text(actualListelement.visElement2,90,  3*windowHeight/4-100);  
+          
+                this.drawText(actualListelement.visElement2);
+              
+            break;
+            case  "FindMin":
+
+                node1=actualListelement.visElement1;
+                node2=actualListelement.visElement2;
+          
+                    
+                this.CiyleChange(node1,47,55);
+                this.CiyleChange(node2,47,55);
+           
+                fill(0,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+
+                fill(100,100,0);
+                ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+             
+          
+                this.drawText(actualListelement.visElement3);
               
             break;
             case  "Del":
 
-                var node1=actualListelement.visElement2;
+                node1=actualListelement.visElement2;
           
-                var node2=actualListelement.visElement3;
+                node2=actualListelement.visElement3;
 
-                var node3=actualListelement.visElement4;
+                node3=actualListelement.visElement4;
                     
                 this.CiyleChange(node1,47,55);
                 this.CiyleChange(node2,47,55);
@@ -517,37 +508,124 @@ class Treevisualizer {
 
                 fill(0,100,0);
                 ellipse( node3.drawx, node3.drawy, node3.round, node3.round);
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
             
-                text(actualListelement.visElement5,90,  3*windowHeight/4-100);  
+                this.drawText(actualListelement.visElement5);
+
+                moved=actualListelement.visElement6;
+              
+              
+            break;
+            case  "DelNil":
+
+                node1=actualListelement.visElement2;
+          
+                node2=actualListelement.visElement3;
+
+                
+                    
+                this.CiyleChange(node1,47,55);
+                this.CiyleChange(node2,47,55);
+                
+                     
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+                 
+                fill(0,100,0);
+                ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+
+
+            
+                this.drawText(actualListelement.visElement4);
+
+                moved=actualListelement.visElement5;
+              
+              
+            break;
+            case  "DelBinding":
+
+                node1=this.visNode1;
+          
+                node2=this.visNode2;
+
+                moved=actualListelement.visElement5;
+                if(moved){
+                    this.MoveNode(node1);
+                    this.MoveNode(node2);
+                }
+               
+                    
+                this.CiyleChange(node1,47,55);
+                this.CiyleChange(node2,47,55);
+                
+                     
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+                 
+                fill(0,100,0);
+                ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+
+
+            
+                this.drawText(actualListelement.visElement4);
+
+                
+              
+              
+            break;
+            case  "DelBindingNil":
+
+                node1=this.visNode1;
+
+                moved=actualListelement.visElement4;
+                
+                if(moved){
+                    this.MoveNode(node1);
+               
+                }
+               
+             
+          
+                   
+                this.CiyleChange(node1,47,55);
+                
+                
+                     
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+              
+
+            
+                this.drawText(actualListelement.visElement3);
+
+                moved=actualListelement.visElement4;
               
               
             break;
             case "End":
                 
-
-                fill(255); 
-                textAlign(LEFT,CENTER);
-                textSize(20);
-                text(actualListelement.visElement2,90,  3*windowHeight/4-100);  
-
+                    this.drawText(actualListelement.visElement2);
               
                 
               break;
           }
 
       
-          if(this.vistree.root!=this.vistree.nil)  this.PreOrderMove(this.vistree.root,this.vistree.nil);
+
+          if(this.vistree.root!=this.vistree.nil && moved)  this.PreOrderMove(this.vistree.root,this.vistree.nil);
         
           if(this.vistree.root!=this.vistree.nil)  this.PostOrderTreeDraw(this.vistree.root,this.vistree.nil);  
+
+          //this.drawNode(this.vistree.nil,0,0);
         
 
     }
 
-    drawText(){
+    drawText(info){
 
+        fill(0); 
+        textAlign(LEFT,CENTER);
+        textSize(20);
+        text(info,20,  4*windowHeight/6-100);  
     }
 
     MoveNodeVertical(n){
@@ -606,10 +684,23 @@ class Treevisualizer {
             this.PostOrderTreeDraw(n.left,nil);
         
         }
+        else
+        {
+         //   stroke(255);
+        // strokeWeight(3);
+          //  line(n.left.drawx, n.left.drawy, n.drawx, n.drawy);
+        }
+
 
         if(n.right!=nil  ){
             this.PostOrderTreeDraw(n.right,nil);
         
+        }
+        else{
+
+          //  stroke(255);
+           // strokeWeight(3);
+           // line(n.right.drawx, n.right.drawy, n.drawx, n.drawy);
         }
 
    
@@ -617,7 +708,7 @@ class Treevisualizer {
         if(n.parent!=nil){
             //console.log(n.parent.drawx + " "+ n.parent.drawy);
             stroke(255);
-            strokeWeight(3);
+            strokeWeight(2);
             line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
         }
         
@@ -635,7 +726,7 @@ class Treevisualizer {
             this.PreOrderMove(n.left,nil);
         
         }
-
+     
         if(n.right!=nil  ){
             this.PreOrderMove(n.right,nil);
         
@@ -660,17 +751,21 @@ class Treevisualizer {
                     
                 n.lambda = n.lambda - this.speed;
 
-                console.log("move");
 
 
             }
 
             if( n.lambda < 0){
+
+              
+
                 n.lambda=1;
                 n.x=n.newx;
                 n.y=n.newy;
+                n.drawx =n.newx;
+                n.drawy = n.newy;
 
-                console.log("set");
+
                
                   
             }
@@ -690,57 +785,32 @@ class Treevisualizer {
 
     ChangeTree(){
 
-        var actualvisElement= this.visNode1=this.visSteps[this.actualStep]["List"][this.actualStepElement];
-        
-        if(actualvisElement.command=="Add"){
+        let actualvisElement= this.visNode1=this.visSteps[this.actualStep]["List"][this.actualStepElement];
+        let command = actualvisElement.command;
+
+
+        if(command == "Add" || command == "Find" ||command == "FindMin" ){
             this.vistree=this.visSteps[this.actualStep]["OldTree"].Clone();
+        }
+        else{
+            this.vistree=actualvisElement.visElement1.Clone();
+        }
+
+
+        if(command == "Add"   ){
             this.visNode1=actualvisElement.visElement1.Copy();
-
         }
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'AddAnimation'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
-        }
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'End'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
-        }
-
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'RotationLeft'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
-          
-            this.visNode1=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement2.Copy();
-            this.visNode2=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement3.Copy();
-
-        }
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'RotationRight'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
-          
-            this.visNode1=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement2.Copy();
-            this.visNode2=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement3.Copy();
+        else if(command=="DelBindingNil"){
             
+            this.visNode1=actualvisElement.visElement2.Copy();
         }
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'RotationSelectAndChange'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
+        else if (command == "RotationLeft" || command == "RotationRight" || command =="DelBinding" ){
+
+            this.visNode1=actualvisElement.visElement2.Copy();
+            this.visNode2=actualvisElement.visElement3.Copy();
         }
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'AddPreaper'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
-        }
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'AddPreaperGrandParent'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
-        }
-        else if(this.visSteps[this.actualStep]["List"][this.actualStepElement].command == 'Del'){
-       
-            this.vistree=this.visSteps[this.actualStep]["List"][this.actualStepElement].visElement1.Clone();
-        }
- 
-     
-      
+
+  
     }
 
 
