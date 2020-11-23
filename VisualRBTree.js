@@ -18,6 +18,7 @@ class VisaulRBTree extends RBTree{
     this.verticalchange=45;
     this.horizontalchange=45;
     this.Steps=[];
+    
 
     
   }
@@ -45,7 +46,7 @@ addValue(val){
     
     while(x!=this.nil){
       y=x;
-      
+    
 
       if(z.value<x.value){
 
@@ -315,10 +316,6 @@ delValue(k){
     y.parent.right=x;
   }
 
-
- 
-  
-
   if( y!=z ){
     z.value=y.value;
    
@@ -386,6 +383,7 @@ delValue(k){
 
   if(y.color=="Black"){
     //javít
+    this.PreaperDel(x);
   }
   let newTree=this.Clone();
   this.CordinatEquals();
@@ -402,6 +400,98 @@ delValue(k){
     
   "NewTree": newTree
   };
+
+
+
+}
+
+
+PreaperDel(x){
+  while (x != this.root && x.color=="Black") {
+    if(x == x.parent.left){
+      let w =x.parent.right;
+      if(w.color=="Red"){
+        w.color="Black";
+        x.parent.color="Red";
+        this.LeftRound(x.parent);
+        w=x.parent.right;
+
+        console.log("1 eset");
+      }
+      if(w.left.color=="Black" && w.right.color=="Black"){
+        w.color="Red";
+        //x.parent.color="Black";
+        x=x.parent;
+        console.log("2 eset");
+      }
+      else {
+        
+          if( w.right.color=="Black"){
+            w.left.color="Black";
+            w.color="Red";
+            this.RightRound(w);
+            w=x.parent.right;
+            console.log("3 eset");
+          }
+
+          w.color=x.parent.color;
+          x.parent.color="Black";
+          w.right.color="Black";
+          this.LeftRound(x.parent);
+          x=this.root;
+          console.log("4 eset");
+        
+    }
+
+
+    }
+    else{
+
+      let w =x.parent.left;
+      if(w.color=="Red"){
+        w.color="Black";
+        x.parent.color="Red";
+        this.RightRound(x.parent);
+        w=x.parent.left;
+        console.log("5 eset");
+
+      }
+      if(w.right.color=="Black" && w.left.color=="Black"){
+        w.color="Red";
+        //x.parent.color="Black";
+        x=x.parent;
+        console.log("6 eset");
+      }
+      else {
+        
+        
+        
+        if( w.left.color=="Black"){
+        w.right.color="Black";
+        w.color="Red";
+        this.LeftRound(w);
+        w=x.parent.left;
+        console.log("7 eset");
+        }
+
+        w.color=x.parent.color;
+        x.parent.color="Black";
+        w.left.color="Black";
+        this.RightRound(x.parent);
+        x=this.root;
+        console.log("8 eset");
+
+
+    }
+
+    }
+
+    x.color="Black";
+
+  } 
+
+
+
 
 
 
@@ -429,45 +519,22 @@ Next(p){
 
 
 VisMinimum(node,rootOfSubTree){
-
-
-
-   
-
-  
+ 
 
   while(node.left != this.nil){
     this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem keresése a jobb részfában."));
 
-    if(this.root.value<node.value ) this.PixelSet(node,-this.horizontalchange,0,node.right);
-    
-   
-   
-
-    
+    if(this.root.value<node.value ) this.PixelSet(node,-this.horizontalchange,0,node.right); 
     node = node.left;
   }
 
-  if(this.root.value>node.value ) this.PixelSet(node,this.horizontalchange,0,node.left);
+  if(this.root.value>node.value ) this.PixelSet(node,this.horizontalchange,0,node.left)
 
-  
-
-
-
-
-  this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem a"+String(node.value)+" a jobb részfában."));
+  this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem a "+String(node.value)+" a jobb részfában."));
 
   return node;
 
-
 }
-
-
-
-
-
-
-
 
 
 
@@ -637,9 +704,6 @@ RepaerAdd(z){
   }
   else{
 
-
-    
-
     let y=z.parent.parent.left;
 
       if(y.color=="Red"){
@@ -697,8 +761,6 @@ this.root.color="Black";
 }
 
 
-
-
 PixelSet(x,px,py,xchild){
   
  
@@ -740,6 +802,8 @@ PixelChange(n,px,py){
 
 
 Clone(){
+
+    console.log("másolás történt");
 
     let newTree= new VisaulRBTree();
 

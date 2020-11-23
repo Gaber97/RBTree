@@ -28,9 +28,11 @@ function draw(){
     
     background(150);
     //Visualazer.setForwardSpeed(slider.value());
+    Visualazer.counterNextStep();
     Visualazer.drawTree();
     LockOperations(Visualazer.canAddAndDel());
     LockSteps(Visualazer.canStep());
+    Visualazer.nextStep=slider.value();
     
     
   
@@ -152,7 +154,7 @@ function createButtons(){
   
     buttonBackward.size(50,50);
 
-    
+
     buttonBackwardSkip = createButton("<<");
     buttonBackwardSkip.position(buttonBackward.x ,buttonBackward.y + buttonBackward.height + 10);
 
@@ -171,7 +173,7 @@ function createButtons(){
 
 
 
-    slider = createSlider(1, 5, 2,0.1);
+    slider = createSlider(150, 500, 200,10);
     slider.position(clearTreeButton.x-slider.width-10, clearTreeButton.y+ clearTreeButton.height/4);
 
     help=createButton('?');
@@ -395,15 +397,6 @@ function windowResized() {
     help.position(sizex-50,10);
     helpDivElement.position(help.x-700,help.y);
     
-
-  
-
-    
-
-
-
-
-
 
 }
 

@@ -25,29 +25,55 @@ class Treevisualizer {
 
         this.tree=new VisaulRBTree();
         this.vistree;
-        
+        this.counter=0;
+        this.nextStep=300;
+        this.manualStep=false;
 
         
     }
 
  
 
-    stopOrStartInterval(){
-        if(!this.userStop){
-            clearInterval(this.timer);
-            this.userStop=true;
-        }
-        else{
-            this.timer=setInterval(()=>{this.stepForward();console.log("klikk");},"2000");
-            this.userStop=false;
+    counterNextStep(){
+
+
+        if(!this.userStop && this.actualStep!=-1 ){
+            this.counter++;
+            //console.log(this.counter);
+
         }
         
+        if(this.counter>this.nextStep){
+            //console.log(this.counter);
+
+            if(this.actualStepElement<this.visSteps[this.actualStep]["List"].length){
+                this.stepForward();
+                
+            }
+            
+            this.counter=0;
+
+            
+
+        }   
+        
     }
+
+    stopOrStartInterval(){
+
+        this.userStop=!this.userStop;
+
+
+
+
+    }
+    
 
     operationInTree(val,operation){
 
         val=parseInt(val)
 
+        this.counter=0;
         if(isNaN(val)){
           console.log(NaN);
             return 0;
@@ -58,16 +84,23 @@ class Treevisualizer {
                 let x=this.tree.max(this.tree.root);
                 
                 if(x.x>windowWidth-50){return 0  ;}
+                //ha már nem fér el a képernyőn
+
                 this.addSteps(this.tree.addValue(val));
                 break;
             case "Del":
                 
                 if(this.visStepsNumber==-1 || this.actualStep==-1) return 0;
+
+                //még nincs mit törölni
+
                 this.addSteps(this.tree.delValue(val));
       
                 break;
             case "Find":
                 if(this.visStepsNumber==-1 || this.actualStep==-1) return 0;
+                //még nincs mit
+
                 this.addSteps(this.tree.findVis(val));
 
               
@@ -119,11 +152,7 @@ class Treevisualizer {
 
         
   
-        if(this.timeStoped && !this.userStop){
-            this.timer= setInterval(()=>{this.stepForward();
-            console.log("klikk");},String(this.StepForwardSpeed));
-            this.timeStoped=false;
-        }
+        
         
 
       
@@ -146,13 +175,7 @@ class Treevisualizer {
             this.actualStep=0;
             return 0;
         }
-
-
-        
-      
-    
-
-        
+       
         if(this.actualStepElement+1>=this.visSteps[this.actualStep]["List"].length){
 
             if(this.actualStep+1<=this.visStepsNumber) {
@@ -630,7 +653,6 @@ class Treevisualizer {
 
     MoveNodeVertical(n){
 
-
         n.drawx = n.x;
         n.drawy = n.y*n.lambda + n.newy*(1-n.lambda);
 
@@ -654,8 +676,6 @@ class Treevisualizer {
 
         }
     }
-
-
 
     drawNode(n,xchange,ychange){
         strokeWeight(1);
