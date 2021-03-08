@@ -1,4 +1,20 @@
 
+mouseX=0;
+mouseY=0;
+
+
+function mousePos(e) {
+
+   mouseX = e.clientX-80;
+   mousey = e.clientY;
+   console.log(mouseX +"|"+mouseY);
+   Visualazer.showNodeInfo(mouseX,mouseY);
+
+
+}
+
+
+
 function setup(){
 
     if(windowHeight>600){
@@ -10,22 +26,25 @@ function setup(){
         sizex=windowWidth;
         sizey=600;
     }
-    
+
 
     background(150);
 
-    
+
     Visualazer= new Treevisualizer();
     createButtons();
     blindButtons();
-    
+
+
+    this.addEventListener("click",mousePos)
+
     //test
 
 }
 
 
 function draw(){
-    
+
     background(150);
     //Visualazer.setForwardSpeed(slider.value());
     Visualazer.counterNextStep();
@@ -33,44 +52,44 @@ function draw(){
     LockOperations(Visualazer.canAddAndDel());
     LockSteps(Visualazer.canStep());
     Visualazer.nextStep=slider.value();
-    
-    
-  
+
+
+
 }
 
 function LockOperations(canClick) {
     if (canClick) {
-      
+
         input.removeAttribute('disabled',"");
         buttonAdd.removeAttribute('disabled',"");
         buttonDel.removeAttribute('disabled',"");
         buttonFind.removeAttribute('disabled',"");
-       
+
     } else {
         input.attribute('disabled',"");
         buttonAdd.attribute('disabled',"");
         buttonDel.attribute('disabled',"");
         buttonFind.attribute('disabled',"");
-     
+
     }
   }
 
 
 function LockSteps(canClick) {
     if (canClick) {
-      
+
         buttonForwardSkip.removeAttribute('disabled',"");
         buttonForward.removeAttribute('disabled',"");
         buttonBackward.removeAttribute('disabled',"");
         buttonBackwardSkip.removeAttribute('disabled',"")
 
-       
+
     } else {
         buttonForwardSkip.attribute('disabled',"");
         buttonForward.attribute('disabled',"");
         buttonBackward.attribute('disabled',"");
         buttonBackwardSkip.attribute('disabled',"")
-     
+
     }
   }
 
@@ -91,12 +110,9 @@ function helpDiv(){
 
 }
 
-
-
-
 function createButtons(){
 
-    
+
 
     translate(0, 0);
     //vizual elemet
@@ -125,7 +141,7 @@ function createButtons(){
 
     buttonAdd = createButton('Add');
     buttonAdd.position(input.x + input.width+10, input.y );
-  
+
     buttonAdd.size(50,30);
 
     buttonDel = createButton('Del');
@@ -141,7 +157,7 @@ function createButtons(){
 
     buttonForwardSkip = createButton('>>');
     buttonForwardSkip.position(input.x, input.y + input.height+ 10);
-    
+
     buttonForwardSkip.size(50,50);
 
     buttonForward = createButton('>');
@@ -151,7 +167,7 @@ function createButtons(){
 
     buttonBackward = createButton('<');
     buttonBackward.position(buttonForward.x ,buttonForward.y + buttonForward.height + 10);
-  
+
     buttonBackward.size(50,50);
 
 
@@ -179,8 +195,8 @@ function createButtons(){
     help=createButton('?');
     help.position(sizex-50,10);
     help.size(30,30);
-    
- 
+
+
 
 
     helpDivElement = createElement("div","");
@@ -190,21 +206,21 @@ function createButtons(){
 
 
     //szépít
-  
-    
+
+
     helpDivElement.html('<h2 align="center">Program működése útmutató</h2>'+
     '<ul>'+
         '<li><h3>Add</h3>'+
             '<p>Ennek segítségével adhatsz elemet a Piros Fekete fához.'+
             'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
-        
+
         '</li>'+
         '<li>'+
             '<h3>Del</h3>'+
             '<p>Ennek segítségével törölhetsz elemet a Piros Fekete fából.'+
             'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
-    
-    
+
+
        '</li>'+
         '<li> <h3>>></h3>'+
             '<p>Ennek segítségével léptetheted a rögtön a vég állapotba  a fát a beszúrás,vagy törlés esetén.</p>'+
@@ -216,7 +232,7 @@ function createButtons(){
         '<li><h3><<</h3>'+
            ' <p>Ennek segítségével léptetheted a fát előre a beszúrás vagy törlés esetén.'+
            ' Ezek segítségével léphetünk vissza, vagy előre előző beszúrt elemekhez is</p>'+
-        '</li>'+   
+        '</li>'+
         '<li>'+
             '<h3>Animation set ON/Off</h3>'+
             '<p>Ennek az animációt be és ki lehet kaspcsolni.'+
@@ -231,8 +247,8 @@ function createButtons(){
     '</ul>'
   );
 
-    
-   
+
+
     helpDivElement.hide();
     helpDivElement.isHide=true;
 
@@ -242,7 +258,7 @@ function createButtons(){
 
 function blindButtons(){
 
-    buttonAdd.mousePressed(() => {  
+    buttonAdd.mousePressed(() => {
 
         n=input.value();
         Visualazer.operationInTree(n,"Add");
@@ -250,16 +266,16 @@ function blindButtons(){
 
     });
 
-    buttonDel.mousePressed(() => {  
+    buttonDel.mousePressed(() => {
         37,
         n=input.value();
         Visualazer.operationInTree(n,"Del");
         input.value("");
-        
+
     });
 
 
-    buttonFind.mousePressed(() => {  
+    buttonFind.mousePressed(() => {
 
         n=input.value();
         Visualazer.operationInTree(n,"Find");
@@ -272,14 +288,14 @@ function blindButtons(){
         Visualazer.stepForwardSkip();
     });
     buttonForward.mousePressed(()=>{
-      
+
         Visualazer.stepForward();
 
     });
     buttonBackward.mousePressed(()=>{
 
         Visualazer.stepBackward();
-        
+
     });
     buttonBackwardSkip.mousePressed(()=>{
 
@@ -287,10 +303,10 @@ function blindButtons(){
 
     });
     buttonPause.mousePressed(()=>{
- 
+
 
         Visualazer.stopOrStartInterval();
-  
+
     });
     clearTreeButton.mousePressed(() =>{
 
@@ -300,7 +316,7 @@ function blindButtons(){
         if (helpDivElement.isHide) {
             helpDivElement.show();
             helpDivElement.isHide=false;
-          
+
          }
          else {
            helpDivElement.hide();
@@ -308,7 +324,7 @@ function blindButtons(){
          }
     });
 
-    
+
 }
 
 
@@ -320,10 +336,10 @@ function randomTree(num){
 
     for(let i=0;i<num;i++){
 
-        Visualazer.addElement(random(1,100+num));            
+        Visualazer.addElement(random(1,100+num));
     }
 
-   
+
 }
 
 function lessTree(num){
@@ -331,11 +347,11 @@ function lessTree(num){
 
     for(let i=0;i<num;i++){
 
-         
-        Visualazer.operationInTree(num*2-2*i,"Add");           
+
+        Visualazer.operationInTree(num*2-2*i,"Add");
     }
 
-   
+
 }
 
 
@@ -344,11 +360,11 @@ function lessTreeDel(num){
 
     for(let i=0;i<num;i++){
 
-         
-        Visualazer.operationInTree(num*2-2*i,"Del");           
+
+        Visualazer.operationInTree(num*2-2*i,"Del");
     }
 
-   
+
 }
 
 
@@ -357,10 +373,10 @@ function GreaterTree(num){
 
     for(let i=0;i<num;i++){
 
-        Visualazer.operationInTree(num+i,"Add");            
+        Visualazer.operationInTree(num+i,"Add");
     }
 
-   
+
 }
 
 
@@ -369,10 +385,10 @@ function FindTest(num,val){
 
     for(let i=0;i<num;i++){
 
-        Visualazer.operationInTree(val,"Find");            
+        Visualazer.operationInTree(val,"Find");
     }
 
-   
+
 }
 
 
@@ -383,7 +399,7 @@ function windowResized() {
 
     if(windowHeight<600) sizey=600;
 
-   
+
 
     resizeCanvas(sizex-80, sizey-50);
     clearTreeButton.position(sizex-150,sizey);
@@ -391,13 +407,11 @@ function windowResized() {
 
     divVertical.size(80,sizey);
     divHorizontal1.size(sizex,50);
-    
+
     divHorizontal2.size(sizex,50);
     divHorizontal2.position(0,sizey);
     help.position(sizex-50,10);
     helpDivElement.position(help.x-700,help.y);
-    
+
 
 }
-
-

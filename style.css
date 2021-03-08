@@ -5,7 +5,7 @@ button{
     background-color: gray;
     border-radius: 5px;
     color: white;
- 
+
 }
 
 body{
@@ -33,9 +33,9 @@ input:disabled,button:disabled{
 div{
 
     background-color: #252424;
-    
-    
-   
+
+
+
 
 
 
@@ -47,12 +47,21 @@ div{
     background-color: gray;
     border-radius: 30px;
     overflow : auto;
-    
+
 
 
 }
 
+#helpNode{
 
+    background-color: gray;
+    border-radius: 5px;
+    overflow : auto;
+    border: 1px solid black;
+
+
+
+}
 
 
 
@@ -60,10 +69,9 @@ button,input {
     transition-duration: 0.4s;
   }
 
-  
+
 #helpDialog::-webkit-scrollbar {
     display: none;
 
 
 }
-
