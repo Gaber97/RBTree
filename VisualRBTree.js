@@ -15,8 +15,8 @@ class VisaulRBTree extends RBTree{
     this.nil.parent=this.nil;
     this.nil.right=this.nil;
     this.root=this.nil;
-    this.verticalchange=45;
-    this.horizontalchange=45;
+    this.verticalchange=40;
+    this.horizontalchange=40;
     this.Steps=[];
 
   }
@@ -111,10 +111,10 @@ addValue(val){
     z.right=this.nil;
     z.color="Red";
 
-    if(z.x<165){
-      this.PixelChange(this.root,45,0)
-    }
 
+    if(this.min(this.root).x<165){
+      this.PixelChange(this.root, this.horizontalchange, 0);
+    }
     
     this.Steps.push(new visElement("AddAnimation",this.Clone(),true,"Az beszurandó "+String(z.value)+" elem a helyére kerül"));
     this.CordinatEquals();

@@ -2,7 +2,7 @@
 let mouseX=0;
 let mouseY=0;
 let maxSlider=400;
-let sliderValue=300;
+let sliderValue=200;
 
 function mousePos(e) {
 
@@ -15,13 +15,14 @@ function mousePos(e) {
 }
 
 function setup(){
-
+console.log(windowHeight)
     if(windowHeight>600){
 
         sizex=windowWidth;
-        sizey=4*windowHeight/6;
+        sizey=5*windowHeight/6;
     }
     else{
+
         sizex=windowWidth;
         sizey=600;
     }
@@ -50,6 +51,8 @@ function draw(){
     LockOperations(Visualazer.canAddAndDel());
     LockSteps(Visualazer.canStep());
     Visualazer.nextStep=maxSlider-slider.value();
+    Visualazer.speed=slider.value()/10000;
+    frameCount;
 
 
 

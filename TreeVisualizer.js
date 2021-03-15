@@ -1,26 +1,20 @@
 
 class Treevisualizer {
-
     constructor(){
-
         this.speed=0.01;
         this.dir=1;
         this.anim=true;
-
         this.visSteps=[];
         this.visStepsNumber=-1;
         this.actualStep=-1;
         this.actualStepElement=0;
-
         this.timeStoped=true;
         this.userStop=false;
         this.timer;
         this.StepForwardSpeed=2000;
 
-
         this.visNode1;
         this.visNode2;
-
         this.tree=new VisaulRBTree();
         this.vistree=this.tree;
         this.counter=0;
@@ -28,34 +22,25 @@ class Treevisualizer {
         this.manualStep=false;
 
 
-
         //// DEBUG:
         this.dialog=createDiv("");
         this.dialog.hide();
-
         this.dialog.size(50,50);
-
     }
-
     counterNextStep(){
 
+        
 
         if(!this.userStop && this.actualStep!=-1 ){
             this.counter++;
             //console.log(this.counter);
-
         }
-
         if(this.counter>this.nextStep){
             //console.log(this.counter);
-
             if(this.actualStepElement<this.visSteps[this.actualStep]["List"].length){
                 this.stepForward();
-
             }
-
             this.counter=0;
-
         }
 
     }
@@ -279,13 +264,15 @@ class Treevisualizer {
 
         let actualListelement=actual["List"][this.actualStepElement];
 
+        
+
 
         switch (actualListelement.command) {
             case "Add":
 
 
                node1=this.visNode1;
-               node1.newy=node1.y-10;
+               node1.newy=node1.y-15;
                node1.value=actualListelement.visElement2.value;
                node1.color=actualListelement.visElement2.color;
 
@@ -565,6 +552,69 @@ class Treevisualizer {
                 moved=actualListelement.visElement4;
 
             break;
+            case  "FixDelCase2":
+
+                node1=this.visNode1;
+
+                moved=actualListelement.visElement4;
+
+                if(moved){
+                    this.MoveNode(node1);
+
+                }
+
+                this.CiyleChange(node1,47,55);
+
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+
+                this.drawText(actualListelement.visElement3);
+
+                moved=actualListelement.visElement4;
+
+            break;
+            case  "FixDelCase3":
+
+                node1=this.visNode1;
+
+                moved=actualListelement.visElement4;
+
+                if(moved){
+                    this.MoveNode(node1);
+
+                }
+
+                this.CiyleChange(node1,47,55);
+
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+
+                this.drawText(actualListelement.visElement3);
+
+                moved=actualListelement.visElement4;
+
+            break;
+            case  "FixDelCase4":
+
+                node1=this.visNode1;
+
+                moved=actualListelement.visElement4;
+
+                if(moved){
+                    this.MoveNode(node1);
+
+                }
+
+                this.CiyleChange(node1,47,55);
+
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+
+                this.drawText(actualListelement.visElement3);
+
+                moved=actualListelement.visElement4;
+
+            break;
             case "End":
 
                     this.drawText(actualListelement.visElement2);
@@ -586,8 +636,10 @@ class Treevisualizer {
         fill(0);
         textAlign(LEFT,CENTER);
         textSize(20);
-        text(info,20,  5*windowHeight/6-50);
+        
+        text(info,20,  (5*windowHeight/6) -150);
     }
+
 
     MoveNodeVertical(n){
 
@@ -692,11 +744,8 @@ class Treevisualizer {
                 n.lambda = n.lambda - this.speed;
 
 
-
             }
-
             if( n.lambda < 0){
-
 
 
                 n.lambda=1;
@@ -706,12 +755,9 @@ class Treevisualizer {
                 n.drawy = n.newy;
 
 
-
-
             }
         }
         else{
-
             n.lambda=1;
             n.x=n.newx;
             n.y=n.newy;
@@ -720,12 +766,9 @@ class Treevisualizer {
         }
     }
 
-
     ChangeTree(){
-
         let actualvisElement= this.visNode1=this.visSteps[this.actualStep]["List"][this.actualStepElement];
         let command = actualvisElement.command;
-
 
         if(command == "Add" || command == "Find" ||command == "FindMin" ){
             this.vistree=this.visSteps[this.actualStep]["OldTree"].Clone();
@@ -734,62 +777,46 @@ class Treevisualizer {
             this.vistree=actualvisElement.visElement1.Clone();
         }
 
-
         if(command == "Add"   ){
             this.visNode1=actualvisElement.visElement1.Copy();
+            this.visNode1.y=this.visNode1.y+5;
         }
         else if(command=="DelBindingNil"){
-
             this.visNode1=actualvisElement.visElement2.Copy();
         }
         else if (command == "RotationLeft" || command == "RotationRight" || command =="DelBinding" ){
-
             this.visNode1=actualvisElement.visElement2.Copy();
             this.visNode2=actualvisElement.visElement3.Copy();
         }
 
-
     }
-
     clear(){
-
         this.visSteps=[];
         this.actualStep=-1;
         this.visStepsNumber=-1;
         this.tree=new VisaulRBTree();
         clearInterval(this.timer);
 
-
     }
-
     canAddAndDel(){
-
         if(this.visStepsNumber==-1 || this.actualStep==-1){
             return true;
         }
-
         if(this.actualStepElement==this.visSteps[this.actualStep]["List"].length-1){
             return true;
         }
-
         return false;
     }
-
     canStep(){
-
         return this.userStop;
-
     }
-
     showDialog(n,nil,x,y){
-
             if(n.left!= nil  ){
                 this.showDialog(n.left,nil,x,y);
             }
             if(n.right!=nil  ){
                 this.showDialog(n.right,nil,x,y);
             }
-
             if(Math.abs(n.drawx-x)<n.round/2 && Math.abs(n.drawy-y)<n.round/2 ){
                 console.log("----------------------------");
                 console.log("Value: %c"+n.value,"color:red");
@@ -803,14 +830,9 @@ class Treevisualizer {
             }
 
 
-
     }
-
     showNodeInfo(x,y){
-
       this.showDialog(this.vistree.root,this.vistree.nil,x,y);
-
     }
-
 
 }
