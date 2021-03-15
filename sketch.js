@@ -118,15 +118,17 @@ function createVisualElements(){
     translate(0, 0);
     //vizual elemet
     divVertical = createElement("div","");
-    divVertical.id()
+    divVertical.id("vertical")
 
     divVertical.position(0,0);
     divVertical.size(70,sizey);
+
 
     divHorizontal1 = createElement("div","");
 
     divHorizontal1.position(0,0);
     divHorizontal1.size(sizex,50);
+
 
 
     divHorizontal2 = createElement("div","");
@@ -158,7 +160,7 @@ function createVisualElements(){
     buttonFind.size(50,30);
 
     buttonForwardSkip = createButton('>>');
-    buttonForwardSkip.position(input.x, input.y + input.height+ 10);
+    buttonForwardSkip.position(input.x, input.y + input.height+ 15);
 
     buttonForwardSkip.size(50,50);
 
@@ -222,8 +224,9 @@ function createVisualElements(){
 
     helpDivElement = createElement("div","");
     helpDivElement.id("helpDialog");
-    helpDivElement.position(help.x-700,help.y)
-    helpDivElement.size(700,750);
+    helpDivElement.size(900,750);
+    helpDivElement.position(help.x-helpDivElement.width,help.y)
+    
 
 
     //szépít
@@ -231,19 +234,19 @@ function createVisualElements(){
 
     helpDivElement.html('<h2 align="center">Program működése útmutató</h2>'+
     '<ul>'+
-        '<li><h3>Add</h3>'+
+        '<li><h3><button type="button">Add</button> </h3>'+
             '<p>Ennek segítségével adhatsz elemet a Piros Fekete fához.'+
             'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
 
         '</li>'+
         '<li>'+
-            '<h3>Del</h3>'+
+            '<h3><button type="button">Del</button></h3>'+
             '<p>Ennek segítségével törölhetsz elemet a Piros Fekete fából.'+
             'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
 
 
        '</li>'+
-        '<li> <h3>>></h3>'+
+        '<li> <h3><button type="button">>></button></h3>'+
             '<p>Ennek segítségével léptetheted a rögtön a vég állapotba  a fát a beszúrás,vagy törlés esetén.</p>'+
         '</li>'+
         '<li><h3>></h3>'+
@@ -337,8 +340,8 @@ function blindButtons(){
     randomButton.mousePressed(() =>{
 
         Visualazer.clear();
-
         randomTree(randomInput.value());
+        Visualazer.stepForwardSkip();
         randomInput.value("");
 
     });

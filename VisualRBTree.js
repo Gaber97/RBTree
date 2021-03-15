@@ -12,10 +12,11 @@ class VisaulRBTree extends RBTree{
     this.nil.parent=this.nil;
     this.nil.right=this.nil;
     this.root=this.nil;
-    this.verticalchange=40;
-    this.horizontalchange=40;
+    this.verticalchange=45;
+    this.horizontalchange=45;
     this.Steps=[];
   }
+
 addValue(val){
     let z = new VisNode(val,"Red");
     z.parent=this.nil;
@@ -152,6 +153,7 @@ findVis(k){
     };
  
 }
+
 findVisDel(k){
   let change=false;
   if(this.Find(k)!=this.nil) change=true;
@@ -392,7 +394,7 @@ PreaperDel(x){
         console.log("8 eset");
 
     }
-    
+
     }
 
   } 
