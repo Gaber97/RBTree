@@ -231,7 +231,6 @@ function createVisualElements(){
 
     //szépít
 
-
     helpDivElement.html('<h2 align="center">Program működése útmutató</h2>'+
     '<ul>'+
         '<li><h3><button type="button">Add</button> </h3>'+
