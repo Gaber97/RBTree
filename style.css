@@ -20,7 +20,7 @@ button:hover{
 }
 
 input{
-    font-size:20;
+    font-size:15;
     text-align: right;
 }
 
@@ -61,7 +61,7 @@ div#text{
 }
 
 button,input {
-    transition-duration: 0.4s;
+    transition-duration: 0s;
   }
 
 

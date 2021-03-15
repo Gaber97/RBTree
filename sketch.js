@@ -1,11 +1,12 @@
 
-mouseX=0;
-mouseY=0;
-
+let mouseX=0;
+let mouseY=0;
+let maxSlider=400;
+let sliderValue=300;
 
 function mousePos(e) {
 
-   mouseX = e.clientX-80;
+   mouseX = e.clientX-70;
    mousey = e.clientY;
    //console.log(mouseX +"|"+mouseY);
    Visualazer.showNodeInfo(mouseX,mouseY);
@@ -48,7 +49,7 @@ function draw(){
     Visualazer.drawTree();
     LockOperations(Visualazer.canAddAndDel());
     LockSteps(Visualazer.canStep());
-    Visualazer.nextStep=slider.value();
+    Visualazer.nextStep=maxSlider-slider.value();
 
 
 
@@ -117,7 +118,7 @@ function createVisualElements(){
     divVertical.id()
 
     divVertical.position(0,0);
-    divVertical.size(80,sizey);
+    divVertical.size(70,sizey);
 
     divHorizontal1 = createElement("div","");
 
@@ -129,11 +130,11 @@ function createVisualElements(){
     divHorizontal2.position(0,sizey);
     divHorizontal2.size(sizex,50);
 
-    canvas=createCanvas(sizex-80, sizey-50);
-    canvas.position(80,50);
+    canvas=createCanvas(sizex-70, sizey-50);
+    canvas.position(70,50);
     //
     input = createInput();
-    input.position(20, 10);
+    input.position(10, 10);
     input.size(50,30);
 
 
@@ -183,7 +184,7 @@ function createVisualElements(){
 
     clearTreeButton = createButton('Clear Tree');
     clearTreeButton.size(100,30);
-    clearTreeButton.position(sizex-150,sizey+10);
+    clearTreeButton.position(sizex-clearTreeButton.width-20,sizey+10);
 
 
 
@@ -206,14 +207,15 @@ function createVisualElements(){
 
 
 
-    slider = createSlider(150, 1000, 400,30);
+    slider = createSlider(0, maxSlider+30, sliderValue);
     slider.position(randomInput.x + randomInput.width+textDiv.width, textDiv.y-5);
 
 
 
     help=createButton('?');
-    help.position(sizex-50,10);
     help.size(30,30);
+    help.position(sizex-help.width-20,10);
+    
 
     helpDivElement = createElement("div","");
     helpDivElement.id("helpDialog");
@@ -358,6 +360,8 @@ function blindButtons(){
 
 function randomTree(num){
 
+    num=parseInt(num)
+
     if(isNaN(num)){
         
           return 0;
@@ -431,18 +435,18 @@ function windowResized() {
     sizey=5*windowHeight/6;
 
     if(windowHeight<600) sizey=600;
+    if(windowWidth<900) sizex=900;
 
 
+    resizeCanvas(sizex-70, sizey-50);
+    clearTreeButton.position(sizex-clearTreeButton.width-20,sizey+10);
 
-    resizeCanvas(sizex-80, sizey-50);
-    clearTreeButton.position(sizex-clearTreeButton.width-50,sizey+10);
-
-    divVertical.size(80,sizey);
+    divVertical.size(70,sizey);
     divHorizontal1.size(sizex,50);
 
     divHorizontal2.size(sizex,50);
     divHorizontal2.position(0,sizey);
-    help.position(sizex-50,10);
+    help.position(sizex-help.width-20,10);
     helpDivElement.position(help.x-700,help.y);
 
 

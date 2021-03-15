@@ -318,8 +318,7 @@ delValue(k){
   if(y.right!=this.nil){
   
     this.PixelChange(x,(y.newx-x.x),(y.newy-x.y));
-
-
+    
     if(x!=this.nil){
       this.Steps.push(new visElement("DelBinding",this.Clone(),z.Copy(),x.Copy(),"A " +String(x.value)+" értékű elem átkötése",false));
     }
@@ -376,6 +375,10 @@ delValue(k){
 
   this.CordinatEquals();
 
+  console.log(z);
+  console.log(y);
+  console.log(x);
+
   if(y.color=="Black"){
     //javít
     this.PreaperDel(x);
@@ -409,7 +412,7 @@ PreaperDel(x){
     if(x == x.parent.left){
       let w =x.parent.right;
       if(w.color=="Red"){
-        
+
         w.color="Black";
         x.parent.color="Red";
         this.LeftRound(x.parent);
@@ -485,12 +488,12 @@ PreaperDel(x){
 
     }
 
-    x.color="Black";
+
 
   } 
 
 
-
+  x.color="Black";
 
 
 

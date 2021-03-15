@@ -613,14 +613,15 @@ class Treevisualizer {
         stroke(0);
         fill(0,0,0);
         if(n.color=="Red"){
-            fill(255,2,2);
+            fill(250,30,14);
 
         }
 
         ellipse( n.drawx+xchange, n.drawy+ychange, 40, 40);
         fill(255);
+        noStroke();
         textAlign(CENTER,CENTER);
-        textSize(20);
+        textSize(15);
         text(n.value, n.drawx+xchange, n.drawy+ychange);
 
     }
