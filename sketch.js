@@ -7,13 +7,11 @@ function mousePos(e) {
 
    mouseX = e.clientX-80;
    mousey = e.clientY;
-   console.log(mouseX +"|"+mouseY);
+   //console.log(mouseX +"|"+mouseY);
    Visualazer.showNodeInfo(mouseX,mouseY);
 
 
 }
-
-
 
 function setup(){
 
@@ -32,13 +30,12 @@ function setup(){
 
 
     Visualazer= new Treevisualizer();
-    createButtons();
+    createVisualElements();
     blindButtons();
 
 
     this.addEventListener("click",mousePos)
 
-    //test
 
 }
 
@@ -110,13 +107,14 @@ function helpDiv(){
 
 }
 
-function createButtons(){
+function createVisualElements(){
 
 
 
     translate(0, 0);
     //vizual elemet
     divVertical = createElement("div","");
+    divVertical.id()
 
     divVertical.position(0,0);
     divVertical.size(80,sizey);
@@ -184,20 +182,38 @@ function createButtons(){
 
 
     clearTreeButton = createButton('Clear Tree');
-    clearTreeButton.size(100,40);
-    clearTreeButton.position(sizex-150,sizey+5);
+    clearTreeButton.size(100,30);
+    clearTreeButton.position(sizex-150,sizey+10);
 
 
 
-    slider = createSlider(150, 500, 200,10);
-    slider.position(clearTreeButton.x-slider.width-10, clearTreeButton.y+ clearTreeButton.height/4);
+
+    
+    randomButton= createButton("Random RBTree");
+    randomButton.size(150,30);
+    randomButton.position(input.x + input.width+10, sizey+10);
+ 
+
+    randomInput= createInput();
+    randomInput.size(50,25);
+    randomInput.position(randomButton.x+randomButton.width+10, randomButton.y+3);
+
+
+    textDiv = createElement("div","Animation Speed:");
+    textDiv.id("text")
+    textDiv.position(randomInput.x + randomInput.width+10,randomInput.y+3);
+    textDiv.size(130,20);
+
+
+
+    slider = createSlider(150, 1000, 400,30);
+    slider.position(randomInput.x + randomInput.width+textDiv.width, textDiv.y-5);
+
+
 
     help=createButton('?');
     help.position(sizex-50,10);
     help.size(30,30);
-
-
-
 
     helpDivElement = createElement("div","");
     helpDivElement.id("helpDialog");
@@ -312,6 +328,15 @@ function blindButtons(){
 
         Visualazer.clear();
     });
+
+    randomButton.mousePressed(() =>{
+
+        Visualazer.clear();
+
+        randomTree(randomInput.value());
+        randomInput.value("");
+
+    });
     help.mousePressed(()=>{
         if (helpDivElement.isHide) {
             helpDivElement.show();
@@ -333,10 +358,18 @@ function blindButtons(){
 
 function randomTree(num){
 
+    if(isNaN(num)){
+        
+          return 0;
+    }
+    if(num<1 || num >30){
+        
+        return 0;
+  }
 
     for(let i=0;i<num;i++){
 
-        Visualazer.addElement(random(1,100+num));
+        Visualazer.operationInTree(random(1,1000),"Add");
     }
 
 
@@ -402,8 +435,7 @@ function windowResized() {
 
 
     resizeCanvas(sizex-80, sizey-50);
-    clearTreeButton.position(sizex-150,sizey);
-    slider.position(clearTreeButton.x-slider.width-10, clearTreeButton.y+ clearTreeButton.height/4);
+    clearTreeButton.position(sizex-clearTreeButton.width-50,sizey+10);
 
     divVertical.size(80,sizey);
     divHorizontal1.size(sizex,50);
@@ -412,6 +444,17 @@ function windowResized() {
     divHorizontal2.position(0,sizey);
     help.position(sizex-50,10);
     helpDivElement.position(help.x-700,help.y);
+
+
+    randomButton.position(input.x + input.width+10, sizey+10);
+    randomInput.position(randomButton.x+randomButton.width+10, randomButton.y+3);
+    textDiv.position(randomInput.x + randomInput.width+10,randomInput.y+3);
+
+    slider.position(randomInput.x + randomInput.width+textDiv.width, textDiv.y-5);
+
+
+
+
 
 
 }

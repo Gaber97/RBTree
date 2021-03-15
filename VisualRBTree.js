@@ -18,9 +18,7 @@ class VisaulRBTree extends RBTree{
     this.verticalchange=45;
     this.horizontalchange=45;
     this.Steps=[];
-    
 
-    
   }
   
 
@@ -133,9 +131,6 @@ addValue(val){
     //a fa kordínátáinak át állítása az újra
     this.CordinatEquals();
     
-    
-
-
     return {
 
       "Operation" : "Add",
@@ -407,10 +402,14 @@ delValue(k){
 
 
 PreaperDel(x){
+
+
+
   while (x != this.root && x.color=="Black") {
     if(x == x.parent.left){
       let w =x.parent.right;
       if(w.color=="Red"){
+        
         w.color="Black";
         x.parent.color="Red";
         this.LeftRound(x.parent);
@@ -803,8 +802,6 @@ PixelChange(n,px,py){
 
 Clone(){
 
-    console.log("másolás történt");
-
     let newTree= new VisaulRBTree();
 
     if (this.root == this.nil)
@@ -855,7 +852,6 @@ Clone(){
     this.CordinatEqualsOrder(this.root,this.nil);
   }
 
-
   CordinatEqualsOrder=function(n,nil){
       
     if(n.left!= nil ){
@@ -868,13 +864,9 @@ Clone(){
     
     }
 
-    
     n.x=n.newx;
     n.y=n.newy;
     n.lambda=1;
-    
-
-
 
 }
 

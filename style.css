@@ -33,6 +33,12 @@ div{
     background-color: #252424;
 }
 
+div#text{
+    background-color: #252424;
+    color:white;
+}
+
+
 #helpDialog{
 
     background-color: gray;

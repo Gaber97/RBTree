@@ -17,6 +17,8 @@ class VisNode extends RBNode {
     this.y=400;
     this.newx=this.x;
     this.newy=this.y;
+
+    
     //change when move
     this.lambda=1;
     

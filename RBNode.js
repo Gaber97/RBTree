@@ -22,14 +22,12 @@ class RBNode{
    
     Copy(nil){
   
-      var n = new node();
-  
-  
+      let n = new node();
+
       n.value=this.value; 
       n.x=this.x;
       n.y=this.y;
       n.color=this.color;
-
 
       if(nil != undefined){
       
@@ -48,8 +46,5 @@ class RBNode{
   
     }
   
-  
-  
-   
   }
    

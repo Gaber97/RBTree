@@ -86,17 +86,17 @@ class Treevisualizer {
                 this.addSteps(this.tree.addValue(val));
                 break;
             case "Del":
-
+                //még nincs mit törölni
                 if(this.visStepsNumber==-1 || this.actualStep==-1) return 0;
 
                 //még nincs mit törölni
-
                 this.addSteps(this.tree.delValue(val));
 
                 break;
             case "Find":
-                if(this.visStepsNumber==-1 || this.actualStep==-1) return 0;
                 //még nincs mit
+                if(this.visStepsNumber==-1 || this.actualStep==-1) return 0;
+                
 
                 this.addSteps(this.tree.findVis(val));
 
@@ -133,9 +133,6 @@ class Treevisualizer {
             return 0;
         }
 
-
-
-
         this.visStepsNumber= this.actualStep+1;
         this.actualStep=this.visStepsNumber;
         this.actualStepElement=0;
@@ -143,13 +140,6 @@ class Treevisualizer {
         this.visSteps[this.visStepsNumber]=data;
 
         this.ChangeTree();
-
-
-
-
-
-
-
 
     }
 
@@ -160,8 +150,6 @@ class Treevisualizer {
             return 0;
 
         }
-
-
 
         this.anim=true;
 
@@ -180,7 +168,6 @@ class Treevisualizer {
 
             }
 
-
             clearInterval(this.timer);
             this.timeStoped=true;
 
@@ -191,9 +178,6 @@ class Treevisualizer {
             this.ChangeTree();
 
         }
-
-
-
     }
 
 
@@ -203,17 +187,12 @@ class Treevisualizer {
 
             return 0;
         }
-
-
         this.anim=true;
 
         if(this.actualStep==-1){
             this.actualStep=0;
             return 0;
         }
-
-
-
 
         if(this.actualStepElement+1==this.visSteps[this.actualStep]["List"].length){
             this.stepForward();
@@ -222,7 +201,6 @@ class Treevisualizer {
             this.actualStepElement=this.visSteps[this.actualStep]["List"].length-1;
             this.ChangeTree();
         }
-
 
     }
 
@@ -233,7 +211,6 @@ class Treevisualizer {
         if(this.visStepsNumber==-1){
             return 0;
         }
-
 
         this.anim=false;
 
@@ -254,7 +231,6 @@ class Treevisualizer {
 
             }
 
-
         }
         else{
 
@@ -264,16 +240,10 @@ class Treevisualizer {
 
         }
 
-
-
-
     }
 
 
     stepBackwardSkip(){
-
-
-
 
         if(this.visStepsNumber==-1){
             return 0;
@@ -292,14 +262,7 @@ class Treevisualizer {
             this.ChangeTree();
         }
 
-
-
-
     }
-
-
-
-
 
 
     drawTree() {
@@ -310,11 +273,7 @@ class Treevisualizer {
 
         let moved=true;
 
-
-
         if(this.visStepsNumber==-1 ||this.actualStep==-1) return 0;
-
-
 
         let actual=this.visSteps[this.actualStep];
 
@@ -368,8 +327,6 @@ class Treevisualizer {
                 this.MoveNode(node2);
                 this.CiyleChange(node1,47,55);
                 this.CiyleChange(node2,47,55);
-
-
 
                 fill(0,100,0);
                 ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
@@ -598,28 +555,19 @@ class Treevisualizer {
 
                 }
 
-
-
-
                 this.CiyleChange(node1,47,55);
-
-
 
                 fill(100,100,0);
                 ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
-
-
 
                 this.drawText(actualListelement.visElement3);
 
                 moved=actualListelement.visElement4;
 
-
             break;
             case "End":
 
                     this.drawText(actualListelement.visElement2);
-
 
               break;
           }
@@ -631,8 +579,6 @@ class Treevisualizer {
           if(this.vistree.root!=this.vistree.nil)  this.PostOrderTreeDraw(this.vistree.root,this.vistree.nil);
 
           //this.drawNode(this.vistree.nil,0,0);
-
-
     }
 
     drawText(info){
@@ -640,21 +586,17 @@ class Treevisualizer {
         fill(0);
         textAlign(LEFT,CENTER);
         textSize(20);
-        text(info,20,  5*windowHeight/6-100);
+        text(info,20,  5*windowHeight/6-50);
     }
 
     MoveNodeVertical(n){
 
         n.drawx = n.x;
         n.drawy = n.y*n.lambda + n.newy*(1-n.lambda);
-
-
         n.lambda = n.lambda - 2*this.speed * n.dir;
 
         if( n.lambda < 0 || n.lambda > 1 ){
             n.dir=n.dir*-1;
-
-
         }
     }
 
@@ -708,15 +650,12 @@ class Treevisualizer {
            // line(n.right.drawx, n.right.drawy, n.drawx, n.drawy);
         }
 
-
-
         if(n.parent!=nil){
             //console.log(n.parent.drawx + " "+ n.parent.drawy);
             stroke(255);
             strokeWeight(2);
             line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
         }
-
 
         this.drawNode(n,0,0);
 
@@ -738,11 +677,9 @@ class Treevisualizer {
         }
 
         this.MoveNode(n);
-
     }
 
     MoveNode(n){
-
         if(this.anim){
 
             if(n.x!=n.newx || n.y!=n.newy){
@@ -780,8 +717,6 @@ class Treevisualizer {
             n.drawx=n.newx;
             n.drawy=n.newy;
         }
-
-
     }
 
 
@@ -815,7 +750,6 @@ class Treevisualizer {
 
     }
 
-
     clear(){
 
         this.visSteps=[];
@@ -826,8 +760,6 @@ class Treevisualizer {
 
 
     }
-
-
 
     canAddAndDel(){
 
@@ -848,88 +780,36 @@ class Treevisualizer {
 
     }
 
-
-
-    showDialog(n,nil,x,y,node,b){
+    showDialog(n,nil,x,y){
 
             if(n.left!= nil  ){
-                this.showDialog(n.left,nil,x,y,node,b);
-            }
-            else
-            {
-             //   stroke(255);
-            // strokeWeight(3);
-              //  line(n.left.drawx, n.left.drawy, n.drawx, n.drawy);
+                this.showDialog(n.left,nil,x,y);
             }
             if(n.right!=nil  ){
-                this.showDialog(n.right,nil,x,y,node,b);
-
-            }
-            else{
-
-              //  stroke(255);
-               // strokeWeight(3);
-               // line(n.right.drawx, n.right.drawy, n.drawx, n.drawy);
+                this.showDialog(n.right,nil,x,y);
             }
 
             if(Math.abs(n.drawx-x)<n.round/2 && Math.abs(n.drawy-y)<n.round/2 ){
-
-                b = b||true;
-                node=n;
+                console.log("----------------------------");
+                console.log("Value: %c"+n.value,"color:red");
+                console.log("Left: %c"+n.left.value,"color:red");
+                console.log("Right: %c"+n.right.value,"color:red");
+                console.log("Parent: %c"+n.parent.value,"color:red");
+                console.log("Color: "+n.color);
+                console.log("X:NEWX: %c"+n.x+":"+n.newx,"color:red");
+                console.log("Y:NEWY: %c"+n.y+":"+n.newy,"color:red");
+                console.log("----------------------------");
             }
-            else{
-                b=b||false;
-            }
 
-            //n.drawx=n.x;
-            //n.drawy=n.y;
+
 
     }
 
     showNodeInfo(x,y){
 
-      let n;
-      let b=false;
-      this.showDialog(this.vistree.root,this.vistree.nil,x,y,n,b);
-
-      if(b ){
-
-
-        this.dialog.remove();
-        this.dialog=createDiv("");
-        this.dialog.id("helpNode")
-
-
-        this.dialog.size(700,200);
-
-
-        this.dialog.position(n.drawx+120,n.drawy+10);
-        this.dialog.html("<p>V: "+n.value + "</p>"+
-                         "<p>C: "+n.color + "</p>"+
-                         "<p>L: "+n.left.value + "</p>"+
-                         "<p>R: "+n.left.value + "</p>"+
-                         "<p>P: "+n.left.value + "</p>"
-
-
-      );
-
-
-        this.dialog.show();
-
-
-
-      }
-      else{
-        this.dialog.remove();
-        this.dialog.hide();
-        console.log("levsz");
-      }
-
+      this.showDialog(this.vistree.root,this.vistree.nil,x,y);
 
     }
-
-
-
 
 
 }
