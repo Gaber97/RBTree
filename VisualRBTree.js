@@ -35,7 +35,7 @@ addValue(val){
     
       if(z.value<x.value){
         
-        this.Steps.push(new visElement("Add",x.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem kisebb mint "+String(x.value)));
+        this.Steps.push(new visElement("Add",x.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem kisebb mint "+String(x.value)+". Balra megyünk tovább."  ));
         if(this.root.value<x.value  ) this.PixelSet(x,this.horizontalchange,0,x.right);
         
         
@@ -48,7 +48,7 @@ addValue(val){
       }
       else{
        
-        this.Steps.push(new visElement("Add",x.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem nagyobb mint "+String(x.value)));
+        this.Steps.push(new visElement("Add",x.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem nagyobb mint "+String(x.value)+". Jobb megyünk tovább."));
        
         if(this.root.value>x.value ) this.PixelSet(x,-this.horizontalchange,0,x.left);
         //z.x=x.x+30;
@@ -68,7 +68,7 @@ addValue(val){
       z.x=this.horizontalchange+40;
       z.y=this.verticalchange;
 
-      this.Steps.push(new visElement("Add",z.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem a gyöker"));
+      this.Steps.push(new visElement("Add",z.Copy(),z.Copy(),"Az beszúrandó "+String(z.value)+" elem a gyöker."));
       
       z.newx=2*this.horizontalchange+40;
       z.newy=this.verticalchange;
@@ -78,6 +78,7 @@ addValue(val){
       y.left=z;
       z.x=y.x-this.horizontalchange;
       z.y=y.y;
+
     }
     else{
       y.right=z;
@@ -92,7 +93,7 @@ addValue(val){
       this.PixelChange(this.root, this.horizontalchange, 0);
     }
     
-    this.Steps.push(new visElement("AddAnimation",this.Clone(),true,"Az beszurandó "+String(z.value)+" elem a helyére kerül"));
+    this.Steps.push(new visElement("AddAnimation",this.Clone(),true,"Az beszúrandó "+String(z.value)+" elem a helyére kerül."));
     this.CordinatEquals();
     
 
@@ -133,10 +134,10 @@ findVis(k){
         }
   }
   if(x==this.nil){
-    this.Steps.push(new visElement("End",this.Clone(),"Az keresendő "+String(k)+" elem nem található"));
+    this.Steps.push(new visElement("End",this.Clone(),"Az keresendő "+String(k)+" elem nem található."));
   }
   else{
-    this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem megtalálva"));
+    this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem megtalálva."));
   }
   this.Steps.push(new visElement("End",this.Clone(),""));
   
@@ -157,12 +158,12 @@ findVis(k){
 findVisDel(k){
   let change=false;
   if(this.Find(k)!=this.nil) change=true;
-  console.log(change);
+  //console.log(change);
   let x=this.root;
   while(x!=this.nil && x.value!=k){
         if(k<x.value){
           this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem kisebb mint "+String(x.value) + "ertékű elem.\nBalra megyünk tovább."));
-          console.log(this.root.value<x.value && change);
+          //console.log(this.root.value<x.value && change);
           if(this.root.value<x.value && change ) this.PixelSet(x,-this.horizontalchange,0,x.right);
         
           x=x.left;
@@ -299,9 +300,7 @@ delValue(k){
   }
 
   this.CordinatEquals();
-  console.log(z);
-  console.log(y);
-  console.log(x);
+
   if(y.color=="Black"){
     //javít
     this.PreaperDel(x);
@@ -333,13 +332,13 @@ PreaperDel(x){
         x.parent.color="Red";
         this.LeftRound(x.parent);
         w=x.parent.right;
-        console.log("1 eset");
+
       }
       if(w.left.color=="Black" && w.right.color=="Black"){
         w.color="Red";
         //x.parent.color="Black";
         x=x.parent;
-        console.log("2 eset");
+      
       }
       else {
         
@@ -348,15 +347,14 @@ PreaperDel(x){
             w.color="Red";
             this.RightRound(w);
             w=x.parent.right;
-            console.log("3 eset");
+            
           }
           w.color=x.parent.color;
           x.parent.color="Black";
           w.right.color="Black";
           this.LeftRound(x.parent);
           x=this.root;
-          console.log("4 eset");
-        
+
     }
 
     }
@@ -367,13 +365,13 @@ PreaperDel(x){
         x.parent.color="Red";
         this.RightRound(x.parent);
         w=x.parent.left;
-        console.log("5 eset");
+    
       }
       if(w.right.color=="Black" && w.left.color=="Black"){
         w.color="Red";
         //x.parent.color="Black";
         x=x.parent;
-        console.log("6 eset");
+        
       }
       else {
         
@@ -384,14 +382,14 @@ PreaperDel(x){
         w.color="Red";
         this.LeftRound(w);
         w=x.parent.left;
-        console.log("7 eset");
+     
         }
         w.color=x.parent.color;
         x.parent.color="Black";
         w.left.color="Black";
         this.RightRound(x.parent);
         x=this.root;
-        console.log("8 eset");
+ 
 
     }
 
@@ -433,7 +431,7 @@ VisMinimum(node,rootOfSubTree){
 LeftRound(x){
   
   let y=x.right;
-  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Balra: A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása balra"));
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Balra: A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása."));
   this.CordinatEquals();
   x.right=y.left;
   
@@ -453,7 +451,7 @@ LeftRound(x){
   y.left=x;
   x.parent=y;
 
-  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Balra: A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása\n A gyerekek és szülők cseréje " ));
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Balra: A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása.\n A gyerekek és szülők cseréje " ));
   this.CordinatEquals();
  
   /*
@@ -476,7 +474,7 @@ RightRound(x){
  
   let y=x.left;
 
-  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Jobbra : A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása jobbra"));
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Jobbra : A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása."));
   this.CordinatEquals();
   x.left=y.right;
   
@@ -498,7 +496,7 @@ RightRound(x){
   x.parent=y;
 
  
-  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Jobbra :A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása\nA gyerekek és szülők cseréje " ));
+  this.Steps.push(new visElement("RotationSelectAndChange",this.Clone(),x.Copy(),y.Copy(),"Forgatás Jobbra :A "+ String(x.value) +" értékű és a " + String(y.value)+" értékű elem forgatása.\nA gyerekek és szülők cseréje," ));
   this.CordinatEquals();
   /*
   if(y==this.root){
@@ -515,7 +513,7 @@ RightRound(x){
 RepaerAdd(z){
  
   while(z.parent.color=='Red'){
-    this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy()," "+ String(z.value) +" értékű csúcs szülője piros "));
+    this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy()," "+ String(z.value) +" értékű csúcs szülője piros. Helyreigazítás szükséges!"));
     this.CordinatEquals();
   
     if(z.parent==z.parent.parent.left){
@@ -525,13 +523,13 @@ RepaerAdd(z){
 
 
       if(y.color=="Red"){
-        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett -A "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros"));
+        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett : A "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros."));
         this.CordinatEquals();
       
         z.parent.color="Black";
         y.color="Black";
         z.parent.parent.color="Red"
-        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"A "+ String(z.value) +" értékű csúcs szülője Fekete, A nagy szüjő jobb gyerek Fekete, A nagyszülő színe Piros lesz\n A következő vizsgált csúcs "+String(z.parent.parent.value )+" lesz "));
+        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett : A "+ String(z.value) +" értékű csúcs szülője Fekete, A nagy szüjő jobb gyerek Fekete, A nagyszülő színe Piros lesz.\n A következő vizsgált csúcs "+String(z.parent.parent.value )+" lesz."));
         this.CordinatEquals();
         z=z.parent.parent;
 
@@ -539,16 +537,16 @@ RepaerAdd(z){
       else{
          
         if(z==z.parent.right){
-          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esettA "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros\nA "+ String(z.value) +" értékű csúcs szülőjének a jobb gyereke az adott csúcs.\nForgatás következik balra."));
+          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esett : A "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros\nA "+ String(z.value) +" értékű csúcs szülőjének a jobb gyereke az adott csúcs.\nForgatás következik balra A 3. esetbe."));
           this.CordinatEquals();
           
           z=z.parent;
           this.LeftRound(z);
         }
-    
+
         z.parent.color="Black";
         z.parent.parent.color="Red";
-        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esett A "+ String(z.value) +" értékű csúcs szölőjének a színe fekete lesz a  nagyszülőjének a színe Piros lesz. "));
+        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"3. esett : A "+ String(z.value) +" értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe piros lesz. "));
         this.CordinatEquals();
         this.RightRound(z.parent.parent);
         
@@ -564,14 +562,14 @@ RepaerAdd(z){
         z.parent.color="Black";
         y.color="Black";
         z.parent.parent.color="Red"
-        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"A "+ String(z.value) +" értékű csúcs szülője Fekete, A nagy szüjő jobb gyerek Fekete, A nagyszülő színe Piros lesz"));
+        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett : A "+ String(z.value) +" értékű csúcs szülője fekete. A nagyszülöjő jobb gyerek Fekete, A nagyszülő színe Piros lesz"));
         this.CordinatEquals();
         z=z.parent.parent;
       }
       else{
        
         if(z==z.parent.left){
-          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esettA "+ String(z.value) +" értékű csúcs nagyszülőjének bal gyereke piros\nA "+ String(z.value) +" értékű csúcs szülőjének a bal gyereke az adott csúcs.\nForgatás következik jobbra."));
+          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esettA "+ String(z.value) +" értékű csúcs nagyszülőjének bal gyereke piros\n A "+ String(z.value) +" értékű csúcs szülőjének a bal gyereke az adott csúcs.\nForgatás következik jobbra."));
           this.CordinatEquals();
 
           z=z.parent;
@@ -580,7 +578,7 @@ RepaerAdd(z){
         }
         z.parent.color="Black";
         z.parent.parent.color="Red";
-        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esett A "+ String(z.value) +" értékű csúcs szülőjének a színe Fekete lesz. A nagyszülőjének a színe Piros lesz. "));
+        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"3. esett A "+ String(z.value) +" értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe Piros lesz. "));
         this.CordinatEquals();
         this.LeftRound(z.parent.parent);
       }
