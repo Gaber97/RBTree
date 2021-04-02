@@ -289,11 +289,11 @@ class Treevisualizer {
 
 
                 if(val<value){
-                    this.drawNode(node1,50,0);
+                    this.drawNode(node1,45,0);
                 }
                 else{
 
-                    this.drawNode(node1,-50,0);
+                    this.drawNode(node1,-45,0);
                 }
 
               break;
@@ -678,7 +678,7 @@ class Treevisualizer {
 
     }
 
-    PostOrderTreeDraw=function(n,nil){
+    PostOrderTreeDraw(n,nil){
 
         if(n.left!= nil  ){
             this.PostOrderTreeDraw(n.left,nil);
@@ -717,7 +717,7 @@ class Treevisualizer {
 
     }
 
-    PreOrderMove=function(n,nil){
+    PreOrderMove(n,nil){
 
         if(n.left!= nil  ){
             this.PreOrderMove(n.left,nil);
