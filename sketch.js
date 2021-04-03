@@ -52,7 +52,7 @@ function draw(){
     LockSteps(Visualazer.canStep());
     Visualazer.nextStep=maxSlider-slider.value();
     Visualazer.speed=slider.value()/10000;
-    frameCount;
+   // frameCount;
 
 
 

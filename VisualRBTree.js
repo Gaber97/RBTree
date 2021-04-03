@@ -230,10 +230,10 @@ delValue(k){
   }
  
   if(x!=this.nil){
-    this.Steps.push(new visElement("Del",this.Clone(),z.Copy(),y.Copy(),x.Copy(),"A "+ String(z.value) +" értékű csúcs törlése",false));
+    this.Steps.push(new visElement("Del",this.Clone(),z.Copy(),y.Copy(),x.Copy(),"A "+ String(z.value) +" értékű csúcs törlése.Az "+String(y.value)+" értékének átmásolása a törlendő csúcs helyére.",false));
   }
   else{
-    this.Steps.push(new visElement("DelNil",this.Clone(),z.Copy(),y.Copy(),"A "+ String(z.value) +" értékű csúcs törlése",false));
+    this.Steps.push(new visElement("DelNil",this.Clone(),z.Copy(),y.Copy(),"A "+ String(z.value) +" értékű csúcs törlése. A "+String(y.value)+" érékének átmásolása a törelendő csúcs helyére." ,false));
   }
   
   x.parent=y.parent;
@@ -291,11 +291,12 @@ delValue(k){
   }
   
   if(x!=this.nil){
-    this.Steps.push(new visElement("DelBinding",this.Clone(),z.Copy(),x.Copy(),"A " +String(x.value)+" értékű elem átkötése",true));
+    this.Steps.push(new visElement("DelBindingNil",this.Clone(),x.Copy(),"A " +String(x.value)+" értékű elem átkötése",true));
+    
   }
   else{
     if(z!=y){
-      this.Steps.push(new visElement("DelBindingNil",this.Clone(),z.Copy(),"Törlés : " +String(x.value)+" értékű elem átkötése",true));
+      this.Steps.push(new visElement("DelBindingNil",this.Clone(),z.Copy(),"Törlés : " +String(z.value)+" értékű elem átkötése",true));
     }
   
   }
