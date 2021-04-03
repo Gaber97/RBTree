@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <script language="javascript" type="text/javascript" src="parentclasses/PoorNode.js"></script>
+    <script language="javascript" type="text/javascript" src="parentclasses/RBNode.js"></script>
+    <script language="javascript" type="text/javascript" src="parentclasses/RBTree.js"></script>
+
+    <script language="javascript" type="text/javascript" src="DiagramTree.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <canvas id="myChart" responsive='true'></canvas>
+    
+    <script>
+
+
+   
+    let datamax=[];
+    let datamin=[];
+    let datablack=[];
+    let name=[];
+    let trees=[];
+    for(let i=0;i<7;i++ ){
+        trees.push(new DiagramTree());
+        
+    }
+
+
+    
+    for(let i=0;i<7;i++ ){
+        trees[i].addRandomElements(7**(i+1));
+        datamin.push(trees[i].minDepth(trees[i].root));
+        datamax.push(trees[i].maxDepth(trees[i].root));
+        datablack.push(trees[i].BlackDepth(trees[i].root));
+        
+
+        name.push(  String( 7**(i+1)) );
+    }
+
+
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: name,
+            datasets: [{
+                label: 'MaxDepth',
+                data: datamax,
+                backgroundColor: [
+                    'rgba(255, 0, 0,1)',
+                    'rgba(255, 0, 0,1)',
+                    'rgba(255, 0, 0,1)',
+                    'rgba(255, 0, 0,1)',
+                    'rgba(255, 0, 0,1)',
+                    'rgba(255, 0, 0,1)',
+                    'rgba(255, 0, 0,1)'
+                ]
+                
+                
+            },{
+                label: 'MinDepth',
+                data: datamin,
+                backgroundColor: [
+                    'rgba(255, 133, 0,1)',
+                    'rgba(255, 133, 0,1)',
+                    'rgba(255, 133, 0,1)',
+                    'rgba(255, 133, 0,1)',
+                    'rgba(255, 133, 0,1)',
+                    'rgba(255, 133, 0,1)',
+                    'rgba(255, 133, 0,1)'
+                ]
+               
+              
+            },
+            {
+                label: 'BlackDepth',
+                data: datablack,
+                backgroundColor: [
+                    'rgba(0, 0, 0,1)',
+                    'rgba(0, 0, 0,1)',
+                    'rgba(0, 0, 0,1)',
+                    'rgba(0, 0, 0,1)',
+                    'rgba(0, 0, 0,1)',
+                    'rgba(0, 0, 0,1)',
+                    'rgba(0, 0, 0,1)'
+                ]
+               
+              
+            }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+
+
+
+</head>
+<body>
+    
+</body>
+</html>
