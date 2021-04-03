@@ -18,8 +18,6 @@ class RBNode{
       
     }
   
-  
-   
     Copy(nil){
   
       let n = new node();
@@ -45,8 +43,6 @@ class RBNode{
       return n;
   
     }
-
-
   
   }
    
