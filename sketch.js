@@ -65,12 +65,23 @@ function LockOperations(canClick) {
         buttonAdd.removeAttribute('disabled',"");
         buttonDel.removeAttribute('disabled',"");
         buttonFind.removeAttribute('disabled',"");
+        buttonPre.removeAttribute('disabled',"");
+        buttonNext.removeAttribute('disabled',"");
+        buttonPreOrder.removeAttribute('disabled',"");
+        buttonInOrder.removeAttribute('disabled',"");
+        buttonPostOrder.removeAttribute('disabled',"");
 
     } else {
         input.attribute('disabled',"");
         buttonAdd.attribute('disabled',"");
         buttonDel.attribute('disabled',"");
         buttonFind.attribute('disabled',"");
+        
+        buttonPre.attribute('disabled',"");
+        buttonNext.attribute('disabled',"");
+        buttonPreOrder.attribute('disabled',"");
+        buttonInOrder.attribute('disabled',"");
+        buttonPostOrder.attribute('disabled',"");
 
     }
   }

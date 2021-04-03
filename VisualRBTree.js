@@ -664,7 +664,61 @@ visOrderRecursive(n,str,ordertype){
 
 }
 
+visNext(val){
 
+  this.Steps=[];
+
+  let oldTree=this.Clone();
+
+  let p=find(val)
+
+  if(p==this.nil){
+    this.Steps.push(new visElement("End",this.Clone(),"Nincs ilyen elem."));
+
+  }
+  else{
+
+    let k;
+
+    if(p.right != this.nil){
+      k = this.VisMinimum(p.right,p);
+    }
+    else{
+      this.Steps.push(new visElement("Next",p.Copy(),"A "+String(p.value)+" nincs jobb gyereke. Felfelé keresük a következő elemet."));
+
+      let k=p.parent;
+      while(s!=this.nil && p==s.right){
+        p=k;
+        k=s.parent;
+        this.Steps.push(new visElement("Next",p.Copy(),"A "+String(p.value)+" nincs jobb gyereke. Felfelé keresük a következő elemet."));
+
+      }
+      
+    }
+
+
+
+
+  }
+  
+
+  let newTree=this.Clone();
+
+  this.Steps.push(new visElement("End",this.Clone(),""));
+
+  return {  "Operation" : "PrevOrNext",
+    
+  "OldTree": oldTree,
+    
+  "List":this.Steps,
+    
+  "NewTree": newTree
+  };
+
+
+
+
+}
 
 
 
@@ -701,11 +755,8 @@ PixelChange(n,px,py){
   }
 }
 
-
-
-
-
 Clone(){
+
     let newTree= new VisaulRBTree();
     if (this.root == this.nil)
         return newTree;
@@ -713,9 +764,7 @@ Clone(){
     let root=this.root;
     newTree.root = root.Copy(newTree.nil);
      let clone=newTree.root;
-   
-    
-  
+
     while (root != this.nil)
     {
       
@@ -743,6 +792,7 @@ Clone(){
     }
     return newTree;
 }
+
   CordinatEquals=function(){
     this.CordinatEqualsOrder(this.root,this.nil);
   }
