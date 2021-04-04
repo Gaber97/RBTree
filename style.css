@@ -19,6 +19,13 @@ button:hover{
 
 }
 
+a { text-decoration: none;
+    color: white; }
+    
+    a:hover{
+        color: black;
+    }
+
 input{
     font-size:15;
     text-align: right;

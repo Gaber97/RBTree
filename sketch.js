@@ -15,7 +15,7 @@ function mousePos(e) {
 }
 
 function setup(){
-console.log(windowHeight)
+//console.log(windowHeight)
     if(windowHeight>600){
 
         sizex=windowWidth;
@@ -194,12 +194,10 @@ function createVisualElements(){
 
     buttonForwardSkip = createButton('>>');
     buttonForwardSkip.position(input.x, input.y + input.height+ 15);
-
     buttonForwardSkip.size(50,50);
 
     buttonForward = createButton('>');
     buttonForward.position(buttonForwardSkip.x, buttonForwardSkip.y + buttonForwardSkip.height+ 10);
-
     buttonForward.size(50,50);
 
     buttonBackward = createButton('<');
@@ -253,6 +251,11 @@ function createVisualElements(){
     help=createButton('?');
     help.size(30,30);
     help.position(sizex-help.width-20,10);
+
+    buttonDiagrams=createButton('<a href="diagram.html"  >Diagrams</a>');
+    buttonDiagrams.size(70,30);
+    buttonDiagrams.position(help.x-help.width-100,10);
+
     
 
     helpDivElement = createElement("div","");
@@ -413,6 +416,11 @@ function blindButtons(){
          }
     });
 
+    buttonDiagrams.mousePressed(()=>{
+
+        
+
+    });
 
 }
 
