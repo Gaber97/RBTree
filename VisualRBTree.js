@@ -305,7 +305,7 @@ delValue(k){
 
   if(y.color=="Black"){
     //javít
-    this.PreaperDel(x);
+    this.FixDel(x);
   }
   let newTree=this.Clone();
   this.CordinatEquals();
@@ -324,36 +324,68 @@ delValue(k){
 
 }
 
-PreaperDel(x){
+FixDel(x){
 
   while (x != this.root && x.color=="Black") {
     if(x == x.parent.left){
       let w =x.parent.right;
+      console.log(w.value)
       if(w.color=="Red"){
+
+        this.Steps.push(new visElement("FixDelCase1Part1",this.Clone(),w.Copy(),x.Copy(),
+        "1. eset: A "+String(x.value)+" testvére piros."));
         w.color="Black";
         x.parent.color="Red";
+        this.Steps.push(new visElement("FixDelCase1Part2",this.Clone(),w.Copy(),x.Copy(),x.parent.Copy(),
+        "1. eset: A "+String(w.value)+" testvére fekete lesz. A szülő piros. Átforgatjuk a 2,3,4 esetre."));
+
         this.LeftRound(x.parent);
         w=x.parent.right;
 
+
       }
       if(w.left.color=="Black" && w.right.color=="Black"){
+
+        
+        this.Steps.push(new visElement("FixDelCase2",this.Clone(),w.Copy(),x.Copy(),
+        "2. eset: A "+String(w.value)+" testvér fekete és mindkét gyereke fekete. A "+String(w.value)+" piros lesz."));
+
+
         w.color="Red";
         //x.parent.color="Black";
+        this.Steps.push(new visElement("FixDelCase2",this.Clone(),w.Copy(),x.Copy(),
+        "2. eset: A következő vizsgálandó elem " + String(w.value)+" szülője lesz."));
         x=x.parent;
       
       }
       else {
         
           if( w.right.color=="Black"){
+            // x brother is black and left child is red, rigth is black
+            this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.left.Copy(),
+            "3. eset: A " +String(x.value) + " testvére "+String(w.value)+" fekete és bal gyere piros, jobb gyereke fekete."));
+
             w.left.color="Black";
             w.color="Red";
+            this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.left.Copy(),
+            "3. eset: A " +String(w.value) + " csúcs piros, bal gyereke fekete lesz. Átforgatjuk a 4. esetre "));
+
+
             this.RightRound(w);
             w=x.parent.right;
             
           }
+          this.Steps.push(new visElement("FixDelCase4",this.Clone(),w.Copy(),x.Copy(),w.right.Copy(),
+          "4. eset: A " +String(x.value) + " testvére "+String(w.value)+" fekete és jobb gyereke piros"));
+
           w.color=x.parent.color;
           x.parent.color="Black";
           w.right.color="Black";
+
+          this.Steps.push(new visElement("FixDelCase4",this.Clone(),w.Copy(),x.parent.Copy(),w.right.Copy(),
+          "4. eset: A " +String(w.value) + " színe "+String(x.parent.value)+"  színe lesz. A "
+          +String(x.parent.value)+" a színe fekete lesz. A "+String(w.right.value)+" a színe fekete lesz. Forgatás után a következő elem a gyökér lesz."));
+          
           this.LeftRound(x.parent);
           x=this.root;
 
@@ -363,15 +395,25 @@ PreaperDel(x){
     else{
       let w =x.parent.left;
       if(w.color=="Red"){
+        this.Steps.push(new visElement("FixDelCase1Part1",this.Clone(),x.Copy(),w.Copy(),
+            "1. eset: A "+String(x.value)+" testvére piros."));
+
         w.color="Black";
         x.parent.color="Red";
+        this.Steps.push(new visElement("FixDelCase1Part2",this.Clone(),x.Copy(),w.Copy(),x.parent.Copy(),
+        "1. eset: A "+String(w.value)+" testvére fekete lesz. A szülő piros. Átforgatjuk a 2,3,4 esetre."));
         this.RightRound(x.parent);
         w=x.parent.left;
     
       }
       if(w.right.color=="Black" && w.left.color=="Black"){
+        this.Steps.push(new visElement("FixDelCase2",this.Clone(),w.Copy(),x.Copy(),
+        "2. eset: A "+String(w.value)+" fekete és mindkét gyereke fekete. A "+String(w.value)+" piros lesz."));
+
         w.color="Red";
         //x.parent.color="Black";
+        this.Steps.push(new visElement("FixDelCase2",this.Clone(),w.Copy(),x.Copy(),
+        "2. eset: A következő vizsgálandó elem " + String(w.value)+" szülője lesz."));
         x=x.parent;
         
       }
@@ -380,15 +422,33 @@ PreaperDel(x){
         
         
         if( w.left.color=="Black"){
+
+          this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.left.Copy(),
+          "3. eset: A " +String(x.value) + " testvére "+String(w.value)+" fekete és jobb gyereke piros, bal gyereke fekete."));
+
+        
         w.right.color="Black";
         w.color="Red";
+
+        this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.left.Copy(),
+        "3. eset: A " +String(w.value) + " csúcs piros, jobb gyereke fekete lesz. Átforgatjuk a 4. esetre "));
         this.LeftRound(w);
         w=x.parent.left;
      
         }
+
+        this.Steps.push(new visElement("FixDelCase4",this.Clone(),w.Copy(),x.Copy(),w.right.Copy(),
+        "4. eset: A " +String(x.value) + " testvére "+String(w.value)+" fekete és bal gyereke piros"));
+
         w.color=x.parent.color;
         x.parent.color="Black";
         w.left.color="Black";
+
+        this.Steps.push(new visElement("FixDelCase4",this.Clone(),w.Copy(),x.parent.Copy(),w.left.Copy(),
+        "4. eset: A " +String(w.value) + " színe "+String(x.parent.value)+"  színe lesz. A "
+        +String(x.parent.value)+" a színe fekete lesz. A "+String(w.left.value)+" a színe fekete lesz. Forgatás után a következő elem a gyökér lesz."));
+        
+
         this.RightRound(x.parent);
         x=this.root;
  
@@ -525,13 +585,13 @@ RepaerAdd(z){
 
 
       if(y.color=="Red"){
-        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett : A "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros."));
+        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. eset : A "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros."));
         this.CordinatEquals();
       
         z.parent.color="Black";
         y.color="Black";
         z.parent.parent.color="Red"
-        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett : A "+ String(z.value) +" értékű csúcs szülője Fekete, A nagy szüjő jobb gyerek Fekete, A nagyszülő színe Piros lesz.\n A következő vizsgált csúcs "+String(z.parent.parent.value )+" lesz."));
+        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. eset : A "+ String(z.value) +" értékű csúcs szülője Fekete, A nagy szüjő jobb gyerek Fekete, A nagyszülő színe Piros lesz.\n A következő vizsgált csúcs "+String(z.parent.parent.value )+" lesz."));
         this.CordinatEquals();
         z=z.parent.parent;
 
@@ -539,7 +599,7 @@ RepaerAdd(z){
       else{
          
         if(z==z.parent.right){
-          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esett : A "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros\nA "+ String(z.value) +" értékű csúcs szülőjének a jobb gyereke az adott csúcs.\nForgatás következik balra, a 3. esetbe."));
+          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. eset : A "+ String(z.value) +" értékű csúcs nagyszülőjének jobb gyereke piros\nA "+ String(z.value) +" értékű csúcs szülőjének a jobb gyereke az adott csúcs.\nForgatás következik balra, a 3. esetbe."));
           this.CordinatEquals();
           
           z=z.parent;
@@ -548,7 +608,7 @@ RepaerAdd(z){
 
         z.parent.color="Black";
         z.parent.parent.color="Red";
-        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"3. esett : A "+ String(z.value) +" értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe piros lesz. "));
+        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"3. eset : A "+ String(z.value) +" értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe piros lesz. "));
         this.CordinatEquals();
         this.RightRound(z.parent.parent);
         
@@ -558,20 +618,20 @@ RepaerAdd(z){
   else{
     let y=z.parent.parent.left;
       if(y.color=="Red"){
-        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett A "+ String(z.value) +" értékű csúcs nagyszülőjének bal gyereke piros "));
+        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. eset : A "+ String(z.value) +" értékű csúcs nagyszülőjének bal gyereke piros "));
         this.CordinatEquals();
 
         z.parent.color="Black";
         y.color="Black";
         z.parent.parent.color="Red"
-        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. esett : A "+ String(z.value) +" értékű csúcs szülője fekete. A nagyszülöjő jobb gyerek Fekete, A nagyszülő színe Piros lesz"));
+        this.Steps.push(new visElement("AddPreaperGrandParent",this.Clone(),z.Copy(),z.parent.Copy(),y.Copy(),"1. eset : A "+ String(z.value) +" értékű csúcs szülője fekete. A nagyszülöjő jobb gyerek Fekete, A nagyszülő színe Piros lesz"));
         this.CordinatEquals();
         z=z.parent.parent;
       }
       else{
        
         if(z==z.parent.left){
-          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. esettA "+ String(z.value) +" értékű csúcs nagyszülőjének bal gyereke piros\n A "+ String(z.value) +" értékű csúcs szülőjének a bal gyereke az adott csúcs.\nForgatás következik jobbra, a 3 esetbe ."));
+          this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"2. eset :A "+ String(z.value) +" értékű csúcs nagyszülőjének bal gyereke piros\n A "+ String(z.value) +" értékű csúcs szülőjének a bal gyereke az adott csúcs.\nForgatás következik jobbra, a 3 esetbe ."));
           this.CordinatEquals();
 
           z=z.parent;
@@ -580,7 +640,7 @@ RepaerAdd(z){
         }
         z.parent.color="Black";
         z.parent.parent.color="Red";
-        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"3. esett A "+ String(z.value) +" értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe Piros lesz. "));
+        this.Steps.push(new visElement("AddPreaper",this.Clone(),z.Copy(),z.parent.Copy(),"3. eset : A "+ String(z.value) +" értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe Piros lesz. "));
         this.CordinatEquals();
         this.LeftRound(z.parent.parent);
       }

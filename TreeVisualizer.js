@@ -585,67 +585,158 @@ class Treevisualizer {
                 this.moved=actualListelement.visElement4;
 
             break;
+            case  "FixDelCase1Part1":
+
+                node1=actualListelement.visElement2;
+
+                node2=actualListelement.visElement3;
+
+
+                this.CiyleChange(node1,47,55);
+
+
+                if(node2.value!=this.vistree.nil.value){
+            
+                    this.CiyleChange(node2,47,55);
+
+                    fill(0,100,0);
+                    ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+    
+                }
+
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+
+
+                this.drawText(actualListelement.visElement4);
+
+            break;
+            case  "FixDelCase1Part2":
+
+                node1=actualListelement.visElement2;
+
+                node2=actualListelement.visElement3;
+
+                node3=actualListelement.visElement4;
+
+
+                if(node2.value!=this.vistree.nil.value){
+            
+                    this.CiyleChange(node2,47,55);
+
+                    fill(0,100,0);
+                    ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+    
+                }
+
+
+                this.CiyleChange(node1,47,55);
+ 
+                this.CiyleChange(node3,47,55);
+
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+
+
+                fill(0,100,0);
+                ellipse( node3.drawx, node3.drawy, node3.round, node3.round);
+
+                this.drawText(actualListelement.visElement5);
+
+                //this.moved=actualListelement.visElement4;
+
+            break;
             case  "FixDelCase2":
 
-                node1=this.visNode1;
+                node1=actualListelement.visElement2;
 
-                this.moved=actualListelement.visElement4;
+                node2=actualListelement.visElement3;
 
-                if(this.moved){
-                    this.MoveNode(node1);
-
-                }
 
                 this.CiyleChange(node1,47,55);
 
                 fill(100,100,0);
                 ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
 
-                this.drawText(actualListelement.visElement3);
 
-                this.moved=actualListelement.visElement4;
+                if(node2.value!=this.vistree.nil.value){
+            
+                    this.CiyleChange(node2,47,55);
+
+                    fill(0,100,0);
+                    ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+    
+                }
+
+                this.drawText(actualListelement.visElement4);
 
             break;
             case  "FixDelCase3":
 
-                node1=this.visNode1;
 
-                this.moved=actualListelement.visElement4;
+                node1=actualListelement.visElement2;
 
-                if(this.moved){
-                    this.MoveNode(node1);
+                node2=actualListelement.visElement3;
 
+                node3=actualListelement.visElement4;
+
+
+                if(node2.value!=this.vistree.nil.value){
+            
+                    this.CiyleChange(node2,47,55);
+
+                    fill(0,100,0);
+                    ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+    
                 }
 
+
                 this.CiyleChange(node1,47,55);
+ 
+                this.CiyleChange(node3,47,55);
 
                 fill(100,100,0);
                 ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
 
-                this.drawText(actualListelement.visElement3);
 
-                this.moved=actualListelement.visElement4;
+                fill(0,100,0);
+                ellipse( node3.drawx, node3.drawy, node3.round, node3.round);
+
+                this.drawText(actualListelement.visElement5);
 
             break;
             case  "FixDelCase4":
 
-                node1=this.visNode1;
 
-                this.moved=actualListelement.visElement4;
+                node1=actualListelement.visElement2;
 
-                if(this.moved){
-                    this.MoveNode(node1);
+                node2=actualListelement.visElement3;
 
+                node3=actualListelement.visElement4;
+
+
+                if(node2.value!=this.vistree.nil.value){
+            
+                    this.CiyleChange(node2,47,55);
+
+                    fill(0,100,0);
+                    ellipse( node2.drawx, node2.drawy, node2.round, node2.round);
+    
                 }
 
+
                 this.CiyleChange(node1,47,55);
+ 
+                this.CiyleChange(node3,47,55);
 
                 fill(100,100,0);
                 ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
 
-                this.drawText(actualListelement.visElement3);
 
-                this.moved=actualListelement.visElement4;
+                fill(0,100,0);
+                ellipse( node3.drawx, node3.drawy, node3.round, node3.round);
+
+                this.drawText(actualListelement.visElement5);
 
             break;
             case  "Orders":
@@ -829,10 +920,10 @@ class Treevisualizer {
 
     ChangeTree(){
         let actualvisElement= this.visSteps[this.actualStep]["List"][this.actualStepElement];
-        console.log(actualvisElement)
+        //console.log(actualvisElement)
         let command = actualvisElement.command;
 
-        console.log(command);
+        //console.log(command);
 
         if(command == "Add" || command == "Find" ||command == "FindMin" || command == "Orders" ){
             this.vistree=this.visSteps[this.actualStep]["OldTree"].Clone();
