@@ -326,7 +326,7 @@ function blindButtons(){
     });
 
     buttonDel.mousePressed(() => {
-        37,
+        
         n=input.value();
         Visualazer.operationInTree(n,"Del");
         input.value("");
@@ -362,6 +362,27 @@ function blindButtons(){
 
         
         Visualazer.operationInTree(0,"PostOrder");
+        
+
+    });
+
+
+    buttonNext.mousePressed(() => {
+
+        n=input.value();
+        Visualazer.operationInTree(n,"Next");
+        input.value("");
+ 
+        
+
+    });
+
+    buttonPre.mousePressed(() => {
+
+        n=input.value();
+        Visualazer.operationInTree(n,"Pre");
+        input.value("");
+ 
         
 
     });

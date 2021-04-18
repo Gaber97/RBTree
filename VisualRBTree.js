@@ -726,11 +726,16 @@ visOrderRecursive(n,str,ordertype){
 
 visNext(val){
 
+  console.log(val);
+
+
   this.Steps=[];
 
   let oldTree=this.Clone();
 
-  let p=find(val)
+  let p=this.Find(val)
+
+  console.log(p);
 
   if(p==this.nil){
     this.Steps.push(new visElement("End",this.Clone(),"Nincs ilyen elem."));
@@ -738,21 +743,29 @@ visNext(val){
   }
   else{
 
+    this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" a következő elemének megkeresése.")); 
+
     let k;
 
     if(p.right != this.nil){
-      k = this.VisMinimum(p.right,p);
+      k = this.VisMinimumNoChange(p.right,p);
+
+      this.Steps.push(new visElement("NextOrPre",k.Copy(),"A "+String(k.value)+" a következő elem."));
     }
     else{
-      this.Steps.push(new visElement("Next",p.Copy(),"A "+String(p.value)+" nincs jobb gyereke. Felfelé keresük a következő elemet."));
+      this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" nincs jobb gyereke. Felfelé keresük a következő elemet."));
 
       let k=p.parent;
-      while(s!=this.nil && p==s.right){
+      while(k!=this.nil && p==k.right){
+
+        this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" jobb gyereke. Felfelé keresük a következő elemet."));
         p=k;
-        k=s.parent;
-        this.Steps.push(new visElement("Next",p.Copy(),"A "+String(p.value)+" nincs jobb gyereke. Felfelé keresük a következő elemet."));
+        k=k.parent;
 
       }
+
+      this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" a következő elem."));
+
       
     }
 
@@ -760,6 +773,9 @@ visNext(val){
 
 
   }
+
+
+  
   
 
   let newTree=this.Clone();
@@ -776,8 +792,100 @@ visNext(val){
   };
 
 
+}
+
+visPrev(val){
 
 
+  this.Steps=[];
+
+  let oldTree=this.Clone();
+
+  let p=this.Find(val)
+
+
+  if(p==this.nil){
+    this.Steps.push(new visElement("End",this.Clone(),"Nincs ilyen elem."));
+
+  }
+  else{
+
+    this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" a előző elemének megkeresése.")); 
+
+    let k;
+
+    if(p.left != this.nil){
+      k = this.VisMaximum(p.left,p);
+
+      this.Steps.push(new visElement("NextOrPre",k.Copy(),"A "+String(k.value)+" a előző elem."));
+    }
+    else{
+      this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" nincs bal gyereke. Felfelé keresük a előző elemet."));
+
+      let k=p.parent;
+      while(k!=this.nil && p==k.left){
+
+        this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" bal gyereke. Felfelé keresük a előző elemet."));
+        p=k;
+        k=k.parent;
+
+      }
+
+      this.Steps.push(new visElement("NextOrPre",p.Copy(),"A "+String(p.value)+" a előző elem."));
+
+      
+    }
+
+
+
+
+  }
+
+
+  
+  
+
+  let newTree=this.Clone();
+
+  this.Steps.push(new visElement("End",this.Clone(),""));
+
+  return {  "Operation" : "PrevOrNext",
+    
+  "OldTree": oldTree,
+    
+  "List":this.Steps,
+    
+  "NewTree": newTree
+  };
+
+
+}
+
+
+
+VisMinimumNoChange(node,rootOfSubTree){
+ 
+  while(node.left != this.nil){
+    this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem keresése a jobb részfában."));
+   
+    node = node.left;
+  }
+
+  this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem a "+String(node.value)+" a jobb részfában."));
+  return node;
+}
+
+
+VisMaximum(node,rootOfSubTree){
+ 
+  while(node.right != this.nil){
+    this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legnagyobb elem keresése a bal részfában."));
+   
+    node = node.right;
+  }
+
+  this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legnagyobb elem a "+String(node.value)+" a bal részfában."));
+  return node;
 }
 
 

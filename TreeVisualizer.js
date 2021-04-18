@@ -90,13 +90,14 @@ class Treevisualizer {
             case "Pre":
                 //még nincs mit
                 if(this.visStepsNumber==-1 || this.actualStep==-1) return 0;
-                this.addSteps(this.tree.findVis(val));
+                this.addSteps(this.tree.visPrev(val));
 
             break;
             case "Next":
                 //még nincs mit
+                console.log("Next")
                 if(this.visStepsNumber==-1 || this.actualStep==-1) return 0;
-                this.addSteps(this.tree.findVis(val));
+                this.addSteps(this.tree.visNext(val));
 
             break;
             case "PreOrder":
@@ -207,6 +208,7 @@ class Treevisualizer {
 
             return 0;
         }
+
         this.anim=true;
 
         if(this.actualStep==-1){
@@ -253,8 +255,6 @@ class Treevisualizer {
 
         }
         else{
-
-
             this.actualStepElement=this.actualStepElement-1;
             this.ChangeTree();
 
@@ -391,8 +391,6 @@ class Treevisualizer {
 
                 this.CiyleChange(node1,47,55);
                 this.CiyleChange(node2,47,55);
-
-
 
                 fill(0,100,0);
                 ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
@@ -761,6 +759,27 @@ class Treevisualizer {
                 
 
             break;
+            case  "NextOrPre":
+
+                node1=this.visNode1;
+
+                this.moved=actualListelement.visElement3;
+
+                if(this.moved){
+                    this.MoveNode(node1);
+
+                }
+
+                this.CiyleChange(node1,47,55);
+
+                fill(100,100,0);
+                ellipse( node1.drawx, node1.drawy, node1.round, node1.round);
+
+                this.drawText(actualListelement.visElement2);
+
+                
+
+            break;
             case "End":
 
                     this.drawText(actualListelement.visElement2);
@@ -926,14 +945,14 @@ class Treevisualizer {
 
         //console.log(command);
 
-        if(command == "Add" || command == "Find" ||command == "FindMin" || command == "Orders" ){
+        if(command == "Add" || command == "Find" ||command == "FindMin" || command == "Orders" || command == "NextOrPre" ){
             this.vistree=this.visSteps[this.actualStep]["OldTree"].Clone();
         }
         else{
             this.vistree=actualvisElement.visElement1.Clone();
         }
 
-        if(command == "Add" || command == "Orders"  ){
+        if(command == "Add" || command == "Orders" || command == "NextOrPre"   ){
             this.visNode1=actualvisElement.visElement1.Copy();
             //this.visNode1.y=this.visNode1.y+7;
         }
