@@ -182,13 +182,14 @@ class Treevisualizer {
             if(this.actualStep+1<=this.visStepsNumber) {
 
                 this.actualStep=this.actualStep+1;
+                this.tree= this.visSteps[this.actualStep]["OldTree"].Clone();
                 this.actualStepElement=0;
                 this.ChangeTree();
 
             }
-
-            clearInterval(this.timer);
-            this.timeStoped=true;
+            else{
+                this.tree= this.visSteps[this.actualStep]["NewTree"].Clone();
+            }
 
         }
         else{
