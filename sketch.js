@@ -2,7 +2,7 @@
 let mouseX=0;
 let mouseY=0;
 let maxSlider=400;
-let sliderValue=200;
+let sliderValue=250;
 
 function mousePos(e) {
 
@@ -233,7 +233,7 @@ function createVisualElements(){
 
     randomInput= createInput();
     randomInput.size(50,25);
-    randomInput.position(randomButton.x+randomButton.width+10, randomButton.y+3);
+    randomInput.position(randomButton.x+randomButton.width+10, randomButton.y);
 
 
     textDiv = createElement("div","Animation Speed:");
@@ -244,7 +244,7 @@ function createVisualElements(){
 
 
     slider = createSlider(0, maxSlider+30, sliderValue);
-    slider.position(randomInput.x + randomInput.width+textDiv.width, textDiv.y-5);
+    slider.position(randomInput.x + randomInput.width+textDiv.width, textDiv.y-3);
 
 
 
@@ -270,39 +270,68 @@ function createVisualElements(){
     helpDivElement.html('<h2 align="center">Program működése útmutató</h2>'+
     '<ul>'+
         '<li><h3><button type="button">Add</button> </h3>'+
-            '<p>Ennek segítségével adhatsz elemet a Piros Fekete fához.'+
-            'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
+            '<p>Ennek segítségével adhatsz elemet a Piros-Fekete fához.'+
+            'Az elem beszúrodik és nyomonkövetheted, hogyan helyezkedik el a fában.</p>'+
 
         '</li>'+
         '<li>'+
             '<h3><button type="button">Del</button></h3>'+
-            '<p>Ennek segítségével törölhetsz elemet a Piros Fekete fából.'+
-            'Az elem beszúrodik és nyomonkövedheted, hogyan helyezkedik el a fában.</p>'+
+            '<p>Ennek segítségével törölhetsz elemet a Piros-Fekete fából.'+
+            'A fa megkeresi a törlendő elemet, kitörli és helyreigazítja a fát.</p>'+
 
 
-       '</li>'+
-        '<li> <h3><button type="button">>></button></h3>'+
-            '<p>Ennek segítségével léptetheted a rögtön a vég állapotba  a fát a beszúrás,vagy törlés esetén.</p>'+
-        '</li>'+
-        '<li><h3>></h3>'+
-            '<p>Ennek segítségével léptetheted a fát előre a beszúrás vagy törlés esetén.</p></li>'+
-        '<li><h3>< </h3>'+
-            '<p>Ennek segítségével léptetheted a fát vissza a beszúrás vagy törlés esetén.</p></li>'+
-        '<li><h3><<</h3>'+
-           ' <p>Ennek segítségével léptetheted a fát előre a beszúrás vagy törlés esetén.'+
-           ' Ezek segítségével léphetünk vissza, vagy előre előző beszúrt elemekhez is</p>'+
-        '</li>'+
-        '<li>'+
-            '<h3>Animation set ON/Off</h3>'+
-            '<p>Ennek az animációt be és ki lehet kaspcsolni.'+
-            'Csúszka segítségével az animáció sebeségét nővelhetjük</p>'+
        '</li>'+
        '<li>'+
-       '<h3>Animation set ON/Off</h3>'+
-       '<p>Ennek az animációt be és ki lehet kaspcsolni.'+
-       '<p>gnoivbuehbvuewjkgorwegervnoierorhorheongvob</p>'+
-       'Csúszka segítségével az animáció sebeségét nővelhetjük</p>'+
-  '</li>'+
+       '<h3><button type="button">Find</button></h3>'+
+       '<p> Ennek segítségével kereshetsz meg elemeket a Piros-Fekete fában.'+
+       'Az fa megkeresi az adott elemet.</p>'+
+        '</li>'+
+        '<li>'+
+        '<h3><button type="button">Pre</button></h3>'+
+        '<p> Ennek segítségével kereshetsz meg az adott elem előző elemét a Piros-Fekete fában.'+
+        'Az fa megkeresi az adott elemet. Majd az adott elem előző elemét.</p>'+
+        '</li>'+
+        '<li>'+
+        '<h3><button type="button">Next</button></h3>'+
+        '<p> Ennek segítségével kereshetsz meg az adott elem köbetkező elemét a Piros-Fekete fában.'+
+        'Az fa megkeresi az adott elemet. Majd az adott elem következő elemét.</p>'+
+        '</li>'+
+        '<li>'+
+        '<h3><button type="button">PreOrder</button></h3>'+
+        '<p> Ennek segítségével kiírathatod a PreOrder sorrendet a Piros-Fekete fában.'+
+        '</p>'+
+        '</li>'+
+        '<li>'+
+        '<h3><button type="button">InOrder</button></h3>'+
+        '<p> Ennek segítségével kiírathatod a InOrder sorrendet a Piros-Fekete fában.'+
+        '</p>'+
+        '</li>'+
+        '<li>'+
+        '<h3><button type="button">PostOrder</button></h3>'+
+        '<p> Ennek segítségével kiírathatod a PostOrder sorrendet a Piros-Fekete fában.'+
+        '</p>'+
+        '</li>'+
+        '<li> <h3><button type="button">Diagram</button></h3>'+
+            '<p>Ennek segítségével nézhet statisztikákat a Piros-Fekete fában.</p>'+
+        '</li>'+
+        '<li><h3> <button type="button"> >> </button> </h3>'+
+        '<p>Ennek segítségével léptetheted a fát az adott művelet legutolsó lépéséhez.</p></li>'+
+        '<li><h3> <button type="button"> > </button> </h3>'+
+        '<p>Ennek segítségével léptetheted a fát az adott művelet következő lépéséhez.</p></li>'+
+        '<li><h3> <button type="button"> < </button> </h3>'+
+        '<p>Ennek segítségével léptetheted a fát az adott művelet előző lépéséhez.</p></li>'+
+
+        '<li><h3> <button type="button"> << </button> </h3>'+
+        '<p>Ennek segítségével léptetheted a fát az adott művelet legelső lépéséhez.</p></li>'+
+        '<li><h3> <button type="button"> Pause/Start </button> </h3>'+
+        '<p>Ennek segítségével lehet az automata és manuális léptetés között váltani. Automatikus esetben a léptető gombok nem elérhetők.</p></li>'+
+        '<li><h3> <button type="button"> Random RBTree </button> </h3>'+
+        '<p>Ennek segítségével lehet random adott elemszámú fát beszúrni (1-30).</p></li>'+
+        '<li><h4>  Animation Speed </h4>'+
+        '<p>Ennek segítségével lehet a műveletek gyorsaságát állítani.</p></li>'+
+        '<li><h3> <button type="button"> Clear RBTree </button> </h3>'+
+        '<p>Törli a fát.</p></li>'+
+
     '</ul>'
   );
 
@@ -538,7 +567,7 @@ function windowResized() {
     divHorizontal2.size(sizex,50);
     divHorizontal2.position(0,sizey);
     help.position(sizex-help.width-20,10);
-    helpDivElement.position(help.x-700,help.y);
+    helpDivElement.position(help.x-helpDivElement.width,help.y)
 
 
     randomButton.position(input.x + input.width+10, sizey+10);
@@ -547,7 +576,7 @@ function windowResized() {
 
     slider.position(randomInput.x + randomInput.width+textDiv.width, textDiv.y-5);
 
-
+    buttonDiagrams.position(help.x-help.width-100,10);
 
 
 

@@ -57,7 +57,7 @@ div#text{
 #helpDialog{
 
     background-color: rgb(172, 172, 172);
-    border-radius: 30px;
+    border-radius: 10px;
     overflow : auto;
 
 
@@ -84,4 +84,9 @@ button,input {
     display: none;
 
 
+}
+
+#helpDialog {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
