@@ -4,15 +4,6 @@ let mouseY=0;
 let maxSlider=400;
 let sliderValue=250;
 
-function mousePos(e) {
-
-   mouseX = e.clientX-70;
-   mousey = e.clientY;
-   //console.log(mouseX +"|"+mouseY);
-   Visualazer.showNodeInfo(mouseX,mouseY);
-
-
-}
 
 function setup(){
 //console.log(windowHeight)
@@ -36,8 +27,6 @@ function setup(){
     blindButtons();
 
 
-    this.addEventListener("click",mousePos)
-
 
 }
 
@@ -45,13 +34,16 @@ function setup(){
 function draw(){
 
     background(150);
+
     //Visualazer.setForwardSpeed(slider.value());
+
     Visualazer.counterNextStep();
     Visualazer.drawTree();
     LockOperations(Visualazer.canAddAndDel());
     LockSteps(Visualazer.canStep());
     Visualazer.nextStep=maxSlider-slider.value();
     Visualazer.speed=slider.value()/10000;
+
    // frameCount;
 
 

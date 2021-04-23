@@ -53,17 +53,20 @@
 
 
     
-    for(let i=0;i<7;i++ ){
-        trees[i].addRandomElements(7**(i+1));
+    for(let i=0;i<6;i++ ){
+        trees[i].addRandomElements( 10**(i+1) )  ;
         datamin.push(trees[i].minDepth(trees[i].root));
         datamax.push(trees[i].maxDepth(trees[i].root));
         datablack.push(trees[i].BlackDepth(trees[i].root));
+
+        console.log(datamin,datamax,datablack);
         
 
-        name.push(  String( 7**(i+1)) );
+        name.push(  String( 10**(i+1)) );
     }
 
 
+    console.log(datamin,datamax,datablack);
 
     var ctx = document.getElementById('myChart').getContext('2d');
     
