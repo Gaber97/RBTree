@@ -541,7 +541,7 @@ RightRound(x){
   x.left=y.right;
   
 
-  if(y.left!=this.nil) y.right.parent=x;
+  if(y.right!=this.nil) y.right.parent=x;
   
   y.parent=x.parent;
   if(x.parent==this.nil){

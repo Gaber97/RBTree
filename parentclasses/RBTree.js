@@ -231,7 +231,7 @@ class RBTree{
     
   
   
-    if(y.left!=this.nil) y.right.parent=x;
+    if(y.right!=this.nil) y.right.parent=x;
     
     y.parent=x.parent;
   

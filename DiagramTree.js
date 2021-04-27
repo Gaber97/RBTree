@@ -20,8 +20,7 @@ class DiagramTree extends RBTree {
             /* compute the depth of each subtree */
             let leftmax = this.maxDepth(node.left);  
             let rightmax = this.maxDepth(node.right);  
-        
-            /* use the larger one */
+
             if (leftmax > rightmax)
             {
                 return(leftmax + 1);  
@@ -42,8 +41,7 @@ class DiagramTree extends RBTree {
             /* compute the depth of each subtree */
             let leftmax = this.minDepth(node.left);  
             let rightmax = this.minDepth(node.right);  
-        
-            /* use the larger one */
+
             if (leftmax < rightmax)
             {
                 return(leftmax + 1);  
@@ -68,12 +66,8 @@ class DiagramTree extends RBTree {
             
             }
 
-            
-            
             node=node.left;
-            
 
-            
         }
         
         return black;
