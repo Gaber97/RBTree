@@ -124,21 +124,21 @@ findVis(k){
   let x=this.root;
   while(x!=this.nil && x.value!=k){
         if(k<x.value){
-          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem kisebb mint "+String(x.value) + " ertékű elem . Balra megyünk tovább."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Find the "+String(k)+" key. The "+String(k)+" key is lesser then "+String(x.value) + " key.\nLooking the left Subtree."));
         
           x=x.left;
         }
         else{
-          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem nagyobb mint "+String(x.value) + " ertékű elem . Jobbra megyünk tovább."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Find the "+String(k)+" key. The "+String(k)+" key is greater then "+String(x.value) + " key.\nLooking the right Subtree."));
 
           x=x.right;
         }
   }
   if(x==this.nil){
-    this.Steps.push(new visElement("End",this.Clone(),"Az keresendő "+String(k)+" elem nem található."));
+    this.Steps.push(new visElement("End",this.Clone(),"The "+String(k)+" key is not founded."));
   }
   else{
-    this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem megtalálva."));
+    this.Steps.push(new visElement("Find",x.Copy(),"The "+String(k)+" key is founded."));
   }
   this.Steps.push(new visElement("End",this.Clone(),""));
   
@@ -530,7 +530,7 @@ LeftRound(x){
 
 
 }
-//?jó?
+
 
 RightRound(x){
  
@@ -968,6 +968,7 @@ Clone(){
   CordinatEquals=function(){
     this.CordinatEqualsOrder(this.root,this.nil);
   }
+  
   CordinatEqualsOrder=function(n,nil){
       
     if(n.left!= nil ){
