@@ -334,7 +334,7 @@ FixDel(x){
   while (x != this.root && x.color=="Black") {
     if(x == x.parent.left){
       let w =x.parent.right;
-      console.log(w.value)
+      //console.log(w.value)
       if(w.color=="Red"){
 
         this.Steps.push(new visElement("FixDelCase1Part1",this.Clone(),w.Copy(),x.Copy(),

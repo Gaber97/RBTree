@@ -70,6 +70,7 @@ class TreeUI {
 
 
     LockOperations(canClick) {
+        
         if (canClick) {
     
             this.input.removeAttribute('disabled',"");
@@ -529,18 +530,152 @@ class TreeUI {
         if(num<1 || num >30){
             
             return 0;
-      }
+        }
     
         for(let i=0;i<num;i++){
-            console.log(i)
+
             this.Visualizer.operationInTree(random(1,1000),"Add");
         }
     
     
     }
-    
 
 
+    EverythingsOk(){
+        this.Visualizer.clear();
+        for(let i=0;i<20;i++){
+            this.Visualizer.operationInTree(random(1,10000),"Add");
+            this.Visualizer.stepForwardSkip();
+        }
+
+        for(let i=0;i<1000;i++){
+
+
+            //console.log(this.Visualizer.tree.root.value)
+            this.Visualizer.operationInTree(this.Visualizer.tree.root.value,"Del");
+            this.Visualizer.stepForwardSkip();
+            this.Visualizer.operationInTree(random(1,10000),"Add");
+            this.Visualizer.stepForwardSkip();
+
+            //console.log(this.isRBTreeBlackHeightValid(this.Visualizer.tree.root));
+            console.log(this.isRBTreeBlackHeightValid(this.Visualizer.tree.root));
+
+        }
+
+
+
+        return 0;
+    }
+
+    isRedBlackTree(tree){
+
+        //prioritis
+
+
+
+        console.log(this.isRBTreeBlackHeightValid(tree))
+        console.log(this.isRBTreeRedHaveBlackChildsValid(tree))
+
+
+    }
+
+    isRBTreeBlackHeightValid(tree)
+    {
+        return computeBlackHeight(tree.root,tree.nil) != -1;
+    } 
+
+
+    computeBlackHeight(currNode,nill) 
+    {
+        // For an empty subtree the answer is obviouss
+        if (currNode == nill){
+            return 0; 
+        }
+            
+        // Computes the height for the left and right child recursively
+        let leftHeight = computeBlackHeight(currNode.left,nill);
+        let rightHeight = computeBlackHeight(currNode.right,nill);
+        let add = currNode.color == "Black" ? 1 : 0;
+
+        if (leftHeight == -1 || rightHeight == -1 || leftHeight != rightHeight){
+            return -1; 
+        }
+        
+        else{
+            return leftHeight + add;
+        }
+        
+    }
+
+    isRBTreeRedHaveBlackChildsValid(tree)
+    {
+        return this.computeRedHaveBlackChilds(tree.root,tree.nil) != -1;
+    } 
+        
+
+    computeRedHaveBlackChilds(currNode,nill) 
+    {
+
+        if (currNode == nill){
+            return 1; 
+        }
+            
+        let leftOkey = this.computeRedHaveBlackChilds(currNode.left,nill);
+        let rightOkey = this.computeRedHaveBlackChilds(currNode.right,nill);
+
+        let bad = false;
+
+        if(currNode.color=="Red"){
+            if(currNode.left.color=="Red" || currNode.right.color=="Red" ){
+                bad=true;
+            }
+        }
+
+
+        if (leftOkey == -1 || rightOkey == -1 || bad){
+            return -1; 
+        }
+        
+        else{
+            return 1;
+        }
+        
+    }
+
+    isRBTreeRedHaveBlackChildsValid(tree)
+    {
+        return this.computeRedHaveBlackChilds(tree.root,tree.nil) != -1;
+    } 
+        
+
+    computeRedHaveBlackChilds(currNode,nill) 
+    {
+
+        if (currNode == nill){
+            return 1; 
+        }
+            
+        let leftOkey = this.computeRedHaveBlackChilds(currNode.left,nill);
+        let rightOkey = this.computeRedHaveBlackChilds(currNode.right,nill); 
+
+        let bad = false;
+
+        if(currNode.color=="Red"){
+            if(currNode.left.color=="Red" || currNode.right.color=="Red" ){
+                bad=true;
+            }
+        }
+
+
+        if (leftOkey == -1 || rightOkey == -1 || bad){
+            return -1; 
+        }
+        
+        else{
+            return 1;
+        }
+        
+    }
 
 
 
