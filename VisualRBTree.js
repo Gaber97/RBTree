@@ -15,7 +15,7 @@ class VisaulRBTree extends RBTree{
     this.verticalchange=45;
     this.horizontalchange=45;
     this.Steps=[];
-    this.str=[]
+    this.str=[];
   }
 
 addValue(val){
@@ -124,21 +124,21 @@ findVis(k){
   let x=this.root;
   while(x!=this.nil && x.value!=k){
         if(k<x.value){
-          this.Steps.push(new visElement("Find",x.Copy(),"Find the "+String(k)+" key. The "+String(k)+" key is lesser then "+String(x.value) + " key.\nLooking the left Subtree."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Find the "+String(k)+" key. The "+String(k)+" key is lesser than "+String(x.value) + " key.\nLooking the left Subtree."));
         
           x=x.left;
         }
         else{
-          this.Steps.push(new visElement("Find",x.Copy(),"Find the "+String(k)+" key. The "+String(k)+" key is greater then "+String(x.value) + " key.\nLooking the right Subtree."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Find the "+String(k)+" key. The "+String(k)+" key is greater than "+String(x.value) + " key.\nLooking the right Subtree."));
 
           x=x.right;
         }
   }
   if(x==this.nil){
-    this.Steps.push(new visElement("End",this.Clone(),"The "+String(k)+" key is not founded."));
+    this.Steps.push(new visElement("End",this.Clone(),"The "+String(k)+" key is not found."));
   }
   else{
-    this.Steps.push(new visElement("Find",x.Copy(),"The "+String(k)+" key is founded."));
+    this.Steps.push(new visElement("Find",x.Copy(),"The "+String(k)+" key is found."));
   }
   this.Steps.push(new visElement("End",this.Clone(),""));
   
@@ -163,14 +163,14 @@ findVisDel(k){
   let x=this.root;
   while(x!=this.nil && x.value!=k){
         if(k<x.value){
-          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem kisebb mint "+String(x.value) + "ertékű elem.\nBalra megyünk tovább."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Az törlendő "+String(k)+" elem kisebb mint "+String(x.value) + " ertékű elem.\nBalra megyünk tovább."));
           //console.log(this.root.value<x.value && change);
           if(this.root.value<x.value && change ) this.PixelSet(x,-this.horizontalchange,0,x.right);
         
           x=x.left;
         }
         else{
-          this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem nagyobb mint "+String(x.value) + " ertékű elem.\nJobbra megyünk tovább."));
+          this.Steps.push(new visElement("Find",x.Copy(),"Az törlendő "+String(k)+" elem nagyobb mint "+String(x.value) + " ertékű elem.\nJobbra megyünk tovább."));
          
           if(this.root.value>x.value && change ) this.PixelSet(x,this.horizontalchange,0,x.left);
           
@@ -178,10 +178,10 @@ findVisDel(k){
         }
   }
   if(x==this.nil){
-    this.Steps.push(new visElement("End",this.Clone(),"Az keresendő "+String(k)+" elem nem található"));
+    this.Steps.push(new visElement("End",this.Clone(),"Az törlendő "+String(k)+" elem nem található"));
   }
   else{
-    this.Steps.push(new visElement("Find",x.Copy(),"Az keresendő "+String(k)+" elem megtalálva"));
+    this.Steps.push(new visElement("Find",x.Copy(),"Az törlendő "+String(k)+" elem megtalálva"));
   
   }
 
@@ -216,7 +216,7 @@ delValue(k){
     y=z;
   }
   else{
-    
+    //
     if(this.root.value>z.value ) this.PixelSet(z,this.horizontalchange,0,z.left);
 
     y=this.Next(z);
@@ -297,6 +297,11 @@ delValue(k){
   else{
     if(z!=y){
       this.Steps.push(new visElement("DelBindingNil",this.Clone(),z.Copy(),"Törlés : " +String(z.value)+" értékű elem átkötése",true));
+    }
+    else{
+      this.Steps.push(new visElement("End",this.Clone(),"Törlés : " +String(z.value)+" értékű elem törlése"));
+
+
     }
   
   }
@@ -486,6 +491,7 @@ VisMinimum(node,rootOfSubTree){
     node = node.left;
   }
   if(this.root.value>node.value ) this.PixelSet(node,this.horizontalchange,0,node.left)
+  
   this.Steps.push(new visElement("FindMin",node.Copy(),rootOfSubTree.Copy(),"A legkisebb elem a "+String(node.value)+" a jobb részfában."));
   return node;
 }

@@ -31,8 +31,6 @@ class Treevisualizer {
     }
     counterNextStep(){
 
-        
-
         if(!this.userStop && this.actualStep!=-1 ){
             this.counter++;
             //console.log(this.counter);
@@ -50,7 +48,7 @@ class Treevisualizer {
     stopOrStartInterval(){
 
         this.userStop=!this.userStop;
-
+        this.counter=0;
     }
 
     operationInTree(val,operation){
