@@ -298,37 +298,6 @@ class Treevisualizer {
         let actualListelement=actual["List"][this.actualStepElement];
 
         switch (actualListelement.command) {
-            case "Add":
-
-               node1=this.visNode1;
-               node1.newy=node1.y-5;
-               node1.value=actualListelement.visElement2.value;
-               node1.color=actualListelement.visElement2.color;
-
-               this.stepanim=true;
-
-               this.MoveNodeVertical(node1);
-
-
-                let val=actualListelement.visElement1.value;
-                let value=actualListelement.visElement2.value;
-
-
-                this.drawText(actualListelement.visElement3);
-
-                if(val<value){
-                    this.drawNode(node1,45,0);
-                }
-                else if(val==value){
-                    this.drawNode(node1,0,0);
-                }
-                else{
-
-
-                    this.drawNode(node1,-45,0);
-                }
-
-              break;
             case "AddAnimation":
 
 
@@ -791,6 +760,42 @@ class Treevisualizer {
           if(this.vistree.root!=this.vistree.nil)  this.PostOrderTreeDraw(this.vistree.root,this.vistree.nil);
 
           //this.drawNode(this.vistree.nil,0,0);
+
+
+          switch (actualListelement.command) {
+            case "Add":
+
+               node1=this.visNode1;
+               node1.newy=node1.y-5;
+               node1.value=actualListelement.visElement2.value;
+               node1.color=actualListelement.visElement2.color;
+
+               this.stepanim=true;
+
+               this.MoveNodeVertical(node1);
+
+
+                let val=actualListelement.visElement1.value;
+                let value=actualListelement.visElement2.value;
+
+
+                this.drawText(actualListelement.visElement3);
+
+                if(val<value){
+                    this.drawNode(node1,45,0);
+                }
+                else if(val==value){
+                    this.drawNode(node1,0,0);
+                }
+                else{
+
+
+                    this.drawNode(node1,-45,0);
+                }
+
+              break;
+        
+            }
     }
 
     drawText(info){
