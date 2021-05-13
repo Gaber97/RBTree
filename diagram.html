@@ -4,39 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBTRee Diagrams</title>
-    <link rel="stylesheet" href="diagram.css">
+    <link rel="stylesheet" href="style/diagram.css">
 
-    <script language="javascript" type="text/javascript" src="parentclasses/PoorNode.js"></script>
-    <script language="javascript" type="text/javascript" src="parentclasses/RBNode.js"></script>
-    <script language="javascript" type="text/javascript" src="parentclasses/RBTree.js"></script>
+    <script language="javascript" type="text/javascript" src="src/parentclasses/SimpleNode.js"></script>
+    <script language="javascript" type="text/javascript" src="src/parentclasses/RBNode.js"></script>
+    <script language="javascript" type="text/javascript" src="src/parentclasses/RBTree.js"></script>
 
-    <script language="javascript" type="text/javascript" src="DiagramTree.js"></script>
+    <script language="javascript" type="text/javascript" src="src/DiagramTree.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 
-    <div id="main" >
-        <div id="header">
 
-            <div id="back" >
-                <button  > 
-                <a href="index.html"  >Vissza</a>   
-                </button>
-
-            </div>
-            <h2>Red Black Tree</h2>
-            
-        </div>
-        <div id="diagrams">
-            <canvas id="myChart" responsive='true'></canvas>
-            <p>Az ábrán random elemekkel beszúrt fákat láthatunk.</p>
-
-        </div>
-
-
-    </div>
+</head>
+<body>
     
+
+    <div class="container" >
+        <div class="header">
+
+                <h2>Red Black Tree</h2>
+        </div>
+        <div class="back">
+
+            <button  > 
+            <a href="index.html"  >Vissza</a>   
+            </button>
+
+         </div>
+         <div class="title">
+            <h2>Diagram</h2>
+         </div>
+
+
+        <canvas class="Diagram"  responsive='true'>
+
+        </canvas>
+
+
+        <div class="Table">
+            <h2>Table</h2>
+         </div>
+
+
+         <table class="table"> 
+
+
+
+         </table>
+  
+
+
+        </div>
+
+
+
+
     <script>
 
 
@@ -68,7 +92,7 @@
 
     console.log(datamin,datamax,datablack);
 
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementsByClassName('Diagram')[0].getContext('2d');
     
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -135,8 +159,6 @@
 
 
 
-</head>
-<body>
-    
+
 </body>
 </html>
