@@ -276,52 +276,45 @@ class TreeUI {
     
         //szépít
     
-        this.helpDivElement.html('<h2 align="center">Program működése útmutató</h2>'+
+        this.helpDivElement.html('<h2 align="center">Guide for the user</h2>'+
         '<ul>'+
             '<li><h3><button type="button">Add</button> </h3>'+
-                '<p>Ennek segítségével adhatsz elemet a Piros-Fekete fához.'+
-                'Az elem beszúrodik és nyomonkövetheted, hogyan helyezkedik el a fában.</p>'+
+                "<p>With the help of this button you can add an element to the red-balck tree. The element will be inserted and you can track how it finds it's place in the tree.</p>"+
     
             '</li>'+
             '<li>'+
                 '<h3><button type="button">Del</button></h3>'+
-                '<p>Ennek segítségével törölhetsz elemet a Piros-Fekete fából.'+
-                'A fa megkeresi a törlendő elemet, kitörli és helyreigazítja a fát.</p>'+
+                '<p>With the help of this button you can delete an element from the red-black tree. The tree searches for the element that is meant to be deleted, removes it, then adjusts itself if it is necessary.</p>'+
     
     
            '</li>'+
            '<li>'+
            '<h3><button type="button">Find</button></h3>'+
-           '<p> Ennek segítségével kereshetsz meg elemeket a Piros-Fekete fában.'+
-           'Az fa megkeresi az adott elemet.</p>'+
+           '<p> With the help of this button you can search for an element in the red-black tree. The tree will search for the given element.</p>'+
             '</li>'+
             '<li>'+
             '<h3><button type="button">Pre</button></h3>'+
-            '<p> Ennek segítségével kereshetsz meg az adott elem előző elemét a Piros-Fekete fában.'+
-            'Az fa megkeresi az adott elemet. Majd az adott elem előző elemét.</p>'+
+            '<p>With the help of this button you can search for the previous element of a given element in the red-black tree. The tree searches for the given element, then the previous element of that element.</p>'+
             '</li>'+
             '<li>'+
             '<h3><button type="button">Next</button></h3>'+
-            '<p> Ennek segítségével kereshetsz meg az adott elem köbetkező elemét a Piros-Fekete fában.'+
-            'Az fa megkeresi az adott elemet. Majd az adott elem következő elemét.</p>'+
+            '<p> With the help of this button you can search for the next element of a given element in the red-black tree. The tree searches for the given element, then the next element of that element.</p>'+
             '</li>'+
             '<li>'+
             '<h3><button type="button">PreOrder</button></h3>'+
-            '<p> Ennek segítségével kiírathatod a PreOrder sorrendet a Piros-Fekete fában.'+
+            '<p> With the help of this button you can write out the PreOrder order of the red-black tree.'+
             '</p>'+
             '</li>'+
             '<li>'+
             '<h3><button type="button">InOrder</button></h3>'+
-            '<p> Ennek segítségével kiírathatod a InOrder sorrendet a Piros-Fekete fában.'+
-            '</p>'+
+            '<p>   With the help of this button you can write out the InOrder order of the red-black tree.</p>'+
             '</li>'+
             '<li>'+
             '<h3><button type="button">PostOrder</button></h3>'+
-            '<p> Ennek segítségével kiírathatod a PostOrder sorrendet a Piros-Fekete fában.'+
-            '</p>'+
+            '<p> With the help of this button you can write out the PostOrder order of the red-black tree.</p>'+
             '</li>'+
             '<li> <h3><button type="button">Diagram</button></h3>'+
-                '<p>Ennek segítségével nézhet statisztikákat a Piros-Fekete fában.</p>'+
+                '<p>With the help of this button you can check some statistics about the red-black tree.</p>'+
             '</li>'+
             '<li><h3> <button type="button"> >> </button> </h3>'+
             '<p>Ennek segítségével léptetheted a fát az adott művelet legutolsó lépéséhez.</p></li>'+

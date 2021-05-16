@@ -83,14 +83,33 @@
         datamax.push(trees[i].maxDepth(trees[i].root));
         datablack.push(trees[i].BlackDepth(trees[i].root));
 
-        console.log(datamin,datamax,datablack);
-        
-
         name.push(  String( 10**(i+1)) );
     }
 
 
+
+
     console.log(datamin,datamax,datablack);
+
+
+
+    var table = document.getElementsByClassName('table')[0]
+
+    table.innerHTML="";
+    
+    let tablebody='  <tr><th scope="col">Minimun Heigh</th><th scope="col">Black Heigh</th><th scope="col">MaxHeigh</th></tr> ';
+
+
+    
+    for(let i=0;i<6;i++ ){
+
+        tablebody+="<tr>"+"<td>"+datamin[i]+"</td>"+"<td>"+datablack[i]+"</td>"+"<td>"+datamax[i]+"</td>"+"</tr>"
+
+
+
+
+    }
+    table.innerHTML=tablebody;
 
     var ctx = document.getElementsByClassName('Diagram')[0].getContext('2d');
     
@@ -154,6 +173,7 @@
             }
         }
     });
+    
     </script>
 
 
