@@ -61,67 +61,52 @@ class Treevisualizer {
             return 0;
         }
 
+        if(operation !="Add" && this.visStepsNumber == -1 || this.actualStep == -1) return 0;
+
+        console.log()
+
         switch (operation) {
             case "Add":
                 let x = this.tree.max(this.tree.root);
 
+
+
                 if (x.x > windowWidth - 50) { return 0; }
-                //ha már nem fér el a képernyőn
 
                 this.addSteps(this.tree.addValue(val));
                 break;
             case "Del":
-                //még nincs mit törölni
-                if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
 
-                //még nincs mit törölni
                 this.addSteps(this.tree.delValue(val));
 
                 break;
             case "Find":
-                //még nincs mit
-                if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
-
                 this.addSteps(this.tree.findVis(val));
 
                 break;
             case "Pre":
-                //még nincs mit
-                if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
+
                 this.addSteps(this.tree.visPrev(val));
 
                 break;
             case "Next":
-                //még nincs mit
-                console.log("Next")
-                if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
+
                 this.addSteps(this.tree.visNext(val));
 
                 break;
             case "PreOrder":
-                //még nincs mit
-                if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
-
                 this.addSteps(this.tree.visOrder("PreOrder"));
 
                 break;
             case "InOrder":
-                //még nincs mit
-                if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
-
                 this.addSteps(this.tree.visOrder("InOrder"));
 
                 break;
             case "PostOrder":
-                //még nincs mit
-                if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
-
-
                 this.addSteps(this.tree.visOrder("PostOrder"));
 
                 break;
             default:
-            // code block
 
         }
 
