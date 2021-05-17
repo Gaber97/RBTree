@@ -428,21 +428,21 @@ FixDel(x){
         
         if( w.left.color=="Black"){
 
-          this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.left.Copy(),
+          this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.right.Copy(),
           "3. eset: A " +String(x.value) + " testvére "+String(w.value)+" fekete és jobb gyereke piros, bal gyereke fekete."));
 
         
         w.right.color="Black";
         w.color="Red";
 
-        this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.left.Copy(),
+        this.Steps.push(new visElement("FixDelCase3",this.Clone(),w.Copy(),x.Copy(),w.right.Copy(),
         "3. eset: A " +String(w.value) + " csúcs piros, jobb gyereke fekete lesz. Átforgatjuk a 4. esetre "));
         this.LeftRound(w);
         w=x.parent.left;
      
         }
 
-        this.Steps.push(new visElement("FixDelCase4",this.Clone(),w.Copy(),x.Copy(),w.right.Copy(),
+        this.Steps.push(new visElement("FixDelCase4",this.Clone(),w.Copy(),x.Copy(),w.left.Copy(),
         "4. eset: A " +String(x.value) + " testvére "+String(w.value)+" fekete és bal gyereke piros"));
 
         w.color=x.parent.color;
