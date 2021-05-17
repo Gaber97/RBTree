@@ -123,7 +123,7 @@ class RBTree {
     y.left = x;
     x.parent = y;
   }
-  
+
   RightRound(x) {
     y = x.left;
     x.left = y.right;
@@ -144,7 +144,7 @@ class RBTree {
   RepairAdd(z) {
     while (z.parent.color == 'Red') {
       if (z.parent == z.parent.parent.left) {
-        
+
         var y = z.parent.parent.right;
         if (y.color == "Red") {
           z.parent.color = "Black";

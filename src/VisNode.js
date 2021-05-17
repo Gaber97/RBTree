@@ -10,60 +10,60 @@ class VisNode extends RBNode {
   drawy;
 
 
-  constructor(val,color){
+  constructor(val, color) {
 
-    super(val,color);
-    this.x=400;
-    this.y=400;
-    this.newx=this.x;
-    this.newy=this.y;
+    super(val, color);
+    this.x = 400;
+    this.y = 400;
+    this.newx = this.x;
+    this.newy = this.y;
 
-    
+
     //change when move
-    this.lambda=1;
-    
-    this.drawx=this.x;
-    this.drawy=this.y;
+    this.lambda = 1;
+
+    this.drawx = this.x;
+    this.drawy = this.y;
 
 
     //just visual element
-    this.dir=1;
-    this.round=50;
-    
+    this.dir = 1;
+    this.round = 50;
+
   }
 
 
-  
- 
-  Copy(nil){
+
+
+  Copy(nil) {
 
     var n = new VisNode();
 
 
-    n.value=this.value; 
-    n.x=this.x;
-    n.y=this.y;
-    n.newx=this.newx;
-    n.newy=this.newy;
-    n.lambda=this.lambda;
-    n.color=this.color;
+    n.value = this.value;
+    n.x = this.x;
+    n.y = this.y;
+    n.newx = this.newx;
+    n.newy = this.newy;
+    n.lambda = this.lambda;
+    n.color = this.color;
 
-  
-    n.drawx=this.x;
-    n.drawy=this.y;
-    
-   
-    if(nil != undefined){
-    
+
+    n.drawx = this.x;
+    n.drawy = this.y;
+
+
+    if (nil != undefined) {
+
       n.left = nil;
-      n.right= nil;
-      n.parent= nil;
+      n.right = nil;
+      n.parent = nil;
     }
-    else{
-     
+    else {
+
       n.left = this.left;;
-      n.right= this.right;
-      n.parent= this.parent;
+      n.right = this.right;
+      n.parent = this.parent;
     }
 
     return n;
@@ -72,6 +72,6 @@ class VisNode extends RBNode {
 
 
 
- 
+
 }
- 
+

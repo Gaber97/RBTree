@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,45 +19,46 @@
 
 
 </head>
-<body>
-    
 
-    <div class="container" >
+<body>
+
+
+    <div class="container">
         <div class="header">
 
-                <h2>Red Black Tree</h2>
+            <h2>Red Black Tree</h2>
         </div>
         <div class="back">
 
-            <button  > 
-            <a href="index.html"  >Vissza</a>   
+            <button>
+                <a href="index.html">Vissza</a>
             </button>
 
-         </div>
-         <div class="title">
+        </div>
+        <div class="title">
             <h2>Diagram</h2>
-         </div>
+        </div>
 
 
-        <canvas class="Diagram"  responsive='true'>
+        <canvas class="Diagram" responsive='true'>
 
         </canvas>
 
 
         <div class="Table">
             <h2>Table</h2>
-         </div>
-
-
-         <table class="table"> 
-
-
-
-         </table>
-  
-
-
         </div>
+
+
+        <table class="table">
+
+
+
+        </table>
+
+
+
+    </div>
 
 
 
@@ -64,116 +66,116 @@
     <script>
 
 
-   
-    let datamax=[];
-    let datamin=[];
-    let datablack=[];
-    let name=[];
-    let trees=[];
-    for(let i=0;i<7;i++ ){
-        trees.push(new DiagramTree());
-        
-    }
 
+        let datamax = [];
+        let datamin = [];
+        let datablack = [];
+        let name = [];
+        let trees = [];
+        for (let i = 0; i < 7; i++) {
+            trees.push(new DiagramTree());
 
-    
-    for(let i=0;i<6;i++ ){
-        trees[i].addRandomElements( 10**(i+1) )  ;
-        datamin.push(trees[i].minDepth(trees[i].root));
-        datamax.push(trees[i].maxDepth(trees[i].root));
-        datablack.push(trees[i].BlackDepth(trees[i].root));
-
-        name.push(  String( 10**(i+1)) );
-    }
-
-
-
-
-    console.log(datamin,datamax,datablack);
-
-
-
-    var table = document.getElementsByClassName('table')[0]
-
-    table.innerHTML="";
-    
-    let tablebody='  <tr><th scope="col">Minimun Heigh</th><th scope="col">Black Heigh</th><th scope="col">MaxHeigh</th></tr> ';
-
-
-    
-    for(let i=0;i<6;i++ ){
-
-        tablebody+="<tr>"+"<td>"+datamin[i]+"</td>"+"<td>"+datablack[i]+"</td>"+"<td>"+datamax[i]+"</td>"+"</tr>"
-
-
-
-
-    }
-    table.innerHTML=tablebody;
-
-    var ctx = document.getElementsByClassName('Diagram')[0].getContext('2d');
-    
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: name,
-            datasets: [{
-                label: 'MaxDepth',
-                data: datamax,
-                backgroundColor: [
-                    'rgba(255, 0, 0,1)',
-                    'rgba(255, 0, 0,1)',
-                    'rgba(255, 0, 0,1)',
-                    'rgba(255, 0, 0,1)',
-                    'rgba(255, 0, 0,1)',
-                    'rgba(255, 0, 0,1)',
-                    'rgba(255, 0, 0,1)'
-                ]
-                
-                
-            },{
-                label: 'MinDepth',
-                data: datamin,
-                backgroundColor: [
-                    'rgba(255, 133, 0,1)',
-                    'rgba(255, 133, 0,1)',
-                    'rgba(255, 133, 0,1)',
-                    'rgba(255, 133, 0,1)',
-                    'rgba(255, 133, 0,1)',
-                    'rgba(255, 133, 0,1)',
-                    'rgba(255, 133, 0,1)'
-                ]
-               
-              
-            },
-            {
-                label: 'BlackDepth',
-                data: datablack,
-                backgroundColor: [
-                    'rgba(0, 0, 0,1)',
-                    'rgba(0, 0, 0,1)',
-                    'rgba(0, 0, 0,1)',
-                    'rgba(0, 0, 0,1)',
-                    'rgba(0, 0, 0,1)',
-                    'rgba(0, 0, 0,1)',
-                    'rgba(0, 0, 0,1)'
-                ]
-               
-              
-            }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
         }
-    });
-    
+
+
+
+        for (let i = 0; i < 6; i++) {
+            trees[i].addRandomElements(10 ** (i + 1));
+            datamin.push(trees[i].minDepth(trees[i].root));
+            datamax.push(trees[i].maxDepth(trees[i].root));
+            datablack.push(trees[i].BlackDepth(trees[i].root));
+
+            name.push(String(10 ** (i + 1)));
+        }
+
+
+
+
+        console.log(datamin, datamax, datablack);
+
+
+
+        var table = document.getElementsByClassName('table')[0]
+
+        table.innerHTML = "";
+
+        let tablebody = '  <tr><th scope="col">Minimun Heigh</th><th scope="col">Black Heigh</th><th scope="col">MaxHeigh</th></tr> ';
+
+
+
+        for (let i = 0; i < 6; i++) {
+
+            tablebody += "<tr>" + "<td>" + datamin[i] + "</td>" + "<td>" + datablack[i] + "</td>" + "<td>" + datamax[i] + "</td>" + "</tr>"
+
+
+
+
+        }
+        table.innerHTML = tablebody;
+
+        var ctx = document.getElementsByClassName('Diagram')[0].getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: name,
+                datasets: [{
+                    label: 'MaxDepth',
+                    data: datamax,
+                    backgroundColor: [
+                        'rgba(255, 0, 0,1)',
+                        'rgba(255, 0, 0,1)',
+                        'rgba(255, 0, 0,1)',
+                        'rgba(255, 0, 0,1)',
+                        'rgba(255, 0, 0,1)',
+                        'rgba(255, 0, 0,1)',
+                        'rgba(255, 0, 0,1)'
+                    ]
+
+
+                }, {
+                    label: 'MinDepth',
+                    data: datamin,
+                    backgroundColor: [
+                        'rgba(255, 133, 0,1)',
+                        'rgba(255, 133, 0,1)',
+                        'rgba(255, 133, 0,1)',
+                        'rgba(255, 133, 0,1)',
+                        'rgba(255, 133, 0,1)',
+                        'rgba(255, 133, 0,1)',
+                        'rgba(255, 133, 0,1)'
+                    ]
+
+
+                },
+                {
+                    label: 'BlackDepth',
+                    data: datablack,
+                    backgroundColor: [
+                        'rgba(0, 0, 0,1)',
+                        'rgba(0, 0, 0,1)',
+                        'rgba(0, 0, 0,1)',
+                        'rgba(0, 0, 0,1)',
+                        'rgba(0, 0, 0,1)',
+                        'rgba(0, 0, 0,1)',
+                        'rgba(0, 0, 0,1)'
+                    ]
+
+
+                }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
     </script>
 
 
@@ -181,4 +183,5 @@
 
 
 </body>
+
 </html>
