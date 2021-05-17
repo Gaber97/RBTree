@@ -6,7 +6,7 @@ class Treevisualizer {
         this.dir = 1;
         this.anim = true;
         this.visSteps = [];
-        this.visStepsNumber = -1;
+        this.visStepsSize = -1;
         this.actualStep = -1;
         this.actualStepElement = 0;
         this.timeStoped = true;
@@ -16,27 +16,27 @@ class Treevisualizer {
 
         this.visNode1;
         this.visNode2;
-        this.tree = new VisaulRBTree();
+        this.tree = new VisRBTree();
         this.vistree = this.tree;
         this.counter = 0;
         this.nextStep = 300;
         this.manualStep = false;
-
+        this.moved = true;
 
         //// DEBUG:
-        this.dialog = createDiv("");
-        this.dialog.hide();
-        this.dialog.size(50, 50);
-        this.moved = true;
+
     }
+
+
     counterNextStep() {
+
 
         if (!this.userStop && this.actualStep != -1) {
             this.counter++;
-            //console.log(this.counter);
+ 
         }
         if (this.counter > this.nextStep) {
-            //console.log(this.counter);
+
             if (this.actualStepElement < this.visSteps[this.actualStep]["List"].length) {
                 this.stepForward();
             }
@@ -44,6 +44,7 @@ class Treevisualizer {
         }
 
     }
+
 
     stopOrStartInterval() {
 
@@ -53,23 +54,29 @@ class Treevisualizer {
 
     operationInTree(val, operation) {
 
-        val = parseInt(val)
+        //add operation in TreeVisualizer
+
+
 
         this.counter = 0;
+        val = parseInt(val)
+
+
+        //exit when the input is not a number, not add element the tree
         if (isNaN(val)) {
             console.log(NaN);
             return 0;
         }
 
-        if(operation !="Add" && this.visStepsNumber == -1 || this.actualStep == -1) return 0;
+
+        //exit when the tree is empty or reset to default, just add element is enabled
+        if( operation != "Add"  && ( this.visStepsSize == -1 || this.actualStep == -1 )) return 0;
 
         console.log()
 
         switch (operation) {
             case "Add":
                 let x = this.tree.max(this.tree.root);
-
-
 
                 if (x.x > windowWidth - 50) { return 0; }
 
@@ -110,11 +117,11 @@ class Treevisualizer {
 
         }
 
-        if (this.actualStep < this.visStepsNumber) {
+        if (this.actualStep < this.visStepsSize) {
 
             if (this.actualStep == -1) {
 
-                this.tree = new VisaulRBTree();
+                this.tree = new VisRBTree();
 
 
             }
@@ -136,11 +143,11 @@ class Treevisualizer {
             return 0;
         }
 
-        this.visStepsNumber = this.actualStep + 1;
-        this.actualStep = this.visStepsNumber;
+        this.visStepsSize = this.actualStep + 1;
+        this.actualStep = this.visStepsSize;
         this.actualStepElement = 0;
 
-        this.visSteps[this.visStepsNumber] = data;
+        this.visSteps[this.visStepsSize] = data;
 
         this.ChangeTree();
 
@@ -148,7 +155,7 @@ class Treevisualizer {
 
     stepForward() {
 
-        if (this.visStepsNumber == -1) {
+        if (this.visStepsSize == -1) {
 
             return 0;
 
@@ -163,7 +170,7 @@ class Treevisualizer {
 
         if (this.actualStepElement + 1 >= this.visSteps[this.actualStep]["List"].length) {
 
-            if (this.actualStep + 1 <= this.visStepsNumber) {
+            if (this.actualStep + 1 <= this.visStepsSize) {
 
                 this.actualStep = this.actualStep + 1;
                 this.tree = this.visSteps[this.actualStep]["OldTree"].Clone();
@@ -187,7 +194,7 @@ class Treevisualizer {
 
     stepForwardSkip() {
 
-        if (this.visStepsNumber == -1) {
+        if (this.visStepsSize == -1) {
 
             return 0;
         }
@@ -213,7 +220,7 @@ class Treevisualizer {
     stepBackward() {
 
 
-        if (this.visStepsNumber == -1) {
+        if (this.visStepsSize == -1) {
             return 0;
         }
 
@@ -232,7 +239,7 @@ class Treevisualizer {
             else if (this.actualStep - 1 == -1) {
                 this.actualStep = this.actualStep - 1;
                 this.actualStepElement = 0;
-                this.tree = new VisaulRBTree();
+                this.tree = new VisRBTree();
 
             }
 
@@ -248,7 +255,7 @@ class Treevisualizer {
 
     stepBackwardSkip() {
 
-        if (this.visStepsNumber == -1) {
+        if (this.visStepsSize == -1) {
             return 0;
         }
 
@@ -276,7 +283,7 @@ class Treevisualizer {
 
         this.moved = true;
 
-        if (this.visStepsNumber == -1 || this.actualStep == -1) return 0;
+        if (this.visStepsSize == -1 || this.actualStep == -1) return 0;
 
         let actual = this.visSteps[this.actualStep];
 
@@ -813,6 +820,7 @@ class Treevisualizer {
         }
     }
 
+    
     drawNode(n, xchange, ychange) {
         strokeWeight(1);
         stroke(0);
@@ -855,22 +863,13 @@ class Treevisualizer {
             // line(n.right.drawx, n.right.drawy, n.drawx, n.drawy);
         }
 
-
-
-
         if (n.parent != nil) {
             //console.log(n.parent.drawx + " "+ n.parent.drawy);
             stroke(255);
             strokeWeight(2);
             line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
         }
-
-
-
         this.drawNode(n, 0, 0);
-
-        //n.drawx=n.x;
-        //n.drawy=n.y;
 
     }
 
@@ -885,7 +884,6 @@ class Treevisualizer {
             this.PreOrderMove(n.right, nil);
 
         }
-
         this.MoveNode(n);
     }
 
@@ -953,14 +951,14 @@ class Treevisualizer {
     clear() {
         this.visSteps = [];
         this.actualStep = -1;
-        this.visStepsNumber = -1;
-        this.tree = new VisaulRBTree();
+        this.visStepsSize = -1;
+        this.tree = new VisRBTree();
         clearInterval(this.timer);
 
     }
 
     canAddAndDel() {
-        if (this.visStepsNumber == -1 || this.actualStep == -1) {
+        if (this.visStepsSize == -1 || this.actualStep == -1) {
             return true;
         }
         if (this.actualStepElement == this.visSteps[this.actualStep]["List"].length - 1) {
@@ -973,29 +971,6 @@ class Treevisualizer {
         return this.userStop;
     }
 
-    showDialog(n, nil, x, y) {
-        if (n.left != nil) {
-            this.showDialog(n.left, nil, x, y);
-        }
-        if (n.right != nil) {
-            this.showDialog(n.right, nil, x, y);
-        }
-        if (Math.abs(n.drawx - x) < n.round / 2 && Math.abs(n.drawy - y) < n.round / 2) {
-            console.log("----------------------------");
-            console.log("Value: %c" + n.value, "color:red");
-            console.log("Left: %c" + n.left.value, "color:red");
-            console.log("Right: %c" + n.right.value, "color:red");
-            console.log("Parent: %c" + n.parent.value, "color:red");
-            console.log("Color: " + n.color);
-            console.log("X:NEWX: %c" + n.x + ":" + n.newx, "color:red");
-            console.log("Y:NEWY: %c" + n.y + ":" + n.newy, "color:red");
-            console.log("----------------------------");
-        }
-
-
-    }
-    showNodeInfo(x, y) {
-        this.showDialog(this.vistree.root, this.vistree.nil, x, y);
-    }
+   
 
 }

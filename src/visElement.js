@@ -1,6 +1,6 @@
 
 
-class visElement {
+class VisElement {
 
     constructor(command, visel1, visel2, visel3, visel4, visel5, visel6) {
         this.command = command;

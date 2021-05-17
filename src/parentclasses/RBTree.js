@@ -15,20 +15,11 @@ class RBTree {
 
   }
 
-
-
-
-
   addValue(val) {
-
-
-
 
     let z = new RBNode(val, "Red")
     let y = this.nil;
     let x = this.root;
-
-
 
     while (x != this.nil) {
       y = x;
@@ -73,9 +64,6 @@ class RBTree {
 
   }
 
-  //megfelelő
-
-
   Find(k) {
 
     let x = this.root;
@@ -94,8 +82,6 @@ class RBTree {
     return x;
 
   }
-
-
 
 
   delValue(k) {
