@@ -48,7 +48,11 @@ class TreeUI {
             this.sizey = 500;
         }
 
-        this.Visualizer = new Treevisualizer();
+        this.visualizer = new Treevisualizer();
+        
+        this.Tester = new Tester(this.visualizer);
+
+
         this.createVisualElements();
         this.bindButtons();
 
@@ -58,12 +62,12 @@ class TreeUI {
 
         background(150);
 
-        this.Visualizer.counterNextStep();
-        this.Visualizer.drawTree();
-        this.LockOperations(this.Visualizer.canAddAndDel());
-        this.LockSteps(this.Visualizer.canStep());
-        this.Visualizer.nextStep = this.maxSlider - this.slider.value();
-        this.Visualizer.speed = this.slider.value() / 10000;
+        this.visualizer.counterNextStep();
+        this.visualizer.drawTree();
+        this.LockOperations(this.visualizer.canAddAndDel());
+        this.LockSteps(this.visualizer.canStep());
+        this.visualizer.nextStep = this.maxSlider - this.slider.value();
+        this.visualizer.speed = this.slider.value() / 10000;
 
 
     }
@@ -350,7 +354,7 @@ class TreeUI {
         this.buttonAdd.mousePressed(() => {
 
             let n = this.input.value();
-            this.Visualizer.operationInTree(n, "Add");
+            this.visualizer.operationInTree(n, "Add");
             this.input.value("");
 
         });
@@ -358,7 +362,7 @@ class TreeUI {
         this.buttonDel.mousePressed(() => {
 
             let n = this.input.value();
-            this.Visualizer.operationInTree(n, "Del");
+            this.visualizer.operationInTree(n, "Del");
             this.input.value("");
 
         });
@@ -367,7 +371,7 @@ class TreeUI {
         this.buttonFind.mousePressed(() => {
 
             let n = this.input.value();
-            this.Visualizer.operationInTree(n, "Find");
+            this.visualizer.operationInTree(n, "Find");
             this.input.value("");
 
         });
@@ -375,7 +379,7 @@ class TreeUI {
         this.buttonPreOrder.mousePressed(() => {
 
 
-            this.Visualizer.operationInTree(0, "PreOrder");
+            this.visualizer.operationInTree(0, "PreOrder");
 
 
         });
@@ -383,7 +387,7 @@ class TreeUI {
         this.buttonInOrder.mousePressed(() => {
 
 
-            this.Visualizer.operationInTree(0, "InOrder");
+            this.visualizer.operationInTree(0, "InOrder");
 
 
         });
@@ -391,7 +395,7 @@ class TreeUI {
         this.buttonPostOrder.mousePressed(() => {
 
 
-            this.Visualizer.operationInTree(0, "PostOrder");
+            this.visualizer.operationInTree(0, "PostOrder");
 
 
         });
@@ -400,7 +404,7 @@ class TreeUI {
         this.buttonNext.mousePressed(() => {
 
             let n = this.input.value();
-            this.Visualizer.operationInTree(n, "Next");
+            this.visualizer.operationInTree(n, "Next");
             this.input.value("");
 
 
@@ -410,7 +414,7 @@ class TreeUI {
         this.buttonPre.mousePressed(() => {
 
             let n = this.input.value();
-            this.Visualizer.operationInTree(n, "Pre");
+            this.visualizer.operationInTree(n, "Pre");
             this.input.value("");
 
 
@@ -419,39 +423,39 @@ class TreeUI {
 
         this.buttonForwardSkip.mousePressed(() => {
 
-            this.Visualizer.stepForwardSkip();
+            this.visualizer.stepForwardSkip();
         });
         this.buttonForward.mousePressed(() => {
 
-            this.Visualizer.stepForward();
+            this.visualizer.stepForward();
 
         });
         this.buttonBackward.mousePressed(() => {
 
-            this.Visualizer.stepBackward();
+            this.visualizer.stepBackward();
 
         });
         this.buttonBackwardSkip.mousePressed(() => {
 
-            this.Visualizer.stepBackwardSkip();
+            this.visualizer.stepBackwardSkip();
 
         });
         this.buttonPause.mousePressed(() => {
 
 
-            this.Visualizer.stopOrStartInterval();
+            this.visualizer.stopOrStartInterval();
 
         });
         this.clearTreeButton.mousePressed(() => {
 
-            this.Visualizer.clear();
+            this.visualizer.clear();
         });
 
         this.randomButton.mousePressed(() => {
 
-            this.Visualizer.clear();
+            this.visualizer.clear();
             this.randomTree(this.randomInput.value());
-            this.Visualizer.stepForwardSkip();
+            this.visualizer.stepForwardSkip();
             this.randomInput.value("");
 
         });
@@ -527,148 +531,11 @@ class TreeUI {
 
         for (let i = 0; i < num; i++) {
 
-            this.Visualizer.operationInTree(random(1, 1000), "Add");
+            this.visualizer.operationInTree(random(1, 1000), "Add");
         }
 
 
     }
-
-
-    EverythingsOk() {
-        this.Visualizer.clear();
-        for (let i = 0; i < 20; i++) {
-            this.Visualizer.operationInTree(random(1, 10000), "Add");
-            this.Visualizer.stepForwardSkip();
-        }
-
-        for (let i = 0; i < 1000; i++) {
-
-
-            //console.log(this.Visualizer.tree.root.value)
-            this.Visualizer.operationInTree(this.Visualizer.tree.root.value, "Del");
-            this.Visualizer.stepForwardSkip();
-            this.Visualizer.operationInTree(random(1, 10000), "Add");
-            this.Visualizer.stepForwardSkip();
-
-            //console.log(this.isRBTreeBlackHeightValid(this.Visualizer.tree.root));
-            console.log(this.isRBTreeBlackHeightValid(this.Visualizer.tree.root));
-
-        }
-
-
-
-        return 0;
-    }
-
-    isRedBlackTree(tree) {
-
-        //prioritis
-
-
-
-        console.log(this.isRBTreeBlackHeightValid(tree))
-        console.log(this.isRBTreeRedHaveBlackChildsValid(tree))
-
-
-    }
-
-    isRBTreeBlackHeightValid(tree) {
-        return computeBlackHeight(tree.root, tree.nil) != -1;
-    }
-
-
-    computeBlackHeight(currNode, nill) {
-        // For an empty subtree the answer is obviouss
-        if (currNode == nill) {
-            return 0;
-        }
-
-        // Computes the height for the left and right child recursively
-        let leftHeight = computeBlackHeight(currNode.left, nill);
-        let rightHeight = computeBlackHeight(currNode.right, nill);
-        let add = currNode.color == "Black" ? 1 : 0;
-
-        if (leftHeight == -1 || rightHeight == -1 || leftHeight != rightHeight) {
-            return -1;
-        }
-
-        else {
-            return leftHeight + add;
-        }
-
-    }
-
-    isRBTreeRedHaveBlackChildsValid(tree) {
-        return this.computeRedHaveBlackChilds(tree.root, tree.nil) != -1;
-    }
-
-
-    computeRedHaveBlackChilds(currNode, nill) {
-
-        if (currNode == nill) {
-            return 1;
-        }
-
-        let leftOkey = this.computeRedHaveBlackChilds(currNode.left, nill);
-        let rightOkey = this.computeRedHaveBlackChilds(currNode.right, nill);
-
-        let bad = false;
-
-        if (currNode.color == "Red") {
-            if (currNode.left.color == "Red" || currNode.right.color == "Red") {
-                bad = true;
-            }
-        }
-
-
-        if (leftOkey == -1 || rightOkey == -1 || bad) {
-            return -1;
-        }
-
-        else {
-            return 1;
-        }
-
-    }
-
-    isRBTreeRedHaveBlackChildsValid(tree) {
-        return this.computeRedHaveBlackChilds(tree.root, tree.nil) != -1;
-    }
-
-
-    computeRedHaveBlackChilds(currNode, nill) {
-
-        if (currNode == nill) {
-            return 1;
-        }
-
-        let leftOkey = this.computeRedHaveBlackChilds(currNode.left, nill);
-        let rightOkey = this.computeRedHaveBlackChilds(currNode.right, nill);
-
-        let bad = false;
-
-        if (currNode.color == "Red") {
-            if (currNode.left.color == "Red" || currNode.right.color == "Red") {
-                bad = true;
-            }
-        }
-
-
-        if (leftOkey == -1 || rightOkey == -1 || bad) {
-            return -1;
-        }
-
-        else {
-            return 1;
-        }
-
-    }
-
-
-
-
-
-
 
 
 

@@ -1,5 +1,9 @@
 
 class Treevisualizer {
+
+
+
+    
     constructor() {
 
         this.speed = 0.01;
@@ -23,40 +27,11 @@ class Treevisualizer {
         this.manualStep = false;
         this.moved = true;
 
-        //// DEBUG:
-
-    }
-
-
-    counterNextStep() {
-
-
-        if (!this.userStop && this.actualStep != -1) {
-            this.counter++;
- 
-        }
-        if (this.counter > this.nextStep) {
-
-            if (this.actualStepElement < this.visSteps[this.actualStep]["List"].length) {
-                this.stepForward();
-            }
-            this.counter = 0;
-        }
-
-    }
-
-
-    stopOrStartInterval() {
-
-        this.userStop = !this.userStop;
-        this.counter = 0;
     }
 
     operationInTree(val, operation) {
 
         //add operation in TreeVisualizer
-
-
 
         this.counter = 0;
         val = parseInt(val)
@@ -68,11 +43,9 @@ class Treevisualizer {
             return 0;
         }
 
-
         //exit when the tree is empty or reset to default, just add element is enabled
-        if( operation != "Add"  && ( this.visStepsSize == -1 || this.actualStep == -1 )) return 0;
 
-        console.log()
+        if( operation != "Add"  && ( this.visStepsSize == -1 || this.actualStep == -1 )) return 0;
 
         switch (operation) {
             case "Add":
@@ -88,7 +61,9 @@ class Treevisualizer {
 
                 break;
             case "Find":
-                this.addSteps(this.tree.findVis(val));
+                this.addSteps(this.tree.visFind(val));
+
+
 
                 break;
             case "Pre":
@@ -127,8 +102,8 @@ class Treevisualizer {
             }
             else {
 
-                this.tree = this.visSteps[this.actualStep]["NewTree"].Clone();
-                this.tree.CordinatEquals();
+                this.tree = this.visSteps[this.actualStep]["NewTree"].clone();
+                this.tree.coordinateEquals();
 
             }
 
@@ -149,7 +124,7 @@ class Treevisualizer {
 
         this.visSteps[this.visStepsSize] = data;
 
-        this.ChangeTree();
+        this.changeTree();
 
     }
 
@@ -173,20 +148,20 @@ class Treevisualizer {
             if (this.actualStep + 1 <= this.visStepsSize) {
 
                 this.actualStep = this.actualStep + 1;
-                this.tree = this.visSteps[this.actualStep]["OldTree"].Clone();
+                this.tree = this.visSteps[this.actualStep]["OldTree"].clone();
                 this.actualStepElement = 0;
-                this.ChangeTree();
+                this.changeTree();
 
             }
             else {
-                this.tree = this.visSteps[this.actualStep]["NewTree"].Clone();
+                this.tree = this.visSteps[this.actualStep]["NewTree"].clone();
             }
 
         }
         else {
 
             this.actualStepElement = 1 + this.actualStepElement;
-            this.ChangeTree();
+            this.changeTree();
 
         }
     }
@@ -211,7 +186,7 @@ class Treevisualizer {
         }
         else {
             this.actualStepElement = this.visSteps[this.actualStep]["List"].length - 1;
-            this.ChangeTree();
+            this.changeTree();
         }
 
     }
@@ -233,8 +208,8 @@ class Treevisualizer {
                 this.actualStep = this.actualStep - 1;
                 this.actualStepElement = this.visSteps[this.actualStep]["List"].length - 1;
                 //this.treeIsSet=false;
-                this.tree = this.visSteps[this.actualStep]["NewTree"].Clone();
-                this.ChangeTree();
+                this.tree = this.visSteps[this.actualStep]["NewTree"].clone();
+                this.changeTree();
             }
             else if (this.actualStep - 1 == -1) {
                 this.actualStep = this.actualStep - 1;
@@ -246,7 +221,7 @@ class Treevisualizer {
         }
         else {
             this.actualStepElement = this.actualStepElement - 1;
-            this.ChangeTree();
+            this.changeTree();
 
         }
 
@@ -269,7 +244,7 @@ class Treevisualizer {
         }
         else {
             this.actualStepElement = 0;
-            this.ChangeTree();
+            this.changeTree();
         }
 
     }
@@ -303,10 +278,10 @@ class Treevisualizer {
                 node2 = this.visNode2;
 
 
-                this.MoveNode(node1);
-                this.MoveNode(node2);
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
+                this.moveNode(node1);
+                this.moveNode(node2);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
 
                 fill(0, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -325,10 +300,10 @@ class Treevisualizer {
                 node2 = this.visNode2;
 
 
-                this.MoveNode(node1);
-                this.MoveNode(node2);
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
+                this.moveNode(node1);
+                this.moveNode(node2);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
 
 
 
@@ -348,8 +323,8 @@ class Treevisualizer {
                 node2 = actualListelement.visElement3;
 
 
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
 
                 fill(0, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -367,8 +342,8 @@ class Treevisualizer {
                 node2 = actualListelement.visElement3;
 
 
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
 
 
 
@@ -389,9 +364,9 @@ class Treevisualizer {
 
                 node3 = actualListelement.visElement4;
 
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
-                this.CiyleChange(node3, 47, 55);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
+                this.circleChange(node3, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -410,7 +385,7 @@ class Treevisualizer {
                 node1 = actualListelement.visElement1;
 
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -425,8 +400,8 @@ class Treevisualizer {
                 node2 = actualListelement.visElement2;
 
 
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
 
                 fill(0, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -446,9 +421,9 @@ class Treevisualizer {
 
                 node3 = actualListelement.visElement4;
 
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
-                this.CiyleChange(node3, 47, 55);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
+                this.circleChange(node3, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -473,8 +448,8 @@ class Treevisualizer {
 
 
 
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
 
 
                 fill(100, 100, 0);
@@ -499,13 +474,13 @@ class Treevisualizer {
 
                 this.moved = actualListelement.visElement5;
                 if (this.moved) {
-                    this.MoveNode(node1);
-                    this.MoveNode(node2);
+                    this.moveNode(node1);
+                    this.moveNode(node2);
                 }
 
 
-                this.CiyleChange(node1, 47, 55);
-                this.CiyleChange(node2, 47, 55);
+                this.circleChange(node1, 47, 55);
+                this.circleChange(node2, 47, 55);
 
 
                 fill(100, 100, 0);
@@ -529,11 +504,11 @@ class Treevisualizer {
                 this.moved = actualListelement.visElement4;
 
                 if (this.moved) {
-                    this.MoveNode(node1);
+                    this.moveNode(node1);
 
                 }
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -550,12 +525,12 @@ class Treevisualizer {
                 node2 = actualListelement.visElement3;
 
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
 
                 if (node2.value != this.vistree.nil.value) {
 
-                    this.CiyleChange(node2, 47, 55);
+                    this.circleChange(node2, 47, 55);
 
                     fill(0, 100, 0);
                     ellipse(node2.drawx, node2.drawy, node2.round, node2.round);
@@ -580,7 +555,7 @@ class Treevisualizer {
 
                 if (node2.value != this.vistree.nil.value) {
 
-                    this.CiyleChange(node2, 47, 55);
+                    this.circleChange(node2, 47, 55);
 
                     fill(0, 100, 0);
                     ellipse(node2.drawx, node2.drawy, node2.round, node2.round);
@@ -588,9 +563,9 @@ class Treevisualizer {
                 }
 
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
-                this.CiyleChange(node3, 47, 55);
+                this.circleChange(node3, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -611,7 +586,7 @@ class Treevisualizer {
                 node2 = actualListelement.visElement3;
 
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -619,7 +594,7 @@ class Treevisualizer {
 
                 if (node2.value != this.vistree.nil.value) {
 
-                    this.CiyleChange(node2, 47, 55);
+                    this.circleChange(node2, 47, 55);
 
                     fill(0, 100, 0);
                     ellipse(node2.drawx, node2.drawy, node2.round, node2.round);
@@ -641,7 +616,7 @@ class Treevisualizer {
 
                 if (node2.value != this.vistree.nil.value) {
 
-                    this.CiyleChange(node2, 47, 55);
+                    this.circleChange(node2, 47, 55);
 
                     fill(0, 100, 0);
                     ellipse(node2.drawx, node2.drawy, node2.round, node2.round);
@@ -649,9 +624,9 @@ class Treevisualizer {
                 }
 
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
-                this.CiyleChange(node3, 47, 55);
+                this.circleChange(node3, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -675,7 +650,7 @@ class Treevisualizer {
 
                 if (node2.value != this.vistree.nil.value) {
 
-                    this.CiyleChange(node2, 47, 55);
+                    this.circleChange(node2, 47, 55);
 
                     fill(0, 100, 0);
                     ellipse(node2.drawx, node2.drawy, node2.round, node2.round);
@@ -683,9 +658,9 @@ class Treevisualizer {
                 }
 
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
-                this.CiyleChange(node3, 47, 55);
+                this.circleChange(node3, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -704,11 +679,11 @@ class Treevisualizer {
                 this.moved = actualListelement.visElement3;
 
                 if (this.moved) {
-                    this.MoveNode(node1);
+                    this.moveNode(node1);
 
                 }
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -725,11 +700,11 @@ class Treevisualizer {
                 this.moved = actualListelement.visElement3;
 
                 if (this.moved) {
-                    this.MoveNode(node1);
+                    this.moveNode(node1);
 
                 }
 
-                this.CiyleChange(node1, 47, 55);
+                this.circleChange(node1, 47, 55);
 
                 fill(100, 100, 0);
                 ellipse(node1.drawx, node1.drawy, node1.round, node1.round);
@@ -747,9 +722,9 @@ class Treevisualizer {
                 break;
         }
 
-        if (this.vistree.root != this.vistree.nil && this.moved) this.PreOrderMove(this.vistree.root, this.vistree.nil);
+        if (this.vistree.root != this.vistree.nil && this.moved) this.preOrderMove(this.vistree.root, this.vistree.nil);
 
-        if (this.vistree.root != this.vistree.nil) this.PostOrderTreeDraw(this.vistree.root, this.vistree.nil);
+        if (this.vistree.root != this.vistree.nil) this.postOrderTreeDraw(this.vistree.root, this.vistree.nil);
 
         //this.drawNode(this.vistree.nil,0,0);
 
@@ -764,7 +739,7 @@ class Treevisualizer {
 
                 this.stepanim = true;
 
-                this.MoveNodeVertical(node1);
+                this.moveNodeVertically(node1);
 
 
                 let val = actualListelement.visElement1.value;
@@ -801,7 +776,7 @@ class Treevisualizer {
     }
 
 
-    MoveNodeVertical(n) {
+    moveNodeVertically(n) {
 
         n.drawx = n.x;
         n.drawy = n.y * n.lambda + n.newy * (1 - n.lambda);
@@ -812,7 +787,7 @@ class Treevisualizer {
         }
     }
 
-    CiyleChange(n, min, max) {
+    circleChange(n, min, max) {
         n.round = n.round + 7 * this.speed * n.dir;
 
         if (n.round < min || n.round > max) {
@@ -839,10 +814,10 @@ class Treevisualizer {
 
     }
 
-    PostOrderTreeDraw(n, nil) {
+    postOrderTreeDraw(n, nil) {
 
         if (n.left != nil) {
-            this.PostOrderTreeDraw(n.left, nil);
+            this.postOrderTreeDraw(n.left, nil);
 
         }
         else {
@@ -853,7 +828,7 @@ class Treevisualizer {
 
 
         if (n.right != nil) {
-            this.PostOrderTreeDraw(n.right, nil);
+            this.postOrderTreeDraw(n.right, nil);
 
         }
         else {
@@ -864,7 +839,7 @@ class Treevisualizer {
         }
 
         if (n.parent != nil) {
-            //console.log(n.parent.drawx + " "+ n.parent.drawy);
+
             stroke(255);
             strokeWeight(2);
             line(n.parent.drawx, n.parent.drawy, n.drawx, n.drawy);
@@ -873,21 +848,21 @@ class Treevisualizer {
 
     }
 
-    PreOrderMove(n, nil) {
+    preOrderMove(n, nil) {
 
         if (n.left != nil) {
-            this.PreOrderMove(n.left, nil);
+            this.preOrderMove(n.left, nil);
 
         }
 
         if (n.right != nil) {
-            this.PreOrderMove(n.right, nil);
+            this.preOrderMove(n.right, nil);
 
         }
-        this.MoveNode(n);
+        this.moveNode(n);
     }
 
-    MoveNode(n) {
+    moveNode(n) {
         if (this.anim) {
 
             if (n.x != n.newx || n.y != n.newy) {
@@ -919,24 +894,23 @@ class Treevisualizer {
         }
     }
 
-    ChangeTree() {
+    changeTree() {
 
         let actualvisElement = this.visSteps[this.actualStep]["List"][this.actualStepElement];
-        //console.log(actualvisElement)
+
         let command = actualvisElement.command;
 
-        //console.log(command);
 
         if (command == "Add" || command == "Find" || command == "FindMin" || command == "Orders" || command == "NextOrPre") {
-            this.vistree = this.visSteps[this.actualStep]["OldTree"].Clone();
+            this.vistree = this.visSteps[this.actualStep]["OldTree"].clone();
         }
         else {
-            this.vistree = actualvisElement.visElement1.Clone();
+            this.vistree = actualvisElement.visElement1.clone();
         }
 
         if (command == "Add" || command == "Orders" || command == "NextOrPre") {
             this.visNode1 = actualvisElement.visElement1.Copy();
-            //this.visNode1.y=this.visNode1.y+7;
+
         }
         else if (command == "DelBindingNil") {
             this.visNode1 = actualvisElement.visElement2.Copy();
@@ -971,6 +945,30 @@ class Treevisualizer {
         return this.userStop;
     }
 
-   
+    counterNextStep() {
+
+        if (!this.userStop && this.actualStep != -1) {
+            this.counter++;
+ 
+        }
+        if (this.counter > this.nextStep) {
+
+            if (this.actualStepElement < this.visSteps[this.actualStep]["List"].length) {
+                this.stepForward();
+            }
+            this.counter = 0;
+        }
+
+    }
+
+
+    stopOrStartInterval() {
+
+        this.userStop = !this.userStop;
+        this.counter = 0;
+    }
+
+
+
 
 }
