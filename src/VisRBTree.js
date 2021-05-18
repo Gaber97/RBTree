@@ -44,7 +44,6 @@ class VisRBTree extends RBTree {
         this.Steps.push(new VisElement("Add", x.Copy(), z.Copy(), "Az beszúrandó " + String(z.value) + " elem kisebb mint " + String(x.value) + ". Balra megyünk tovább."));
         if (this.root.value < x.value) this.piselSet(x, this.horizontalchange, 0, x.right);
 
-
         z.newx = x.newx - this.horizontalchange;
         z.newy = x.newy + this.verticalchange;
         x = x.left;
@@ -55,8 +54,6 @@ class VisRBTree extends RBTree {
         this.Steps.push(new VisElement("Add", x.Copy(), z.Copy(), "Az beszúrandó " + String(z.value) + " elem nagyobb mint " + String(x.value) + ". Jobb megyünk tovább."));
 
         if (this.root.value > x.value) this.piselSet(x, -this.horizontalchange, 0, x.left);
-
-
 
         z.newx = x.newx + this.horizontalchange;
         z.newy = x.newy + this.verticalchange;
@@ -72,8 +69,6 @@ class VisRBTree extends RBTree {
 
       z.x = this.horizontalchange + 40;
       z.y = this.verticalchange;
-
-
 
       this.Steps.push(new VisElement("Add", z.Copy(), z.Copy(), "Az beszúrandó " + String(z.value) + " elem a gyöker."));
 
@@ -104,13 +99,10 @@ class VisRBTree extends RBTree {
 
     this.coordinateEquals();
 
-
     this.fixAdd(z);
-
 
     let newTree = this.clone();
     this.Steps.push(new VisElement("End", this.clone(), ""));
-
 
     this.coordinateEquals();
 
@@ -133,9 +125,7 @@ class VisRBTree extends RBTree {
 
       if (z.parent == z.parent.parent.left) {
 
-
         let y = z.parent.parent.right;
-
 
         if (y.color == "Red") {
           this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "1. eset : A " + String(z.value) + " értékű csúcs nagyszülőjének jobb gyereke piros."));
@@ -261,7 +251,6 @@ class VisRBTree extends RBTree {
         "NewTree": newTree
       };
 
-
     }
 
     let y;
@@ -312,7 +301,6 @@ class VisRBTree extends RBTree {
         else {
           this.Steps.push(new VisElement("DelBindingNil", this.clone(), z.Copy(), "Törlés : " + String(x.value) + " értékű elem átkötése", false));
         }
-
 
       }
     }
@@ -476,8 +464,6 @@ class VisRBTree extends RBTree {
 
         }
         else {
-
-
 
           if (w.left.color == "Black") {
 

@@ -2,24 +2,24 @@
 
 
 
-class Tester  {
+class Tester {
 
 
-    constructor(visualizer){
-        this.visualizer=visualizer;
-        
-        
+    constructor(visualizer) {
+        this.visualizer = visualizer;
+
+
     }
-    
-    findTest(num,val){
 
-        for(let i=0;i<num;i++){
-    
-            this.visualizer.operationInTree(val,"Find");
+    findTest(num, val) {
+
+        for (let i = 0; i < num; i++) {
+
+            this.visualizer.operationInTree(val, "Find");
         }
-    
+
     }
-    
+
     everythingsOk() {
 
 
@@ -31,21 +31,15 @@ class Tester  {
 
         for (let i = 0; i < 1000; i++) {
 
-
-            //console.log(this.visualizer.tree.root.value)
             this.visualizer.operationInTree(this.visualizer.tree.root.value, "Del");
             this.visualizer.stepForwardSkip();
             this.visualizer.operationInTree(random(1, 10000), "Add");
             this.visualizer.stepForwardSkip();
 
-            //console.log(this.isRBTreeBlackHeightValid(this.visualizer.tree.root));
             console.log(this.isRedBlackTree(this.visualizer.tree))
 
         }
 
-
-
-        return 0;
     }
 
     actualIsOk() {
@@ -54,17 +48,17 @@ class Tester  {
 
     isRedBlackTree(tree) {
 
-        let isRBTree= true;
+        let isRBTree = true;
 
 
-        isRBTree=isRBTree || tree.root.color=="Black";
-        isRBTree=isRBTree || tree.nil.color=="Black";
-        isRBTree=isRBTree || this.isRBTreeBlackHeightValid(tree);
-        isRBTree=isRBTree || this.isRBTreeRedHaveBlackChildsValid(tree);
-        isRBTree=isRBTree || this.computeRBTreeNodesRedOrBlackValid(tree);
+        isRBTree = isRBTree || tree.root.color == "Black";
+        isRBTree = isRBTree || tree.nil.color == "Black";
+        isRBTree = isRBTree || this.isRBTreeBlackHeightValid(tree);
+        isRBTree = isRBTree || this.isRBTreeRedHaveBlackChildsValid(tree);
+        isRBTree = isRBTree || this.computeRBTreeNodesRedOrBlackValid(tree);
 
 
-    
+
         return isRBTree;
 
     }
@@ -146,7 +140,7 @@ class Tester  {
 
 
         if (currNode.color != "Red" && currNode.color != "Black") {
-                bad = true;
+            bad = true;
         }
 
 
@@ -160,85 +154,83 @@ class Tester  {
 
     }
 
-    isRBTreeBlackHeightValid(tree)
-    {
-        return computeBlackHeight(tree.root,tree.nil) != -1;
-    } 
-    
-    
-    computeBlackHeight(currNode,nill) 
-    {
-        if (currNode == nill){
-            return 0; 
+    isRBTreeBlackHeightValid(tree) {
+        return computeBlackHeight(tree.root, tree.nil) != -1;
+    }
+
+
+    computeBlackHeight(currNode, nill) {
+        if (currNode == nill) {
+            return 0;
         }
-        let leftHeight = computeBlackHeight(currNode.left,nill);
-        let rightHeight = computeBlackHeight(currNode.right,nill);
+        let leftHeight = computeBlackHeight(currNode.left, nill);
+        let rightHeight = computeBlackHeight(currNode.right, nill);
         let add = currNode.color == "Black" ? 1 : 0;
-        
-        if (leftHeight == -1 || rightHeight == -1 || leftHeight != rightHeight){
-            return -1; 
+
+        if (leftHeight == -1 || rightHeight == -1 || leftHeight != rightHeight) {
+            return -1;
         }
-          
-        else{
+
+        else {
             return leftHeight + add;
         }
-           
+
     }
 
 
     shuffle(array) {
         var tmp, current, top = array.length;
-        if(top) while(--top) {
-          current = Math.floor(Math.random() * (top + 1));
-          tmp = array[current];
-          array[current] = array[top];
-          array[top] = tmp;
+        if (top) while (--top) {
+            current = Math.floor(Math.random() * (top + 1));
+            tmp = array[current];
+            array[current] = array[top];
+            array[top] = tmp;
         }
         return array;
-      }
-      
-      
-      
-      isRBTreeGrandTest(){
-  
-           let array=[];
-      
-          for (let index = 0; index < 100; index++) {
-              
-                  let tree=new VisRBTree();
-              
-                  for (var a=[],i=0;i<100;++i) array[i]=i;
-              
-                  array=this.shuffle(array);
-                  
-              
-                  for (let index = 0; index < array.length; index++) {
-                      const element = array[index];
-                      
-                      tree.addValue(element);
-              
-  
-                      
-                  }
-              
-              
-                  array=shuffle(array);
-  
-              
-                  for (let index = 0; index < array.length/2; index++) {
-                      const element = array[index];
-                      
-                      tree.delValue(element);
-  
-              
-                  }
-  
-  
-                  console.log(this.isRedBlackTree(tree))
-              
-          }
-      }
-  
+    }
+
+
+
+    isRBTreeGrandTest() {
+
+        let array = [];
+
+        for (let index = 0; index < 100; index++) {
+
+            let tree = new VisRBTree();
+
+            for (var a = [], i = 0; i < 100; ++i) array[i] = i;
+
+            array = this.shuffle(array);
+
+
+            for (let index = 0; index < array.length; index++) {
+                const element = array[index];
+
+                tree.addValue(element);
+
+
+
+            }
+
+
+            array = shuffle(array);
+
+
+            for (let index = 0; index < array.length / 2; index++) {
+                const element = array[index];
+
+                tree.delValue(element);
+
+
+            }
+
+
+            console.log(this.isRedBlackTree(tree))
+
+        }
+    }
+
 
 
 

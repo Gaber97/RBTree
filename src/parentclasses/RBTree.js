@@ -59,7 +59,7 @@ class RBTree {
     z.right = this.nil;
     z.color = "Red";
 
-    this.RepairAdd(z);
+    this.fixAdd(z);
 
 
   }
@@ -136,7 +136,7 @@ class RBTree {
 
 
     if (y.color == "Black") {
-      //javít
+      this.fixDel(x);
     }
 
 
@@ -144,6 +144,97 @@ class RBTree {
 
 
   }
+
+  fixDel(x) {
+
+    while (x != this.root && x.color == "Black") {
+      if (x == x.parent.left) {
+        let w = x.parent.right;
+
+        if (w.color == "Red") {
+
+          w.color = "Black";
+          x.parent.color = "Red";
+
+          this.leftRound(x.parent);
+          w = x.parent.right;
+
+
+        }
+        if (w.left.color == "Black" && w.right.color == "Black") {
+          w.color = "Red";
+          x = x.parent;
+
+        }
+        else {
+
+          if (w.right.color == "Black") {
+
+            w.left.color = "Black";
+            w.color = "Red";
+            this.rightRound(w);
+            w = x.parent.right;
+
+          }
+
+          w.color = x.parent.color;
+          x.parent.color = "Black";
+          w.right.color = "Black";
+
+
+          this.leftRound(x.parent);
+          x = this.root;
+
+        }
+
+      }
+      else {
+        let w = x.parent.left;
+        if (w.color == "Red") {
+
+
+          w.color = "Black";
+          x.parent.color = "Red";
+
+          this.rightRound(x.parent);
+          w = x.parent.left;
+
+        }
+        if (w.right.color == "Black" && w.left.color == "Black") {
+
+          w.color = "Red";
+          x = x.parent;
+        }
+        else {
+
+          if (w.left.color == "Black") {
+
+            w.right.color = "Black";
+            w.color = "Red";
+
+            this.leftRound(w);
+            w = x.parent.left;
+
+          }
+
+          w.color = x.parent.color;
+          x.parent.color = "Black";
+          w.left.color = "Black";
+
+          x = this.root;
+
+
+        }
+
+      }
+
+    }
+
+    x.color = "Black";
+
+  }
+
+
 
 
 
@@ -179,7 +270,7 @@ class RBTree {
 
 
 
-  LeftRound(x) {
+  leftRound(x) {
 
 
     let y = x.right;
@@ -208,7 +299,7 @@ class RBTree {
   //?jó?
 
 
-  RightRound(x) {
+  rightRound(x) {
 
 
     let y = x.left;
@@ -241,7 +332,7 @@ class RBTree {
   }
 
 
-  RepairAdd(z) {
+  fixAdd(z) {
 
 
     while (z.parent.color == 'Red') {
@@ -269,7 +360,7 @@ class RBTree {
           if (z == z.parent.right) {
 
             z = z.parent;
-            this.LeftRound(z);
+            this.leftRound(z);
 
           }
 
@@ -277,7 +368,7 @@ class RBTree {
           z.parent.color = "Black";
           z.parent.parent.color = "Red";
 
-          this.RightRound(z.parent.parent);
+          this.rightRound(z.parent.parent);
 
 
 
@@ -308,14 +399,14 @@ class RBTree {
           if (z == z.parent.left) {
 
             z = z.parent;
-            this.RightRound(z);
+            this.rightRound(z);
 
           }
 
           z.parent.color = "Black";
           z.parent.parent.color = "Red";
 
-          this.LeftRound(z.parent.parent);
+          this.leftRound(z.parent.parent);
 
         }
 

@@ -1,12 +1,20 @@
 
-class RBNode extends SimpleNode {
+class RBNode {
 
-
+  value;
+  left;
+  right;
+  parent;
   color;
 
 
   constructor(val, color) {
-    super(val);
+  
+    this.value = val;
+    this.left = null;
+    this.right = null;
+    this.parent = null;
+
     this.color = color;
 
 
@@ -16,7 +24,7 @@ class RBNode extends SimpleNode {
 
   Copy(nil) {
 
-    var n = new node();
+    var n = new RBNode();
 
 
     n.value = this.value;
