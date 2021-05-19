@@ -64,7 +64,7 @@ class RBTree {
 
   }
 
-  Find(k) {
+  find(k) {
 
     let x = this.root;
     while (x != this.nil && x.value != k) {

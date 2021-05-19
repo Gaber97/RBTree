@@ -5,13 +5,13 @@ class DiagramTree extends RBTree {
 
     constructor() {
         super();
-
+        this.trees=[];
 
 
     }
 
     addRandomElements(num) {
-        for (let i = 0; i < num; i++) this.addValue(Math.floor(Math.random() * num));
+        for (let i = 0; i < num; i++) this.addValue(Math.floor(Math.random() * num*5));
 
     }
 
@@ -76,19 +76,19 @@ class DiagramTree extends RBTree {
         let datamin = [];
         let datablack = [];
         let name = [];
-        let trees = [];
+        //let trees = [];
         for (let i = 0; i < 7; i++) {
-            trees.push(new DiagramTree());
+            this.trees.push(new DiagramTree());
 
         }
 
 
 
         for (let i = 0; i < 6; i++) {
-            trees[i].addRandomElements(10 ** (i + 1));
-            datamin.push(trees[i].minDepth(trees[i].root));
-            datamax.push(trees[i].maxDepth(trees[i].root));
-            datablack.push(trees[i].BlackDepth(trees[i].root));
+            this.trees[i].addRandomElements(10 ** (i + 1));
+            datamin.push(this.trees[i].minDepth(this.trees[i].root));
+            datamax.push(this.trees[i].maxDepth(this.trees[i].root));
+            datablack.push(this.trees[i].BlackDepth(this.trees[i].root));
 
             name.push(String(10 ** (i + 1)));
         }

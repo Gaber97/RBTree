@@ -30,7 +30,7 @@ class VisRBTree extends RBTree {
     let x = this.root;
 
 
-    if (this.Find(val) != this.nil) {
+    if (this.find(val) != this.nil) {
       return [];
     }
     this.Steps = [];
@@ -202,7 +202,7 @@ class VisRBTree extends RBTree {
 
   findVisDel(k) {
     let change = false;
-    if (this.Find(k) != this.nil) change = true;
+    if (this.find(k) != this.nil) change = true;
 
     let x = this.root;
     while (x != this.nil && x.value != k) {
@@ -722,7 +722,7 @@ class VisRBTree extends RBTree {
 
     let oldTree = this.clone();
 
-    let n = this.Find(val)
+    let n = this.find(val)
 
     let node = n;
 
@@ -794,7 +794,7 @@ class VisRBTree extends RBTree {
 
     let oldTree = this.clone();
 
-    let n = this.Find(val)
+    let n = this.find(val)
 
     let node = n;
 
