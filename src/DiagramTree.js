@@ -50,7 +50,7 @@ class DiagramTree extends RBTree {
     }
 
 
-    BlackDepth(node) {
+    blackDepth(node) {
         let black = 1;
 
 
@@ -88,7 +88,7 @@ class DiagramTree extends RBTree {
             this.trees[i].addRandomElements(10 ** (i + 1));
             datamin.push(this.trees[i].minDepth(this.trees[i].root));
             datamax.push(this.trees[i].maxDepth(this.trees[i].root));
-            datablack.push(this.trees[i].BlackDepth(this.trees[i].root));
+            datablack.push(this.trees[i].blackDepth(this.trees[i].root));
 
             name.push(String(10 ** (i + 1)));
         }
@@ -154,7 +154,7 @@ class DiagramTree extends RBTree {
 
                 },
                 {
-                    label: 'BlackDepth',
+                    label: 'blackDepth',
                     data: datablack,
                     backgroundColor: [
                         'rgba(0, 0, 0,1)',

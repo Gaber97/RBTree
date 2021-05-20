@@ -9,7 +9,6 @@ class VisNode extends RBNode {
   drawx;
   drawy;
 
-
   constructor(val, color) {
 
     super(val, color);
@@ -31,9 +30,6 @@ class VisNode extends RBNode {
     this.round = 50;
 
   }
-
-
-
 
   Copy(nil) {
 
@@ -69,9 +65,6 @@ class VisNode extends RBNode {
     return n;
 
   }
-
-
-
 
 }
 

@@ -947,11 +947,11 @@ class VisRBTree extends RBTree {
   }
 
 
-  coordinateEquals = function () {
+  coordinateEquals() {
     this.coordinateEqualsOrder(this.root, this.nil);
   }
 
-  coordinateEqualsOrder = function (n, nil) {
+  coordinateEqualsOrder(n, nil) {
 
     if (n.left != nil) {
       this.coordinateEqualsOrder(n.left, nil);
