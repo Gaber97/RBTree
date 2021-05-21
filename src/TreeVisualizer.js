@@ -15,12 +15,15 @@ class Treevisualizer {
         this.actualStepElement = 0;
         this.timeStoped = true;
         this.userStop = false;
-        this.timer;
+
         this.StepForwardSpeed = 2000;
 
+        
         this.visNode1;
         this.visNode2;
+
         this.tree = new VisRBTree();
+
         this.vistree = this.tree;
         this.counter = 0;
         this.nextStep = 300;
@@ -102,7 +105,7 @@ class Treevisualizer {
             }
             else {
 
-                this.tree = this.visSteps[this.actualStep]["NewTree"].clone();
+                this.tree = this.visSteps[this.actualStep]["OldTree"].clone();
                 this.tree.coordinateEquals();
 
             }
