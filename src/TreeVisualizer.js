@@ -7,18 +7,13 @@ class Treevisualizer {
     constructor() {
 
         this.speed = 0.01;
-        this.dir = 1;
         this.anim = true;
         this.visSteps = [];
         this.visStepsSize = -1;
         this.actualStep = -1;
         this.actualStepElement = 0;
-        this.timeStoped = true;
         this.userStop = false;
 
-        this.StepForwardSpeed = 2000;
-
-        
         this.visNode1;
         this.visNode2;
 
@@ -27,7 +22,7 @@ class Treevisualizer {
         this.vistree = this.tree;
         this.counter = 0;
         this.nextStep = 300;
-        this.manualStep = false;
+
         this.moved = true;
 
     }
@@ -930,7 +925,7 @@ class Treevisualizer {
         this.actualStep = -1;
         this.visStepsSize = -1;
         this.tree = new VisRBTree();
-        clearInterval(this.timer);
+        this.counter= 0;
 
     }
 
@@ -969,6 +964,29 @@ class Treevisualizer {
 
         this.userStop = !this.userStop;
         this.counter = 0;
+    }
+
+
+    
+    randomTree(num) {
+
+        num = parseInt(num)
+
+        if (isNaN(num)) {
+
+            return 0;
+        }
+        if (num < 1 || num > 30) {
+
+            return 0;
+        }
+
+        for (let i = 0; i < num; i++) {
+
+            this.operationInTree(random(1, 1000), "Add");
+        }
+
+
     }
 
 
