@@ -34,6 +34,7 @@ class TreeUI {
         this.buttonPause;
         this.textDiv;
         this.helpDivElement;
+        this.canvas;
 
         if (windowHeight > 600) {
 
@@ -158,8 +159,8 @@ class TreeUI {
         this.divHorizontal2.position(0, this.sizey);
         this.divHorizontal2.size(this.sizex, 50);
 
-        canvas = createCanvas(this.sizex - 70, this.sizey - 50);
-        canvas.position(70, 50);
+        this.canvas = createCanvas(this.sizex - 70, this.sizey - 50);
+        this.canvas.position(70, 50);
         //
         this.input = createInput();
         this.input.position(10, 10);
