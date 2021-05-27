@@ -160,6 +160,7 @@ class VisRBTree extends RBTree {
 
 
           this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "Third case: The " + String(z.value) + " node's grandparent's right child is black.\nThe node " + String(z.value) + " the left child."));
+          this.coordinateEquals();
           z.parent.color = "Black";
           z.parent.parent.color = "Red";
 
@@ -198,6 +199,7 @@ class VisRBTree extends RBTree {
 
           }
           this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "Third case: The " + String(z.value) + " node's grandparent's left child is black.\nThe node " + String(z.value) + " the right child."));
+          this.coordinateEquals();
 
           z.parent.color = "Black";
           z.parent.parent.color = "Red";
@@ -467,12 +469,12 @@ class VisRBTree extends RBTree {
       else {
         let w = x.parent.left;
         if (w.color == "Red") {
-          this.Steps.push(new VisElement("FixDelCase1Part1", this.clone(), x.Copy(), w.Copy(),
+          this.Steps.push(new VisElement("FixDelCase1Part1", this.clone(), w.Copy(), x.Copy(),
           "First case: The sibling of the " + String(x.value) + " is red."));
 
           w.color = "Black";
           x.parent.color = "Red";
-          this.Steps.push(new VisElement("FixDelCase1Part2", this.clone(), x.Copy(), w.Copy(), x.parent.Copy(),
+          this.Steps.push(new VisElement("FixDelCase1Part2", this.clone(), w.Copy(), x.Copy(), x.parent.Copy(),
           "First case: The sibling of the node " + String(w.value) + " will be black. The parent is red.\nRotate to one of the cases from 2,3,4."));
           this.rightRound(x.parent);
           w = x.parent.left;

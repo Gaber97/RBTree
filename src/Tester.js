@@ -23,7 +23,7 @@ class Tester {
     everythingsOk() {
 
         this.visualizer.clear();
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 15; i++) {
             this.visualizer.operationInTree(random(1, 10000), "Add");
             this.visualizer.stepForwardSkip();
         }
@@ -155,58 +155,7 @@ class Tester {
 
     }
 
-    shuffle(array) {
-        var tmp, current, top = array.length;
-        if (top) while (--top) {
-            current = Math.floor(Math.random() * (top + 1));
-            tmp = array[current];
-            array[current] = array[top];
-            array[top] = tmp;
-        }
-        return array;
-    }
 
-
-
-    isRBTreeGrandTest() {
-
-        let array = [];
-
-        for (let index = 0; index < 100; index++) {
-
-            let tree = new VisRBTree();
-
-            for (var a = [], i = 0; i < 100; ++i) array[i] = i;
-
-            array = this.shuffle(array);
-
-
-            for (let index = 0; index < array.length; index++) {
-                const element = array[index];
-
-                tree.addValue(element);
-
-
-
-            }
-
-
-            array = shuffle(array);
-
-
-            for (let index = 0; index < array.length / 2; index++) {
-                const element = array[index];
-
-                tree.delValue(element);
-
-
-            }
-
-
-            console.log(this.isRedBlackTree(tree))
-
-        }
-    }
 
 
 
