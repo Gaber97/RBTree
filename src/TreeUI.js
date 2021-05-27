@@ -265,7 +265,7 @@ class TreeUI {
         this.help.size(30, 30);
         this.help.position(this.sizex - this.help.width - 20, 10);
 
-        this.buttonDiagrams = createButton('<a href="diagram.html"  >Diagrams</a>');
+        this.buttonDiagrams = createButton('<a  href="diagram.html"  >Diagrams</a>');
         this.buttonDiagrams.size(70, 30);
         this.buttonDiagrams.position(this.help.x - this.help.width - 100, 10);
 
@@ -278,7 +278,6 @@ class TreeUI {
 
 
 
-        //szépít
 
         this.helpDivElement.html('<h2 align="center">Guide for the user</h2>' +
             '<ul>' +

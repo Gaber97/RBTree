@@ -372,8 +372,15 @@ class Treevisualizer {
                 fill(0, 100, 0);
                 ellipse(node2.drawx, node2.drawy, node2.round, node2.round);
 
-                fill(0, 100, 0);
-                ellipse(node3.drawx, node3.drawy, node3.round, node3.round);
+
+                if(node3.value !="Nil"){
+                    
+                    this.circleChange(node3, 47, 55);
+                    
+                    fill(0, 100, 0);
+                    ellipse(node3.drawx, node3.drawy, node3.round, node3.round);
+
+                }
 
                 this.drawText(actualListelement.visElement5);
 

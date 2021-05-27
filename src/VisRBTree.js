@@ -41,7 +41,7 @@ class VisRBTree extends RBTree {
 
       if (z.value < x.value) {
 
-        this.Steps.push(new VisElement("Add", x.Copy(), z.Copy(), "Az beszúrandó " + String(z.value) + " elem kisebb mint " + String(x.value) + ". Balra megyünk tovább."));
+        this.Steps.push(new VisElement("Add", x.Copy(), z.Copy(), "Add an element. " + String(z.value) + " is less than " + String(x.value) + ". We continue in the left subtree."));
         if (this.root.value < x.value) this.piselSet(x, this.horizontalchange, 0, x.right);
 
         z.newx = x.newx - this.horizontalchange;
@@ -51,7 +51,7 @@ class VisRBTree extends RBTree {
       }
       else {
 
-        this.Steps.push(new VisElement("Add", x.Copy(), z.Copy(), "Az beszúrandó " + String(z.value) + " elem nagyobb mint " + String(x.value) + ". Jobb megyünk tovább."));
+        this.Steps.push(new VisElement("Add", x.Copy(), z.Copy(), "Add an element. " + String(z.value) + "  is greater than " + String(x.value) + ". We continue in the right subtree."));
 
         if (this.root.value > x.value) this.piselSet(x, -this.horizontalchange, 0, x.left);
 
@@ -70,7 +70,7 @@ class VisRBTree extends RBTree {
       z.x = this.horizontalchange + 40;
       z.y = this.verticalchange;
 
-      this.Steps.push(new VisElement("Add", z.Copy(), z.Copy(), "Az beszúrandó " + String(z.value) + " elem a gyöker."));
+      this.Steps.push(new VisElement("Add", z.Copy(), z.Copy(), "The added  " + String(z.value) + " element is the root of the tree."));
 
       z.newx = 2 * this.horizontalchange + 40;
       z.newy = this.verticalchange;
@@ -95,7 +95,7 @@ class VisRBTree extends RBTree {
       this.pixelChange(this.root, this.horizontalchange, 0);
     }
 
-    this.Steps.push(new VisElement("AddAnimation", this.clone(), true, "Az beszúrandó " + String(z.value) + " elem a helyére kerül."));
+    this.Steps.push(new VisElement("AddAnimation", this.clone(), true, "The inserted element with value " + String(z.value) + " reached it's destination."));
 
     this.coordinateEquals();
 
@@ -119,8 +119,9 @@ class VisRBTree extends RBTree {
 
   fixAdd(z) {
 
-    while (z.parent.color == 'Red') {
-      this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), " " + String(z.value) + " értékű csúcs szülője piros. Helyreigazítás szükséges!"));
+    while (z.parent.color == 'Red') { 
+      //The parent of the node x is red. Reordering is needed.
+      this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), " The parent of the node with value " + String(z.value) + "  is red. Reordering is needed."));
       this.coordinateEquals();
 
       if (z.parent == z.parent.parent.left) {
@@ -128,13 +129,19 @@ class VisRBTree extends RBTree {
         let y = z.parent.parent.right;
 
         if (y.color == "Red") {
-          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "1. eset : A " + String(z.value) + " értékű csúcs nagyszülőjének jobb gyereke piros."));
+          //First case: The right child of the grandparent of x is red.
+          
+          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "First case: The right child of the grandparent of " + String(z.value) + " is red."));
           this.coordinateEquals();
 
           z.parent.color = "Black";
           y.color = "Black";
-          z.parent.parent.color = "Red"
-          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "1. eset : A " + String(z.value) + " értékű csúcs szülője Fekete, A nagy szüjő jobb gyerek Fekete, A nagyszülő színe Piros lesz.\n A következő vizsgált csúcs " + String(z.parent.parent.value) + " lesz."));
+          z.parent.parent.color = "Red";
+
+
+          //First case: the parent of 12 is black. The right child of it's grandparent is black, So the grandparent will be red. The next examined node will be 122.
+          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "First case: The parent of " + String(z.value) + " is black. The right child of it's grandparent is black, So the grandparent will be red."+
+          "\nThe next examined node will be " + String(z.parent.parent.value) + "."));
           this.coordinateEquals();
           z = z.parent.parent;
 
@@ -142,16 +149,24 @@ class VisRBTree extends RBTree {
         else {
 
           if (z == z.parent.right) {
-            this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), "2. eset : A " + String(z.value) + " értékű csúcs nagyszülőjének jobb gyereke piros\nA " + String(z.value) + " értékű csúcs szülőjének a jobb gyereke az adott csúcs.\nForgatás következik balra, a 3. esetbe."));
+            //Second case: The 442 node's grandparent's right child is black. The node 442 the right child. Next we rotate left, to the third case.
+
+            this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "Second case: The " + String(z.value) + " node's grandparent's right child is black.\nThe node " + String(z.value) + " the right child. Next we rotate left, to the third case."));
             this.coordinateEquals();
 
             z = z.parent;
             this.leftRound(z);
           }
 
+
+          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "Third case: The " + String(z.value) + " node's grandparent's right child is black.\nThe node " + String(z.value) + " the left child."));
           z.parent.color = "Black";
           z.parent.parent.color = "Red";
-          this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), "3. eset : A " + String(z.value) + " értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe piros lesz. "));
+
+
+
+          //Third case: The parent of the node 122 will be black. So the grandparent will become red.
+          this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), "Third case: The parent of the node " + String(z.value) + " will be black. So the grandparent will become red."));
           this.coordinateEquals();
           this.rightRound(z.parent.parent);
 
@@ -161,29 +176,33 @@ class VisRBTree extends RBTree {
       else {
         let y = z.parent.parent.left;
         if (y.color == "Red") {
-          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "1. eset : A " + String(z.value) + " értékű csúcs nagyszülőjének bal gyereke piros "));
+          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "First case: The left child of the grandparent of " + String(z.value) + " is red."));
           this.coordinateEquals();
 
           z.parent.color = "Black";
           y.color = "Black";
           z.parent.parent.color = "Red"
-          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "1. eset : A " + String(z.value) + " értékű csúcs szülője fekete. A nagyszülöjő jobb gyerek Fekete, A nagyszülő színe Piros lesz"));
+          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "First case: The parent of " + String(z.value) + " is black. The left child of it's grandparent is black, So the grandparent will be red."
+          +"\nThe next examined node will be " + String(z.parent.parent.value) + "."));
           this.coordinateEquals();
           z = z.parent.parent;
         }
         else {
 
           if (z == z.parent.left) {
-            this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), "2. eset :A " + String(z.value) + " értékű csúcs nagyszülőjének bal gyereke piros\n A " + String(z.value) + " értékű csúcs szülőjének a bal gyereke az adott csúcs.\nForgatás következik jobbra, a 3 esetbe ."));
+            this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "Second case: The " + String(z.value) + " node's grandparent's left child is black.\nThe node " + String(z.value) + " the left child. Next we rotate right, to the third case."));
             this.coordinateEquals();
 
             z = z.parent;
             this.rightRound(z);
 
           }
+          this.Steps.push(new VisElement("AddPreaperGrandParent", this.clone(), z.Copy(), z.parent.Copy(), y.Copy(), "Third case: The " + String(z.value) + " node's grandparent's left child is black.\nThe node " + String(z.value) + " the right child."));
+
           z.parent.color = "Black";
           z.parent.parent.color = "Red";
-          this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), "3. eset : A " + String(z.value) + " értékű csúcs szülőjének a színe fekete lesz. A nagyszülőjének a színe Piros lesz. "));
+
+          this.Steps.push(new VisElement("AddPreaper", this.clone(), z.Copy(), z.parent.Copy(), "Third case: The parent of the node " + String(z.value) + " will be black. So the grandparent will become red."));
           this.coordinateEquals();
           this.leftRound(z.parent.parent);
         }
@@ -192,7 +211,7 @@ class VisRBTree extends RBTree {
 
     }
     if (this.root.color == "Red") {
-      this.Steps.push(new VisElement("AddPreaper", this.clone(), this.root.Copy(), this.root.Copy(), "A gyöker csúcs színe Fekete lesz. "));
+      this.Steps.push(new VisElement("AddPreaper", this.clone(), this.root.Copy(), this.root.Copy(), "The root has to be black."));
       this.coordinateEquals();
     }
     this.root.color = "Black";
@@ -207,14 +226,18 @@ class VisRBTree extends RBTree {
     let x = this.root;
     while (x != this.nil && x.value != k) {
       if (k < x.value) {
-        this.Steps.push(new VisElement("Find", x.Copy(), "Az törlendő " + String(k) + " elem kisebb mint " + String(x.value) + " ertékű elem.\nBalra megyünk tovább."));
+
+        // "Add an element. " + String(z.value) + " is less than " + String(x.value) + ". We continue in the left subtree."
+        this.Steps.push(new VisElement("Find", x.Copy(), "Del an element.  " + String(k) + " is less than " + String(x.value) + ". We continue in the left subtree."));
         //console.log(this.root.value<x.value && change);
         if (this.root.value < x.value && change) this.piselSet(x, -this.horizontalchange, 0, x.right);
 
         x = x.left;
       }
       else {
-        this.Steps.push(new VisElement("Find", x.Copy(), "Az törlendő " + String(k) + " elem nagyobb mint " + String(x.value) + " ertékű elem.\nJobbra megyünk tovább."));
+
+
+        this.Steps.push(new VisElement("Find", x.Copy(), "Del an element.  " + String(k) + " is greater than " + String(x.value) + ". We continue in the right subtree."));
 
         if (this.root.value > x.value && change) this.piselSet(x, this.horizontalchange, 0, x.left);
 
@@ -222,10 +245,12 @@ class VisRBTree extends RBTree {
       }
     }
     if (x == this.nil) {
-      this.Steps.push(new VisElement("End", this.clone(), "Az törlendő " + String(k) + " elem nem található"));
+
+      this.Steps.push(new VisElement("End", this.clone(), "Del an element.The node " + String(k) + " is not found."));
     }
     else {
-      this.Steps.push(new VisElement("Find", x.Copy(), "Az törlendő " + String(k) + " elem megtalálva"));
+
+      this.Steps.push(new VisElement("Find", x.Copy(), "Del an element. The node " + String(k) + " is found."));
 
     }
 
@@ -271,11 +296,11 @@ class VisRBTree extends RBTree {
       x = y.right;
     }
 
-    if (x != this.nil) {
-      this.Steps.push(new VisElement("Del", this.clone(), z.Copy(), y.Copy(), x.Copy(), "A " + String(z.value) + " értékű csúcs törlése.Az " + String(y.value) + " értékének átmásolása a törlendő csúcs helyére.", false));
+    if (x != this.nil) {//Deletion the node 154. We copy the key of the node 360 into the place of the node we want to delete.
+      this.Steps.push(new VisElement("Del", this.clone(), z.Copy(), y.Copy(), x.Copy(), "Deletion the node " + String(z.value) + " .We copy the key of the node " + String(y.value) + " into the place of the node we want to delete.", false));
     }
     else {
-      this.Steps.push(new VisElement("DelNil", this.clone(), z.Copy(), y.Copy(), "A " + String(z.value) + " értékű csúcs törlése. A " + String(y.value) + " érékének átmásolása a törelendő csúcs helyére.", false));
+      this.Steps.push(new VisElement("DelNil", this.clone(), z.Copy(), y.Copy(), "Deletion the node " + String(z.value) + " .We copy the key of the node " + String(y.value) + " into the place of the node we want to delete.", false));
     }
 
     x.parent = y.parent;
@@ -296,10 +321,10 @@ class VisRBTree extends RBTree {
         this.pixelChange(x, (y.newx - x.x), (y.newy - x.y));
 
         if (x != this.nil) {
-          this.Steps.push(new VisElement("DelBinding", this.clone(), z.Copy(), x.Copy(), "A " + String(x.value) + " értékű elem átkötése", false));
+          this.Steps.push(new VisElement("DelBinding", this.clone(), z.Copy(), x.Copy(), "Remove: Moving the node with value " + String(x.value) + " .", false));
         }
         else {
-          this.Steps.push(new VisElement("DelBindingNil", this.clone(), z.Copy(), "Törlés : " + String(x.value) + " értékű elem átkötése", false));
+          this.Steps.push(new VisElement("DelBindingNil", this.clone(), z.Copy(), "Remove: Moving the node with value " + String(x.value) + " .", false));
         }
 
       }
@@ -331,15 +356,15 @@ class VisRBTree extends RBTree {
     }
 
     if (x != this.nil) {
-      this.Steps.push(new VisElement("DelBindingNil", this.clone(), x.Copy(), "A " + String(x.value) + " értékű elem átkötése", true));
+      this.Steps.push(new VisElement("DelBindingNil", this.clone(), x.Copy(), "Remove: Moving the node with value " + String(x.value) + " .", true));
 
     }
     else {
       if (z != y) {
-        this.Steps.push(new VisElement("DelBindingNil", this.clone(), z.Copy(), "Törlés : " + String(z.value) + " értékű elem átkötése", true));
+        this.Steps.push(new VisElement("DelBindingNil", this.clone(), z.Copy(), "Remove: Moving the node with value " + String(z.value) + " .", true));
       }
       else {
-        this.Steps.push(new VisElement("End", this.clone(), "Törlés : " + String(z.value) + " értékű elem törlése"));
+        this.Steps.push(new VisElement("End", this.clone(), "Remove: Moving the node with value " + String(z.value) + " ."));
 
 
       }
@@ -379,11 +404,12 @@ class VisRBTree extends RBTree {
         if (w.color == "Red") {
 
           this.Steps.push(new VisElement("FixDelCase1Part1", this.clone(), w.Copy(), x.Copy(),
-            "1. eset: A " + String(x.value) + " testvére piros."));
+            "First case: The sibling of the " + String(x.value) + " is red."));
           w.color = "Black";
           x.parent.color = "Red";
+          //First case: The sibling of the node 796 will be black. The parent is red. Rotate to one of the cases from 2,3,4.
           this.Steps.push(new VisElement("FixDelCase1Part2", this.clone(), w.Copy(), x.Copy(), x.parent.Copy(),
-            "1. eset: A " + String(w.value) + " testvére fekete lesz. A szülő piros. Átforgatjuk a 2,3,4 esetre."));
+            "First case: The sibling of the node " + String(w.value) + " will be black. The parent is red.\nRotate to one of the cases from 2,3,4."));
 
           this.leftRound(x.parent);
           w = x.parent.right;
@@ -394,13 +420,13 @@ class VisRBTree extends RBTree {
 
 
           this.Steps.push(new VisElement("FixDelCase2", this.clone(), w.Copy(), x.Copy(),
-            "2. eset: A " + String(w.value) + " testvér fekete és mindkét gyereke fekete. A " + String(w.value) + " piros lesz."));
+            "Second case: The sibling of the " + String(w.value) + " is black and both of it's child is also black.\nThe node " + String(w.value) + " will be red."));
 
 
           w.color = "Red";
 
           this.Steps.push(new VisElement("FixDelCase2", this.clone(), w.Copy(), x.Copy(),
-            "2. eset: A következő vizsgálandó elem " + String(w.value) + " szülője lesz."));
+            "Second case: The next node to examine will be the parent of " + String(w.value) + "."));
           x = x.parent;
 
         }
@@ -409,12 +435,12 @@ class VisRBTree extends RBTree {
           if (w.right.color == "Black") {
 
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.left.Copy(),
-              "3. eset: A " + String(x.value) + " testvére " + String(w.value) + " fekete és bal gyere piros, jobb gyereke fekete."));
+              "Third case: The sibling of the node " + String(x.value) + " is " + String(w.value) + " and its black, and it's left child is red, the right child is black."));
 
             w.left.color = "Black";
             w.color = "Red";
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.left.Copy(),
-              "3. eset: A " + String(w.value) + " csúcs piros, bal gyereke fekete lesz. Átforgatjuk a 4. esetre "));
+              "Third case: The node " + String(w.value) + " is red, it's left child will be black. We rotate into the 4. case."));
 
 
             this.rightRound(w);
@@ -422,15 +448,15 @@ class VisRBTree extends RBTree {
 
           }
           this.Steps.push(new VisElement("FixDelCase4", this.clone(), w.Copy(), x.Copy(), w.right.Copy(),
-            "4. eset: A " + String(x.value) + " testvére " + String(w.value) + " fekete és jobb gyereke piros"));
+            "Fourth case: The sibling of " + String(x.value) + "  is the black " + String(w.value) + " and it's right child is red."));
 
           w.color = x.parent.color;
           x.parent.color = "Black";
           w.right.color = "Black";
 
           this.Steps.push(new VisElement("FixDelCase4", this.clone(), w.Copy(), x.parent.Copy(), w.right.Copy(),
-            "4. eset: A " + String(w.value) + " színe " + String(x.parent.value) + "  színe lesz. A "
-            + String(x.parent.value) + " a színe fekete lesz. A " + String(w.right.value) + " a színe fekete lesz. Forgatás után a következő elem a gyökér lesz."));
+            "Fourth case: The colour of the node " + String(w.value) + " will be the same colour as " + String(x.parent.value) + "'s.\nThe "
+            + String(x.parent.value) + "'s colour will be black. The " + String(w.right.value) + "'s colour will be also black.\nAfter the rotation the next element will be the root"));
 
           this.leftRound(x.parent);
           x = this.root;
@@ -442,55 +468,55 @@ class VisRBTree extends RBTree {
         let w = x.parent.left;
         if (w.color == "Red") {
           this.Steps.push(new VisElement("FixDelCase1Part1", this.clone(), x.Copy(), w.Copy(),
-            "1. eset: A " + String(x.value) + " testvére piros."));
+          "First case: The sibling of the " + String(x.value) + " is red."));
 
           w.color = "Black";
           x.parent.color = "Red";
           this.Steps.push(new VisElement("FixDelCase1Part2", this.clone(), x.Copy(), w.Copy(), x.parent.Copy(),
-            "1. eset: A " + String(w.value) + " testvére fekete lesz. A szülő piros. Átforgatjuk a 2,3,4 esetre."));
+          "First case: The sibling of the node " + String(w.value) + " will be black. The parent is red.\nRotate to one of the cases from 2,3,4."));
           this.rightRound(x.parent);
           w = x.parent.left;
 
         }
         if (w.right.color == "Black" && w.left.color == "Black") {
           this.Steps.push(new VisElement("FixDelCase2", this.clone(), w.Copy(), x.Copy(),
-            "2. eset: A " + String(w.value) + " fekete és mindkét gyereke fekete. A " + String(w.value) + " piros lesz."));
+          "Second case: The sibling of the " + String(w.value) + " is black and both of it's child is also black.\nThe node " + String(w.value) + " will be red."));
 
           w.color = "Red";
 
           this.Steps.push(new VisElement("FixDelCase2", this.clone(), w.Copy(), x.Copy(),
-            "2. eset: A következő vizsgálandó elem " + String(w.value) + " szülője lesz."));
+          "Second case: The next node to examine will be the parent of " + String(w.value) + "."));
           x = x.parent;
 
         }
         else {
 
           if (w.left.color == "Black") {
-
+            //"Third case: The sibling of the node " + String(x.value) + " is " + String(w.value) + " and its black, and it's left child is red, the right child is black."
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.right.Copy(),
-              "3. eset: A " + String(x.value) + " testvére " + String(w.value) + " fekete és jobb gyereke piros, bal gyereke fekete."));
+            "Third case: The sibling of the node " + String(x.value) + " is " + String(w.value) + " and its black, and it's right child is red, the left child is black."));
 
 
             w.right.color = "Black";
             w.color = "Red";
-
+            // "Third case: The node " + String(w.value) + " is red, it's left child will be black. We rotate into the 4. case."
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.right.Copy(),
-              "3. eset: A " + String(w.value) + " csúcs piros, jobb gyereke fekete lesz. Átforgatjuk a 4. esetre "));
+            "Third case: The node " + String(w.value) + " is red, it's right child will be black. We rotate into the 4. case."));
             this.leftRound(w);
             w = x.parent.left;
 
           }
 
           this.Steps.push(new VisElement("FixDelCase4", this.clone(), w.Copy(), x.Copy(), w.left.Copy(),
-            "4. eset: A " + String(x.value) + " testvére " + String(w.value) + " fekete és bal gyereke piros"));
+          "Fourth case: The sibling of " + String(x.value) + "  is the black " + String(w.value) + " and it's left child is red."));
 
           w.color = x.parent.color;
           x.parent.color = "Black";
           w.left.color = "Black";
 
           this.Steps.push(new VisElement("FixDelCase4", this.clone(), w.Copy(), x.parent.Copy(), w.left.Copy(),
-            "4. eset: A " + String(w.value) + " színe " + String(x.parent.value) + "  színe lesz. A "
-            + String(x.parent.value) + " a színe fekete lesz. A " + String(w.left.value) + " a színe fekete lesz. Forgatás után a következő elem a gyökér lesz."));
+          "Fourth case: The colour of the node " + String(w.value) + " will be the same colour as " + String(x.parent.value) + "'s.\nThe "
+          + String(x.parent.value) + "'s colour will be black. The " + String(w.right.value) + "'s colour will be also black.\nAfter the rotation the next element will be the root"));
 
 
           this.rightRound(x.parent);
@@ -525,13 +551,13 @@ class VisRBTree extends RBTree {
   visMinimumWithChange(node, rootOfSubTree) {
   
       while (node.left != this.nil) {
-        this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "A legkisebb elem keresése a jobb részfában."));
+        this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "Finding the smallest node in the right sub-tree."));
         if (this.root.value < node.value) this.piselSet(node, -this.horizontalchange, 0, node.right);
         node = node.left;
       }
       if (this.root.value > node.value) this.piselSet(node, this.horizontalchange, 0, node.left)
   
-      this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "A legkisebb elem a " + String(node.value) + " a jobb részfában."));
+      this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "The smallest value is " + String(node.value) + " in the right sub-tree."));
       return node;
   }
 
@@ -542,21 +568,21 @@ class VisRBTree extends RBTree {
     let x = this.root;
     while (x != this.nil && x.value != k) {
       if (k < x.value) {
-        this.Steps.push(new VisElement("Find", x.Copy(), "Find the " + String(k) + " key. The " + String(k) + " key is lesser than " + String(x.value) + " key.\nLooking the left Subtree."));
+        this.Steps.push(new VisElement("Find", x.Copy(), "Find the key " + String(k) + " . The key " + String(k) + " is lesser than key " + String(x.value) + ".\nLooking the left Subtree."));
 
         x = x.left;
       }
       else {
-        this.Steps.push(new VisElement("Find", x.Copy(), "Find the " + String(k) + " key. The " + String(k) + " key is greater than " + String(x.value) + " key.\nLooking the right Subtree."));
+        this.Steps.push(new VisElement("Find", x.Copy(), "Find the key " + String(k) + ". The key " + String(k) + " is greater than key " + String(x.value) + " .\nLooking the right Subtree."));
 
         x = x.right;
       }
     }
     if (x == this.nil) {
-      this.Steps.push(new VisElement("End", this.clone(), "The " + String(k) + " key is not found."));
+      this.Steps.push(new VisElement("End", this.clone(), "The key " + String(k) + " is not found."));
     }
     else {
-      this.Steps.push(new VisElement("Find", x.Copy(), "The " + String(k) + " key is found."));
+      this.Steps.push(new VisElement("Find", x.Copy(), "The key " + String(k) + " is found."));
     }
     this.Steps.push(new VisElement("End", this.clone(), ""));
 
@@ -577,7 +603,10 @@ class VisRBTree extends RBTree {
   leftRound(x) {
 
     let y = x.right;
-    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Forgatás Balra: A " + String(x.value) + " értékű és a " + String(y.value) + " értékű elem forgatása."));
+
+
+    //Rotate left: The rotation of the x and the y nodes.
+    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Rotate left: The rotation of the " + String(x.value) + " and the " + String(y.value) + " nodes."));
     this.coordinateEquals();
     x.right = y.left;
 
@@ -597,7 +626,8 @@ class VisRBTree extends RBTree {
     y.left = x;
     x.parent = y;
 
-    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Forgatás Balra: A " + String(x.value) + " értékű és a " + String(y.value) + " értékű elem forgatása.\n A gyerekek és szülők cseréje "));
+    //Swapping the parents with the childrens.
+    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Rotate left: The rotation of the " + String(x.value) + " and the " + String(y.value) + " nodes.\nSwapping the parents with the childrens."));
     this.coordinateEquals();
 
 
@@ -605,7 +635,7 @@ class VisRBTree extends RBTree {
 
     this.piselSet(x, 0, this.verticalchange, x.left);
 
-    this.Steps.push(new VisElement("RotationLeft", this.clone(), x.Copy(), y.Copy(), "Forgatás Balra: A " + String(x.value) + " értékű és a " + String(y.value) + " értékű elem a helyére kerül"));
+    this.Steps.push(new VisElement("RotationLeft", this.clone(), x.Copy(), y.Copy(), "Rotate left: The rotation of the " + String(x.value) + " and the " + String(y.value) + " nodes reached it's destination"));
     this.coordinateEquals();
 
 
@@ -616,7 +646,7 @@ class VisRBTree extends RBTree {
 
     let y = x.left;
 
-    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Forgatás Jobbra : A " + String(x.value) + " értékű és a " + String(y.value) + " értékű elem forgatása."));
+    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Rotate right: The rotation of the " + String(x.value) + " and the " + String(y.value) + " nodes."));
     this.coordinateEquals();
     x.left = y.right;
 
@@ -638,13 +668,13 @@ class VisRBTree extends RBTree {
     x.parent = y;
 
 
-    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Forgatás Jobbra :A " + String(x.value) + " értékű és a " + String(y.value) + " értékű elem forgatása.\nA gyerekek és szülők cseréje,"));
+    this.Steps.push(new VisElement("RotationSelectAndChange", this.clone(), x.Copy(), y.Copy(), "Rotate right: The rotation of the " + String(x.value) + " and the " + String(y.value) + " nodes.\nSwapping the parents with the childrens."));
     this.coordinateEquals();
 
     this.piselSet(y, 0, -this.verticalchange, y.left);
     this.piselSet(x, 0, this.verticalchange, x.right);
 
-    this.Steps.push(new VisElement("RotationRight", this.clone(), x.Copy(), y.Copy(), "Forgatás Jobbra :A " + String(x.value) + " értékű és a " + String(y.value) + " értékű elem a helyére kerül"));
+    this.Steps.push(new VisElement("RotationRight", this.clone(), x.Copy(), y.Copy(), "Rotate left: The rotation of the " + String(x.value) + " and the " + String(y.value) + " nodes reached it's destination"));
     this.coordinateEquals();
   }
 
@@ -727,27 +757,27 @@ class VisRBTree extends RBTree {
     let node = n;
 
     if (n == this.nil) {
-      this.Steps.push(new VisElement("End", this.clone(), "Nincs ilyen elem."));
+      this.Steps.push(new VisElement("End", this.clone(), "There is no such element."));
 
     }
     else {
 
-      this.Steps.push(new VisElement("NextOrPre", n.Copy(), "A " + String(n.value) + " a következő elemének megkeresése."));
+      this.Steps.push(new VisElement("NextOrPre", n.Copy(), "Finding the next element of the node " + String(n.value) + "."));
 
       let p;
 
       if (n.right != this.nil) {
         p = this.visMinimum(n.right, n);
 
-        this.Steps.push(new VisElement("NextOrPre", p.Copy(), "A " + String(p.value) + " a következő elem."));
+        this.Steps.push(new VisElement("NextOrPre", p.Copy(), String(p.value) + " is the next element"));
       }
       else {
-        this.Steps.push(new VisElement("NextOrPre", n.Copy(), "A " + String(n.value) + " nincs jobb gyereke. Felfelé keresük a következő elemet."));
+        this.Steps.push(new VisElement("NextOrPre", n.Copy(), String(n.value) + " doesn't have a right child. To find the next element we have to look at the parent."));
 
         p = n.parent;
         while (p != this.nil && n == p.right) {
 
-          this.Steps.push(new VisElement("NextOrPre", p.Copy(), "A " + String(p.value) + " jobb gyereke. Felfelé keresük a következő elemet."));
+          this.Steps.push(new VisElement("NextOrPre", p.Copy(), String(p.value) + " is a right child. To find the next element we have to look at the parent."));
           n = p;
           p = p.parent;
 
@@ -755,11 +785,11 @@ class VisRBTree extends RBTree {
 
 
         if (p == this.nil) {
-          this.Steps.push(new VisElement("NextOrPre", node.Copy(), "A " + String(val) + " a legnagyobb elem, nincs következő eleme."));
+          this.Steps.push(new VisElement("NextOrPre", node.Copy(),  String(val) + " is the maximum value, so there is no next element."));
 
         }
         else {
-          this.Steps.push(new VisElement("NextOrPre", p.Copy(), "A " + String(p.value) + " a következő elem."));
+          this.Steps.push(new VisElement("NextOrPre", p.Copy(), String(p.value) + " is the next element"));
         }
 
 
@@ -800,38 +830,38 @@ class VisRBTree extends RBTree {
 
 
     if (n == this.nil) {
-      this.Steps.push(new VisElement("End", this.clone(), "Nincs ilyen elem."));
+      this.Steps.push(new VisElement("End", this.clone(), "There is no such element."));
 
     }
     else {
 
-      this.Steps.push(new VisElement("NextOrPre", n.Copy(), "A " + String(n.value) + " a előző elemének megkeresése."));
+      this.Steps.push(new VisElement("NextOrPre", n.Copy(), "Finding the pre element of the node " + String(n.value) + "."));
 
       let p;
 
       if (n.left != this.nil) {
         p = this.visMaximum(n.left, n);
 
-        this.Steps.push(new VisElement("NextOrPre", p.Copy(), "A " + String(p.value) + " a előző elem."));
+        this.Steps.push(new VisElement("NextOrPre", p.Copy(), String(p.value) + " is the previous element"));
       }
       else {
-        this.Steps.push(new VisElement("NextOrPre", n.Copy(), "A " + String(n.value) + " nincs bal gyereke. Felfelé keresük a előző elemet."));
+        this.Steps.push(new VisElement("NextOrPre", n.Copy(), String(n.value) + " doesn't have a left child. To find the prev element we have to look at the parent."));
 
         let p = n.parent;
         while (p != this.nil && n == p.left) {
 
-          this.Steps.push(new VisElement("NextOrPre", p.Copy(), "A " + String(p.value) + " bal gyereke. Felfelé keresük a előző elemet."));
+          this.Steps.push(new VisElement("NextOrPre", p.Copy(), String(p.value) + " is a left child. To find the previous element we have to look at the parent."));
           n = p;
           p = p.parent;
 
         }
 
         if (p == this.nil) {
-          this.Steps.push(new VisElement("NextOrPre", node.Copy(), "A " + String(val) + " a legkisebb elem, nincs előző eleme."));
+          this.Steps.push(new VisElement("NextOrPre", node.Copy(),  String(val) + " is the minimum value, so there is no prev element."));
 
         }
         else {
-          this.Steps.push(new VisElement("NextOrPre", p.Copy(), "A " + String(p.value) + " a előző elem."));
+          this.Steps.push(new VisElement("NextOrPre", p.Copy(), String(p.value) + " is the previous element"));
         }
 
 
@@ -856,27 +886,30 @@ class VisRBTree extends RBTree {
 
   }
 
+
+
+
   visMinimum(node, rootOfSubTree) {
 
     while (node.left != this.nil) {
-      this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "A legkisebb elem keresése a jobb részfában."));
+      this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "Finding the smallest node in the right sub-tree."));
 
       node = node.left;
     }
 
-    this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "A legkisebb elem a " + String(node.value) + " a jobb részfában."));
+    this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(),"The smallest value is " + String(node.value) + " in the right sub-tree."));
     return node;
   }
 
   visMaximum(node, rootOfSubTree) {
 
     while (node.right != this.nil) {
-      this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "A legnagyobb elem keresése a bal részfában."));
+      this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "Finding the biggest node in the left sub-tree."));
 
       node = node.right;
     }
 
-    this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(), "A legnagyobb elem a " + String(node.value) + " a bal részfában."));
+    this.Steps.push(new VisElement("FindMin", node.Copy(), rootOfSubTree.Copy(),"The biggest value is " + String(node.value) + " in the left sub-tree."));
     return node;
   }
 
