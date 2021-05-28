@@ -49,6 +49,8 @@ class Tester {
         console.log(this.isRedBlackTree(this.visualizer.tree))
     }
 
+
+    //check the tree is a valid rbtree
     isRedBlackTree(tree) {
 
         let isRBTree = true;
@@ -70,12 +72,12 @@ class Tester {
 
 
     computeBlackHeight(currNode, nill) {
-        // For an empty subtree the answer is obviouss
+
         if (currNode == nill) {
             return 0;
         }
 
-        // Computes the height for the left and right child recursively
+
         let leftHeight = this.computeBlackHeight(currNode.left, nill);
         let rightHeight = this.computeBlackHeight(currNode.right, nill);
         let add = currNode.color == "Black" ? 1 : 0;

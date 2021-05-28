@@ -19,7 +19,7 @@ class DiagramTree extends RBTree {
         if (node == this.nil)
             return 0;
         else {
-            /* compute the depth of each subtree */
+
             let leftmax = this.maxDepth(node.left);
             let rightmax = this.maxDepth(node.right);
 
@@ -36,7 +36,7 @@ class DiagramTree extends RBTree {
         if (node == this.nil)
             return 0;
         else {
-            /* compute the depth of each subtree */
+
             let leftmax = this.minDepth(node.left);
             let rightmax = this.minDepth(node.right);
 
@@ -49,10 +49,8 @@ class DiagramTree extends RBTree {
         }
     }
 
-
     blackDepth(node) {
         let black = 1;
-
 
         while (node != this.nil) {
 
@@ -64,9 +62,7 @@ class DiagramTree extends RBTree {
             node = node.left;
 
         }
-
         return black;
-
     }
 
 
@@ -92,13 +88,6 @@ class DiagramTree extends RBTree {
 
             name.push(String(10 ** (i + 1)));
         }
-
-
-
-
-        console.log(datamin, datamax, datablack);
-
-
 
         var table = document.getElementsByClassName('table')[0]
 

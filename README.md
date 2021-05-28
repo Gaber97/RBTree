@@ -1,2 +1,4 @@
 #RBTree
-This my web
+The program vizualize the RBTree
+
+The program make by Gábor Flórián

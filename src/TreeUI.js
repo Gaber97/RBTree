@@ -60,6 +60,8 @@ class TreeUI {
 
     drawTree() {
 
+        //draww perodicly the tree
+
         background(150);
 
         this.visualizer.counterNextStep();

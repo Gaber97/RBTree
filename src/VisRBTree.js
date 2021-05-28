@@ -24,6 +24,8 @@ class VisRBTree extends RBTree {
   }
 
   addValue(val) {
+    //add an value
+
     let z = new VisNode(val, "Red");
     z.parent = this.nil;
     let y = this.nil;
@@ -229,9 +231,9 @@ class VisRBTree extends RBTree {
     while (x != this.nil && x.value != k) {
       if (k < x.value) {
 
-        // "Add an element. " + String(z.value) + " is less than " + String(x.value) + ". We continue in the left subtree."
+  
         this.Steps.push(new VisElement("Find", x.Copy(), "Del an element.  " + String(k) + " is less than " + String(x.value) + ". We continue in the left subtree."));
-        //console.log(this.root.value<x.value && change);
+
         if (this.root.value < x.value && change) this.piselSet(x, -this.horizontalchange, 0, x.right);
 
         x = x.left;
@@ -298,7 +300,7 @@ class VisRBTree extends RBTree {
       x = y.right;
     }
 
-    if (x != this.nil) {//Deletion the node 154. We copy the key of the node 360 into the place of the node we want to delete.
+    if (x != this.nil) {
       this.Steps.push(new VisElement("Del", this.clone(), z.Copy(), y.Copy(), x.Copy(), "Deletion the node " + String(z.value) + " .We copy the key of the node " + String(y.value) + " into the place of the node we want to delete.", false));
     }
     else {
@@ -409,7 +411,7 @@ class VisRBTree extends RBTree {
             "First case: The sibling of the " + String(x.value) + " is red."));
           w.color = "Black";
           x.parent.color = "Red";
-          //First case: The sibling of the node 796 will be black. The parent is red. Rotate to one of the cases from 2,3,4.
+          //First case: The sibling of the node x will be black. The parent is red. Rotate to one of the cases from 2,3,4.
           this.Steps.push(new VisElement("FixDelCase1Part2", this.clone(), w.Copy(), x.Copy(), x.parent.Copy(),
             "First case: The sibling of the node " + String(w.value) + " will be black. The parent is red.\nRotate to one of the cases from 2,3,4."));
 
@@ -420,13 +422,13 @@ class VisRBTree extends RBTree {
         }
         if (w.left.color == "Black" && w.right.color == "Black") {
 
-
+          ////Second case: The sibling of the w is black and both of it's child is also black. The node w will be red.
           this.Steps.push(new VisElement("FixDelCase2", this.clone(), w.Copy(), x.Copy(),
             "Second case: The sibling of the " + String(w.value) + " is black and both of it's child is also black.\nThe node " + String(w.value) + " will be red."));
 
 
           w.color = "Red";
-
+          //Second case: The next node to examine will be the parent of w.
           this.Steps.push(new VisElement("FixDelCase2", this.clone(), w.Copy(), x.Copy(),
             "Second case: The next node to examine will be the parent of " + String(w.value) + "."));
           x = x.parent;
@@ -435,7 +437,7 @@ class VisRBTree extends RBTree {
         else {
 
           if (w.right.color == "Black") {
-
+            //"Third case: The sibling of the node x is w  and its black, and it's left child is red, the right child is black."
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.left.Copy(),
               "Third case: The sibling of the node " + String(x.value) + " is " + String(w.value) + " and its black, and it's left child is red, the right child is black."));
 
@@ -443,22 +445,23 @@ class VisRBTree extends RBTree {
             w.color = "Red";
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.left.Copy(),
               "Third case: The node " + String(w.value) + " is red, it's left child will be black. We rotate into the 4. case."));
-
+            // "Third case: The node w is red, it's left child will be black. We rotate into the 4. case."
 
             this.rightRound(w);
             w = x.parent.right;
 
           }
+          //Fourth case: The sibling of x is the black w and it's right child is red.
           this.Steps.push(new VisElement("FixDelCase4", this.clone(), w.Copy(), x.Copy(), w.right.Copy(),
             "Fourth case: The sibling of " + String(x.value) + "  is the black " + String(w.value) + " and it's right child is red."));
 
           w.color = x.parent.color;
           x.parent.color = "Black";
           w.right.color = "Black";
-
+          //Fourth case: The colour of the node w will be the same colour as x.parent's. The x.parent's colour will be black. The w.right's colour will be also black. After the rotation the next element will be the root
           this.Steps.push(new VisElement("FixDelCase4", this.clone(), w.Copy(), x.parent.Copy(), w.right.Copy(),
             "Fourth case: The colour of the node " + String(w.value) + " will be the same colour as " + String(x.parent.value) + "'s.\nThe "
-            + String(x.parent.value) + "'s colour will be black. The " + String(w.right.value) + "'s colour will be also black.\nAfter the rotation the next element will be the root"));
+            + String(x.parent.value) + "'s colour will be black. The " + String(w.right.value) + "'s colour will be also black.\nAfter the rotation the next element will be the root."));
 
           this.leftRound(x.parent);
           x = this.root;
@@ -494,14 +497,14 @@ class VisRBTree extends RBTree {
         else {
 
           if (w.left.color == "Black") {
-            //"Third case: The sibling of the node " + String(x.value) + " is " + String(w.value) + " and its black, and it's left child is red, the right child is black."
+
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.right.Copy(),
             "Third case: The sibling of the node " + String(x.value) + " is " + String(w.value) + " and its black, and it's right child is red, the left child is black."));
 
 
             w.right.color = "Black";
             w.color = "Red";
-            // "Third case: The node " + String(w.value) + " is red, it's left child will be black. We rotate into the 4. case."
+
             this.Steps.push(new VisElement("FixDelCase3", this.clone(), w.Copy(), x.Copy(), w.right.Copy(),
             "Third case: The node " + String(w.value) + " is red, it's right child will be black. We rotate into the 4. case."));
             this.leftRound(w);
@@ -947,6 +950,9 @@ class VisRBTree extends RBTree {
     }
   }
 
+
+
+  //this method clone an another tree
   clone() {
 
     let newTree = new VisRBTree();
