@@ -149,7 +149,7 @@ class Treevisualizer {
         if (this.actualStepElement + 1 >= this.visSteps[this.actualStep]["List"].length) {
 
             if (this.actualStep + 1 <= this.visStepsSize) {
-
+  
                 this.actualStep = this.actualStep + 1;
                 this.tree = this.visSteps[this.actualStep]["OldTree"].clone();
                 this.actualStepElement = 0;
@@ -158,6 +158,7 @@ class Treevisualizer {
             }
             else {
                 this.tree = this.visSteps[this.actualStep]["NewTree"].clone();
+
             }
 
         }
@@ -165,7 +166,7 @@ class Treevisualizer {
 
             this.actualStepElement = 1 + this.actualStepElement;
             this.changeTree();
-
+    
         }
     }
 
@@ -191,6 +192,7 @@ class Treevisualizer {
         }
         else {
             this.actualStepElement = this.visSteps[this.actualStep]["List"].length - 1;
+            this.tree = this.visSteps[this.actualStep]["NewTree"].clone();
             this.changeTree();
         }
 
